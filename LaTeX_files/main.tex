@@ -1,0 +1,78 @@
+%
+% LAYOUT.TEX - Kurzbeschreibung von PA 88-10-04 (LaTeX)
+%                                      99-03-20
+%
+%  Updated for REFMAN.CLS (LaTeX2e)
+%
+\documentclass[oneside,a4paper]{paper}
+%\documentclass[pagesize,twoside,a5paper,smallborder,10pt]{refart}
+\usepackage{fancyhdr}
+\usepackage[T1]{fontenc}
+\usepackage{ae} % CM-Zeichens"atze mit T1 encoding
+\usepackage{makeidx}
+\usepackage{ifthen}
+\usepackage{verbatim}
+%\usepackage{english}
+%\usepackage{showidx}
+\usepackage{subfiles} % Best loaded last in the preamble
+\usepackage[english]{babel}
+\usepackage{blindtext}
+\usepackage{geometry}
+\geometry{lmargin=4cm, rmargin=2cm}
+\usepackage{titlesec}
+\titleformat*{\section}{\LARGE\bfseries}
+\titleformat*{\subsection}{\Large\bfseries}
+\titleformat*{\subsubsection}{\large\bfseries}
+
+
+\renewcommand{\familydefault}{\sfdefault}
+\reversemarginpar
+
+\title{All of Machine Learning \\ \small{\textit{A summary under eternal construction}}}
+\author{
+	Moritz Gück \\
+	github.com/MoritzGuck/All\_of\_ML-under\_construction \\
+	last changes: \today   \\
+	}
+
+
+
+\date{}
+\emergencystretch1em  % F"ur TeX <3.0 auskommentieren!
+
+%\pagestyle{footings}
+%\pagestyle{headings}
+%\pagestyle{myfootings}
+
+
+\makeindex
+
+
+\setcounter{tocdepth}{2}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This is a reference for machine learning approaches and methods. The topics range from basic statistics to complex machine learning models and explanation methods. For each method and model, the underlying formulas (objective functions, prediction functions, etc.) are given, as well as code snippets from the respective python libraries. This reference should give data scientists a catalogue to find methods for their problem, refresh their knowledge and give references for further reading. If you find errors or unclear explanations in this text, please file an issue under \\ \verb=github.com/MoritzGuck/All_of_ML-under_construction= . 
+\end{abstract}
+
+\tableofcontents
+
+\newpage
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subfile{sections/classification_methods}
+
+\subfile{sections/regression_methods}
+
+\subfile{sections/kernel_methods}
+
+\subfile{sections/Interpretation_methods}
+
+
+
+\printindex
+
+\end{document}
