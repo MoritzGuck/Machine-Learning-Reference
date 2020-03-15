@@ -10,6 +10,7 @@
 \usepackage[T1]{fontenc}
 \usepackage{ae} % CM-Zeichens"atze mit T1 encoding
 \usepackage{makeidx}
+\usepackage{hyperref}       % hyperlinks
 \usepackage{ifthen}
 \usepackage{verbatim}
 %\usepackage{english}
@@ -20,6 +21,13 @@
 \usepackage{geometry}
 \geometry{lmargin=4cm, rmargin=2cm}
 \usepackage{titlesec}
+\usepackage{mathtools}
+\usepackage{commath}
+\usepackage{xr}
+\usepackage{zref}
+\usepackage{amsmath}
+\DeclareMathOperator{\sign}{sign}
+
 \titleformat*{\section}{\LARGE\bfseries}
 \titleformat*{\subsection}{\Large\bfseries}
 \titleformat*{\subsubsection}{\large\bfseries}
@@ -32,7 +40,7 @@
 \author{
 	Moritz Gück \\
 	github.com/MoritzGuck/All\_of\_ML-under\_construction \\
-	last changes: \today   \\
+	Last changes: \today   \\
 	}
 
 
@@ -54,7 +62,7 @@
 \maketitle
 
 \begin{abstract}
-This is a reference for machine learning approaches and methods. The topics range from basic statistics to complex machine learning models and explanation methods. For each method and model, the underlying formulas (objective functions, prediction functions, etc.) are given, as well as code snippets from the respective python libraries. This reference should give data scientists a catalogue to find methods for their problem, refresh their knowledge and give references for further reading. If you find errors or unclear explanations in this text, please file an issue under \\ \verb=github.com/MoritzGuck/All_of_ML-under_construction= . 
+This is a reference for machine learning approaches and methods. The topics range from basic statistics to complex machine learning models and explanation methods. For each method and model, I have provided the underlying formulas (objective functions, prediction functions, etc.) as well as code snippets from the respective python libraries. I made this reference to quickly look up things I have studied already. I published it to give data scientists a catalogue to find methods for their problem, refresh their knowledge and give references for further reading. If you find errors or unclear explanations in this text, please file an issue under: \\ \verb=github.com/MoritzGuck/All_of_ML-under_construction=  
 \end{abstract}
 
 \tableofcontents
@@ -63,16 +71,18 @@ This is a reference for machine learning approaches and methods. The topics rang
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subfile{sections/probability_theory}
+\pagebreak
 \subfile{sections/classification_methods}
-
+\pagebreak
+\subfile{sections/clustering_methods}
+\pagebreak
 \subfile{sections/regression_methods}
-
+\pagebreak
 \subfile{sections/kernel_methods}
-
+\pagebreak
 \subfile{sections/Interpretation_methods}
-
-
-
+\pagebreak
 \printindex
 
 \end{document}

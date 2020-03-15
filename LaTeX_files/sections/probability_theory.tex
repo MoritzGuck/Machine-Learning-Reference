@@ -1,0 +1,30 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+
+\section{Probability Theory} \label{probability}
+A probability is a measure of how frequent or likely an event will take place. 
+
+\paragraph{Probability Space} \index{Probability Space} The probability space is a triplet space containing a sample/outcome space $\Omega$ (containing all possible atomic events), a collection of events $S$ (containing a subset of $\Omega$ to which we want to assign probabilities) and the mapping $P$ between $\Omega$ and $S$. 
+\paragraph{Axioms of Probability} \index{Axioms of Probability} The mapping $P$ must fulfill the axioms of probability: 
+        \begin{enumerate}
+            \item $P(a) \leq 0$
+            \item $P(\Omega) = 1$
+            \item $a,b \in S$ and $a \cap b = \{\}$ $ \Rightarrow P(a \cup b) = P(a) + P(b)$
+        \end{enumerate}
+\paragraph{Random Variable} \index{Random Variable} A random variable is a function that maps points from the sample space $\Omega$ to some range (e.g. Real numbers or booleans). They are characterized by their distribution function. E.g. for a dice roll:
+        \[ X(\omega) = \begin{cases} 
+            0, \text{ if } \omega = heads\\
+            1, \text{ if } \omega = tails.
+        \end{cases}
+        \]
+\paragraph{Proposition} \index{Proposition} A Proposition is a conclusion of a statistical inference that can be true or false (e.g. a classification of a datapoint). More formally: A disjunction of events where the logic model holds. An event can be written as a \textbf{propositional logic model}:\\ $A = true, B = false \Rightarrow a \land \neg b $. Propositions can be continuous, discrete or boolean. 
+
+\subsection{Probability distributions} \index{Probability distribution}
+Probability distributions assign probabilities to to all possible points in $\Omega$ (e.g. $P(Weather) = \langle 0.3, 0.4, 0.2, 0.1 \rangle$, representing Rain, sunshine, clouds and snow). 
+Joint probability distributions give you a probability for each atomic event of the random variables (e.g. $P(weather, accident)$ gives you a $2\times 4$  matrix.)
+
+\paragraph{Cumulative Distribution Function} \index{Cumulative Distribution Function}
+
+
+\end{document}

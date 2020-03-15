@@ -1,10 +1,35 @@
-\documentclass[main.tex]{subfiles}
+\documentclass[../main.tex]{subfiles}
+\externaldocument{clustering_methods}
+\externaldocument{../references}
+\externaldocument{../main}
 
 \begin{document}
 
-\section{Classification methods}
+\section{Classification Methods}
+Classification is the assignment of objects (data points) to categories (classes). It requires a data set (i.e. training set) of points with known class labels. If the class labels are not known you can instead group the data using clustering algorithms (chapter \ref{Clustering Methods}).
 
-\subsection{Support Vector Machines (SVM)}
 
+\subsection{Linear Classifiers}
+Linear classifiers use linear decision boundaries to classify points to a respective class. 
+
+
+\subsection{Support Vector Classifier (SVC)}
+SVCs use hyperplanes to separate data points according to their class label with a maximum margin ($M$) between the separating hyperplane ($x^T\beta + \beta_0=0$) and the points. If points cannot be perfectly separated by the decision boundary, a soft margin SVM is used with a slack variable $\xi$ that punishes points in the margin or on the wrong side of the hyperplane.
+The optimization problem is given by \cite{Hastie2009} : 
+\begin{equation}
+    \begin{split}
+        \max_{\beta, \beta_0, \beta=1} M, \\
+        \text{subject to } y_i(x_i^T \beta + \beta_0) \ge 1 - \xi_i, \quad \forall i, \\\xi_i \ge 0, \quad \sum \xi_i \le constant, \quad i= 1, ..., N, 
+    \end{split}
+\end{equation} 
+where $\beta$ are the coefficients and $x$ are the $N$ data points. The support vectors are the points that determine the orientation of the hyperplane (i.e. the closest points).
+The classification function is given by: 
+\begin{equation}
+    G(x) = \sign[x^T\beta + \beta_0] 
+\end{equation}
+
+
+\bibliographystyle{unsrtnat}
+\bibliography{../references}
 
 \end{document}
