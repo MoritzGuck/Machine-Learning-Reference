@@ -12,7 +12,7 @@ A probability is a measure of how frequent or likely an event will take place.
             \item $P(\Omega) = 1$
             \item $a,b \in S$ and $a \cap b = \{\}$ $ \Rightarrow P(a \cup b) = P(a) + P(b)$
         \end{enumerate}
-\paragraph{Random Variable} \index{Random Variable} A random variable is a function that maps points from the sample space $\Omega$ to some range (e.g. Real numbers or booleans). They are characterized by their distribution function. E.g. for a dice roll:
+\paragraph{Random Variable (RV)} \index{Random Variable} A RV is a function that maps points from the sample space $\Omega$ to some range (e.g. Real numbers or booleans). They are characterized by their distribution function. E.g. for a dice roll:
         \[ X(\omega) = \begin{cases} 
             0, \text{ if } \omega = heads\\
             1, \text{ if } \omega = tails.
@@ -20,9 +20,10 @@ A probability is a measure of how frequent or likely an event will take place.
         \]
 \paragraph{Proposition} \index{Proposition} A Proposition is a conclusion of a statistical inference that can be true or false (e.g. a classification of a datapoint). More formally: A disjunction of events where the logic model holds. An event can be written as a \textbf{propositional logic model}:\\ $A = true, B = false \Rightarrow a \land \neg b $. Propositions can be continuous, discrete or boolean. 
 
+%%%%%%%%%%%
 \subsection{Probability distributions} \index{Probability distribution}
 Probability distributions assign probabilities to to all possible points in $\Omega$ (e.g. $P(Weather) = \langle 0.3, 0.4, 0.2, 0.1 \rangle$, representing Rain, sunshine, clouds and snow). 
-Joint probability distributions give you a probability for each atomic event of the random variables (e.g. $P(weather, accident)$ gives you a $2\times 4$  matrix.)
+Joint probability distributions give you a probability for each atomic event of the RVs (e.g. $P(weather, accident)$ gives you a $2\times 4$  matrix.)
 
 \paragraph{Cumulative Distribution Function (CDF)} \index{Cumulative Distribution Function} The CDF is defined as $F_X(x) = P(X \leq x)$ (See figure \ref{CDF}).
         \begin{figure}
@@ -48,7 +49,17 @@ Joint probability distributions give you a probability for each atomic event of 
             \label{CDF}
         \end{figure}
 
-\paragraph{Uniform distribution} \index{Uniform distribution}
+\paragraph{Properties of Distributions} 
+\begin{itemize}
+    \item[] The \textbf{expected value} \index{expected value} ($E$) or mean ($\mu$) is given by $E[X] = \sum_{x \in X} x*p(x)$ for discrete RVs and $E[X] = \int_X x*p(x) dx$ for continuous RVs.
+    \item[] The \textbf{variance} \index{variance} measures the spread of a distribution: $var[X] = \sigma^2 = E[(X-\mu)^2] = E[X]^2 - \mu^2$.
+    \item[] The \textbf{standard deviation} \index{standard deviation} is given by: $\sqrt{var[X]} = \sigma$.
+    \item[] The \textbf{mode} \index{mode} is the value with the highest probability (or the point in the PDF with the highest value): 
+    \item[] The \textbf{median} \index{median} is the point at which all point less than the median and all points greater than the median have the same probability ($0.5$). 
+    \item[] The \textbf{quantiles} ($Q$) \index{quantile} divide the datapoints into sets of equal number. The $Q_1$ qua\textbf{r}tile has 25\% of the values below it. 
+\end{itemize}
+
+\subsubsection{Uniform distribution} \index{Uniform distribution}
         The uniform distribution has the same probability throughout a specific interval and is defined as 
         % \begin{equation}
         %     \text{Unif}(a,b) = \frac{1}{b-a} \mathbb{I}(a < x \leq b) = 
@@ -59,7 +70,8 @@ Joint probability distributions give you a probability for each atomic event of 
         \end{cases}
         \]
 
-\paragraph{Properties of Distributions}
-
+\subsubsection{Discrete distributions}
+\paragraph{Binomial distribution} \index{Binomial distribution} jkjnk % todo complete
+\paragraph{Bernoulli distribution} \index{Bernoulli distribution} jknk % todo complete
 
 \end{document}
