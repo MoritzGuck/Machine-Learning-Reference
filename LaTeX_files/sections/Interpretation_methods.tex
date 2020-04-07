@@ -7,19 +7,23 @@ Complex machine learning algorithms (e.g. NNs) are hard/impossible to interpret.
 \subsection{Local interpretability methods}
 Explain, why your model made this/these exact decisions. 
 
-\subsubsection{Shapley values}
-Find attributes that determine the deviation of your output from the \textit{expected value}. \textbf{How:} Calculate how much each feature pushes the prediction away from the expected value, by shuffling through all combinations of features having the sample-value or expected value respectively. \\
-\index{SHapley Additive exPlanations (SHAP)}
-\paragraph{SHapley Additive exPlanations (SHAP)}
-SHAP calculates Shapley values % todo make more precise
+    \subsubsection{Shapley values}
+    Find attributes that determine the deviation of your output from the \textit{expected value}. \textbf{How:} Calculate how much each feature pushes the prediction away from the expected value, by assigning to all combinations of features the sample-value or expected value respectively. \\
+    \index{SHapley Additive exPlanations (SHAP)}
+    \paragraph{SHapley Additive exPlanations (SHAP)}
+    SHAP calculates Shapley values % todo make more precise
 
-\subsubsection{Local interpretable model-agnostic explanations (LIME)}
-% \blindtext \\
-\attention LIME interpretaions are not always consistent. % todo write this more precisely
+    \subsubsection{Local interpretable model-agnostic explanations (LIME)}
+    % \blindtext \\
+    \attention LIME interpretaions are not always consistent. % todo write this more precisely
 
-\subsubsection{Example-based explanations}
-\paragraph{Influence Functions}
-What would happen to the model parameters, if you would up-weight an instance? (model is function of training data.)
+    \subsubsection{Example-based explanations}
+    \paragraph{Influence Functions}
+    What would happen to the model parameters, if you would up-weight an instance? (model is function of training data.)
+
+    subsubsection{Nomograms}
+
+
 
 
 \end{document}

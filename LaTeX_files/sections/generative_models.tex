@@ -1,0 +1,33 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+
+\section{Generative models}
+
+\subsection{Generative Models for Discrete Data}
+    \subsubsection{Bayesian Concept Learning} \index{Bayesian concept learning}
+        can learn a concept $c \in C$ from positive examples alone. For that define the posterior: $p(c|\mathcal{D})$. To get to learn a concept you need a hypothesis space $\mathcal{H}$ and a version space (a subset of $\mathcal{H}$) that is consistent with $\mathcal{D}$. You choose a hypothesis $h$ by assuming that samples are randomly chosen from the true concept and calculate $p(\mathcal{D}|h)=\lbrack \frac{1}{|h|}\rbrack^N$ (sampling the $N$ data points from $h$). You than choose the hypothesis that has the highest probability (thereby you choose suspicious coincidences of too broad models). The priors can be chosen e.g. by giving lower priority to concepts with complex rules (e.g. "all powers of 2 below 100 but not 64."). This is subjective, however often beneficial for rapid learning. \\
+        Using Bayes rule, we can calculate the posterior:
+        $$
+        p(h|\mathcal{D}) =\dfrac{p(\mathcal{D}|h)p(h)}{p(\mathcal{D})} =  \dfrac{p(\mathcal{D}|h)p(h)}{\sum_{h' \in \mathcal{H}}p(\mathcal{D}|h')p(h')}=\dfrac{\mathbb{I}(\mathcal{D} \in h)p(h)}{\sum_{h' \in \mathcal{H}}\mathbb{I}(\mathcal{D} \in h')p(h')},
+        $$
+        where $\mathbb{I}(\mathcal{D} \in h)p(h)$ = 1 if the data adhere to the $h$. The maximum of $p(h|\mathcal{D})$ is the \textbf{MAP estimate}. 
+        
+        With more data the MAP-estimate converges to the MLE. If the true hypothesis is in $\mathcal{H}$ then MLE and MAP will converge to it ($\rightarrow$ consistent estimators). If you take the entire distribution of the hypotheses you get a distribution for the estimate (and not a point prediction) $\rightarrow$ \textbf{posterior predictive distribution}.
+        $$
+        p(\tilde{x}|\mathcal{D}) = \sum_h p(\tilde{x}|h)p(h|\mathcal{D}) 
+        $$
+        This weighting of hypotheses is called \textbf{Bayes model averaging}. For small data sets you get a vague posterior and broad predictive distribution. You can replace the posteriors with their delta-function:
+        $$
+        p(\tilde{x}|\mathcal{D}) = \sum_h p(\tilde{x}|h)\delta_{\hat{h}_{\text{MAP}}}(h)
+        $$
+        $\rightarrow$ \textbf{plug-in approximation} (under-represents uncertainty).
+
+    \subsubsection{Beta-binomial model} \index{Beta-binomial model}
+        This is a distribution that uses a binomial distribution as its likelihood and a beta-distribution over it's $\theta$ parameter as its prior. 
+        \paragraph{Likelihood}
+            $$p(\mathcal{D}|\theta) = \text{Bin}(k|n, \theta )$$
+        $$X \sim \text{Bin}(n, \theta ) \text{\hspace{1em},Bin}(k|n,\theta)={n \choose k} \theta^k (1-\theta)^{n-k} \text{\hspace{1em},}\frac{n!}{k!(n-k)!},$$ 
+
+
+\end{document}

@@ -8,26 +8,80 @@
 \section{Classification Methods}
 Classification is the assignment of objects (data points) to categories (classes). It requires a data set (i.e. training set) of points with known class labels. If the class labels are not known you can instead group the data using clustering algorithms (chapter \ref{Clustering Methods}).
 
+\subsection{Evaluation of Classifiers}
+\subsubsection{Basic Quality Measures}
+\begin{itemize}
+    \item[] \textbf{Accuracy / Success Rate} 
+    \item[] \textbf{Precision}
+    \item[] \textbf{Recall}
+    \item[] \textbf{Specificity}
+    \item[] \textbf{Sensitivity}
+    \item[] \textbf{Support}
+    \item[] \textbf{F-score}
+\end{itemize}
 
+\subsubsection{Area under the Precision-Recall Curve}
+
+\subsubsection{Handling Unbalanced Data}
+Having many more samples in one class than the others during training can lead to high accuracy values event hough the classifier performs poorly on the small classes. You can handle the unbalance by:
+\begin{itemize}
+    \item up-sampling the smaller data set (creating more artificial samples for that class)
+    \item giving more weight to the samples in the smaller data set
+\end{itemize}
+
+\begin{tcolorbox}[title=Implementations for Handling Unbalanced Data Sets]
+    Oversampling using imbalanced-learn (see: \href{https://imbalanced-learn.readthedocs.io}{\underline{documentation}})
+    \begin{lstlisting}
+        from imblearn.over_sampling import RandomOverSampler
+        ros = RandomOverSampler(random_state=0)
+        features_resampled, labels_resampled = ros.fit_resample(df[feature_cols], df[label_col])
+        \end{lstlisting}
+    
+    Sensitivity, specificity, precision, recall, support and F-score
+    \begin{lstlisting}
+        y_true = df[label_col]
+        y_pred = classifier.predict(df[feature_cols])
+
+        from imblearn.metrics import sensitivity_specificity_support
+        sensitivity, specificity, support = sensitivity_specificity_support(y_true, y_pred) 
+
+        from sklearn.metrics import precision_recall_fscore_support
+        precision, recall, fscore, support = precision_recall_fscore_support(y_true, y_pred) 
+
+    \end{lstlisting}
+\end{tcolorbox}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Linear Classifiers}
 Linear classifiers use linear decision boundaries to classify points to a respective class. 
 
-
-\subsection{Support Vector Classifier (SVC)}
-SVCs use hyperplanes to separate data points according to their class label with a maximum margin ($M$) between the separating hyperplane ($x^T\beta + \beta_0=0$) and the points. If points cannot be perfectly separated by the decision boundary, a soft margin SVM is used with a slack variable $\xi$ that punishes points in the margin or on the wrong side of the hyperplane.
-The optimization problem is given by \cite{Hastie2009} : 
-\begin{equation}
-    \begin{split}
-        \max_{\beta, \beta_0, \beta=1} M, \\
-        \text{subject to } y_i(x_i^T \beta + \beta_0) \ge 1 - \xi_i, \quad \forall i, \\\xi_i \ge 0, \quad \sum \xi_i \le constant, \quad i= 1, ..., N, 
-    \end{split}
-\end{equation} 
-where $\beta$ are the coefficients and $x$ are the $N$ data points. The support vectors are the points that determine the orientation of the hyperplane (i.e. the closest points).
-The classification function is given by: 
-\begin{equation}
-    G(x) = \sign[x^T\beta + \beta_0] 
-\end{equation}
-
+    \subsubsection{Support Vector Classifier (SVC)}
+    SVCs use hyperplanes to separate data points according to their class label with a maximum margin ($M$) between the separating hyperplane ($x^T\beta + \beta_0=0$) and the points. If points cannot be perfectly separated by the decision boundary, a soft margin SVM is used with a slack variable $\xi$ that punishes points in the margin or on the wrong side of the hyperplane.
+    The optimization problem is given by \cite{Hastie2009} : 
+    \begin{equation}
+        \begin{split}
+            \max_{\beta, \beta_0, \beta=1} M, \\
+            \text{subject to } y_i(x_i^T \beta + \beta_0) \ge 1 - \xi_i, \quad \forall i, \\\xi_i \ge 0, \quad \sum \xi_i \le constant, \quad i= 1, ..., N, 
+        \end{split}
+    \end{equation} 
+    where $\beta$ are the coefficients and $x$ are the $N$ data points. The support vectors are the points that determine the orientation of the hyperplane (i.e. the closest points).
+    The classification function is given by: 
+    \begin{equation}
+        G(x) = \sign[x^T\beta + \beta_0] 
+    \end{equation}
+    If you only calculate the inner part of the function you can get the distance of a point to your hyperplane (in SKlearn you need to divide by the norm vector $w$ of your hyperplane to get the true distance). To get the probability of a point being in a class, you can use Platt's algorithm \cite{Platt1999}. 
+    SVMs are sensitive to the scaling of the features. Therefore, the data should be normalized before classification. \\ % todo reference schmölkopfs bioinf paper
+    
+    \begin{tcolorbox}[title=Implementation of SVCs]
+        \begin{lstlisting}
+        from sklearn import svm
+        # train the model
+        svc_model = svm.SVC()
+        svc_model.fit(train_df[feautre_cols], train_df[label_col])
+        # test the model
+        y_predict = svc_model.predict(test_df[feature_cols])
+            \end{lstlisting}
+    \end{tcolorbox}
 
 \bibliographystyle{unsrtnat}
 \bibliography{../references}
