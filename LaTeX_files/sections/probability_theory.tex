@@ -90,7 +90,7 @@ A probability is a measure of how frequent or likely an event will take place.
         Used for random variables that have discrete states.
 
         \paragraph{Binomial distribution} \index{Binomial distribution} Used for experiments with two outcomes (e.g. coin flips). 
-                $$X \sim \text{Bin}(n, \theta ) \text{\hspace{1em},Bin}(k|n,\theta)={n \choose k} \theta^k (1-\theta)^{n-k} \text{\hspace{1em},}\frac{n!}{k!(n-k)!},$$ 
+                $$X \sim \text{Bin}(n, \theta ) \text{\hspace{1em},Bin}(k|n,\theta)={n \choose k} \theta^k (1-\theta)^{n-k} \text{\hspace{1em},}{n \choose k} = \frac{n!}{k!(n-k)!},$$ 
                 where $n$ is the number of total experiments, $k$ is the number of sucessful experiments and $\theta$ is the probability of success of an experiment.
 
         \paragraph{Bernoulli distribution} \index{Bernoulli distribution} Is a special case of the binomial distribution with $n=1$. 

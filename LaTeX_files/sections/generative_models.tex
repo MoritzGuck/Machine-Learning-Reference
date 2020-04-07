@@ -25,9 +25,43 @@
 
     \subsubsection{Beta-binomial model} \index{Beta-binomial model}
         This is a distribution that uses a binomial distribution as its likelihood and a beta-distribution over it's $\theta$ parameter as its prior. 
+
         \paragraph{Likelihood}
-            $$p(\mathcal{D}|\theta) = \text{Bin}(k|n, \theta )$$
-        $$X \sim \text{Bin}(n, \theta ) \text{\hspace{1em},Bin}(k|n,\theta)={n \choose k} \theta^k (1-\theta)^{n-k} \text{\hspace{1em},}\frac{n!}{k!(n-k)!},$$ 
+            $$p(\mathcal{D}|\theta) = \text{Bin}(k|n, \theta) \propto \theta^k (1-\theta)^{n-k},$$
+        where $k$ are the successful trials, $n$ are the total trials and $\theta$ are the success-probabilities of the single experiments. $k$ and $n-k$ are \textit{sufficient statistics of the data}: $p(\theta|\mathcal{D} = p(\theta|k, n-k))$.
 
+        \paragraph{Prior}
+            $$\text{Beta}(\theta|\alpha, \beta) \propto \theta^{\alpha-1}(1-\theta)^{\beta-1}$$
+            the parameters $\alpha$ and $\beta$ are used as hyper parameters. The prior has the same form as the likelihood $\rightarrow$ \textit{conjugate prior}. \index{conjugate prior}
 
+        \paragraph{Posterior}
+            $$p(\theta|\mathcal{D}) \propto \text{Bin}(k|n,\theta)\text{Beta}(\theta|\alpha, \beta)=\text{Beta}(\theta|k+\alpha,n-k+\beta)$$
+            \btw We add pseudo-counts ($\alpha, \beta$) to empirical counts ($N, k$).
+            The posterior predictive distribution is:
+            \begin{align*}
+                p(\tilde{x}=1|\mathcal{D})& =\int_0^1 p(\tilde{x}=1|\theta)p(\theta|\mathcal{D})\mathrm{d}\theta 
+                        =\int_0^1 \theta\text{Beta}(\theta|N-k+\alpha,k+\beta)\mathrm{d}\theta \\
+                        & =\text{E}[\theta|\mathcal{D}]=\dfrac{N-k+\alpha}{N\cancel{-k+k}+\alpha+\beta} \\
+            \end{align*}
+            \attention If instead we used the MLE for $\theta$ instead ($p(\theta|\mathcal{D}) = p(\theta|\theta_{\text{MLE}})$) and we only had little data and no failures (e.g. 3 coin flips and all are tails). Then the MLE estimate would be $\theta_{\text{MLE}}) = 0/3 = 0$. This is called \textit{zero count estimate} problem or \textit{black swan paradox} (i.e. you don't attribute possibilities to something you have never seen before). Solution: You  use a uniform prior ($\alpha = \beta = 1$): $p(\tilde{x}=1|\mathcal{D}) = \dfrac{N-k+1}{N+2}$. % todo cite murphy
+
+    \subsubsection{Dirichlet-multinomial model}
+    Before: model of $k$ \underline{successes}, now: $k$ times a \underline{discrete outcome} (e.g. four pips on a die roll) in $n$ experiments. 
+        \paragraph{Prior:} The Dirichlet distribution:
+            $$ 
+            \text{Dir}(\theta|\alpha) = \dfrac{1}{B({\alpha})}\prod\limits_{k=1}^K \theta_k^{\alpha_k-1}
+            $$
+        \paragraph{Posterior:}
+            \begin{align*}
+            p({\theta}|\mathcal{D})& \propto p(\mathcal{D}|{\theta})p({\theta|\alpha}) \\
+                & \propto \prod\limits_{k=1}^K\theta_k^{N_k}\theta_k^{\alpha_k-1} = \prod\limits_{k=1}^K\theta_k^{N_k+\alpha_k-1}\\
+                & =\text{Dir}({\theta}|\alpha_1+N_1,\cdots,\alpha_K+N_K)
+            \end{align*}
+            The posterior predictive distribution is:
+            \begin{align*}
+                p(\tilde{\tilde{X}}=j|\mathcal{D})& =\int p(\tilde{X}=j|{\theta})p({\theta}|\mathcal{D})\mathrm{d}{\theta} \\
+                    & =\int p(\tilde{X}=j|\theta_j)\left[\int p({\theta}_{-j}, \theta_j|\mathcal{D})\mathrm{d}{\theta}_{-j}\right]\mathrm{d}\theta_j \\
+                    & =\int \theta_jp(\theta_j|\mathcal{D})\mathrm{d}\theta_j=\text{E}[\theta_j|\mathcal{D}]=\dfrac{N_j+\alpha_j}{\sum_k N_k+\alpha_k}
+                \end{align*}
+                (Again, we avoid the the zero-count problem via the pseudo counts.)
 \end{document}
