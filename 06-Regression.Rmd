@@ -1,0 +1,120 @@
+---
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+# Regression
+
+<!-- Look at this https://scikit-learn.org/stable/auto_examples/inspection/plot_linear_model_coefficient_interpretation.html#sphx-glr-auto-examples-inspection-plot-linear-model-coefficient-interpretation-py -->
+
+## Evaluation of regression models
+
+### R\^2 score
+
+### Mean squared error
+
+### Visual tools
+
+## Linear Models
+
+### Ordinary Least Squares
+
+### Lasso regression
+
+### Ridge regression
+
+#### Kernel ridge regression
+
+### Bayesian regression
+
+### Generalized linear models
+
+## Gaussian process regression
+
+Gaussian process regression is based on Bayesian Probability: You
+generate many models and calculate the probability of your models given
+the samples. You make predictions based on the probabilities of your
+models.
+
+You get non-linear functions to your data by using non-linear kernels:
+You assume that input data points that are similar, will have similar
+target values. The concept of similarity (e.g. same hour of the day) is
+encoded in the kernels that you use.
+
+![Schema of the training process of Gaussian process regression. The
+left graph shows the prior samples of functions before. These functions
+are then conditioned on the data (graph in middle). The right graph
+shows the predictions with the credible intervals in gray. *Source:
+[user Cdipaolo96 on
+wikimedia.org](https://commons.wikimedia.org/wiki/File:Gaussian_Process_Regression.png)
+.*](figures/Gaussian_Process_Regression.png)
+
+**Pros:**
+
+-   The model reports the predictions with a certain probability.
+
+-   
+
+**Cons:**
+
+-   Training scales with $O(n^3)$.
+
+-   You need to design or choose a kernel.
+
+``` python
+from sklearn.gaussian_process import GaussianProcessRegressor
+from sklearn.gaussian_process.kernels import DotProduct, WhiteKernel, RBF, ExpSineSquared
+kernel = DotProduct() + WhiteKernel() + RBF() + ExpSineSquared() # The kernel hyperparameters are tuned by the model
+gpr = GaussianProcessRegressor(kernel=kernel)
+gpr.fit(X, y)
+gpr.predict(X, return_std=True)
+```
+
+More info:
+[scikit-learn.org](https://scikit-learn.org/stable/modules/generated/sklearn.gaussian_process.GaussianProcessRegressor.html)\
+
+## Gradient boosted tree regression
+
+Apart from classification, gradient boosted trees also allow for
+regression. It works like gradient boosted trees for classification: You
+iteratively add decision tree regressors that minimize the regression
+loss of the already fitted ensemble. A [decision tree
+regressor](https://scikit-learn.org/stable/auto_examples/tree/plot_tree_regression.html)
+is a decision tree that is trained on continuous data instead of
+discrete classification data, but its [output is still
+discrete](https://medium.com/analytics-vidhya/regression-trees-decision-tree-for-regression-machine-learning-e4d7525d8047).
+
+``` python
+from sklearn.ensemble import GradientBoostingRegressor
+gbr = GradientBoostingRegressor(n_estimators = 500, min_samples_split =5, max_depth = 4, max_features="sqrt", n_iter_no_change=15)
+gbr.fit(X, y)
+```
+
+More info:
+[scikit-learn.org](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingRegressor.html)\
+
+## Time Series Forecasting
+
+For "normal" settings the order of the samples does not play a role (e.g. blood sugar level of one sample is independent of the others). In time series however, the samples need to be represented in an ordered vector or matrix (e.g. The temperature of Jan 2nd is not independent of the temperature on Jan 1st).  
+
+```python
+import pandas as pd
+df = pd.read_csv("data.csv", header=0, index_col=0, names=["date", "sales"])
+sales_series = df["sales"] # pandas series make working with time series easier 
+```
+
+### ARIMA(X) Model
+
+univariate time series model with exogenous regressor.
+
+### VARMMA(X) Model
+
+Multivariate time series model, where the variables can influence each other and the target can influence the variables and vice versa. 
+
+### Prophet-Model
+
+Explain Prophet model from Facebook.
+Source: https://otexts.com/fpp3/prophet.html
+
+

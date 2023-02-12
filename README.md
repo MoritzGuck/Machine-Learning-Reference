@@ -1,5 +1,6 @@
-# All_of_ML-under_construction
-Machine learning summary that will always be growing & never be finished.
+# Moritz' Machine Learning Reference
 
-I add everything to this summary  that I come across and find worth documenting for later use.
+This is a reference for machine learning approaches and methods. The topics range from basic statistics to complex machine learning models
+and explanation methods. For each method and model, I have provided the underlying formulas (objective functions, prediction functions, etc.) as well as code snippets from the respective python libraries. I am gradually expanding this reference with things that I come across and find worth documenting for later use. If you find errors or unclear explanations in this text, please file an issue under: `github.com/MoritzGuck/All_of_ML-under_construction`
 
+References to outside sources are given as direct links to the source for reasons of practicality. 
