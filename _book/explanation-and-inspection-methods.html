@@ -37,7 +37,7 @@ The HTML output format for this example is bookdown::gitbook,</p>" />
   
   
 <link rel="prev" href="neural-networks-neural-networks.html"/>
-<link rel="next" href="references.html"/>
+
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -307,18 +307,30 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="7.2" data-path="neural-networks-neural-networks.html"><a href="neural-networks-neural-networks.html#feedforward-neural-network-multi-layer-perceptron"><i class="fa fa-check"></i><b>7.2</b> Feedforward Neural Network / Multi-Layer Perceptron</a>
 <ul>
-<li class="chapter" data-level="7.2.1" data-path="neural-networks-neural-networks.html"><a href="neural-networks-neural-networks.html#bekpropageshn"><i class="fa fa-check"></i><b>7.2.1</b> Bekpropageshn</a></li>
+<li class="chapter" data-level="7.2.1" data-path="neural-networks-neural-networks.html"><a href="neural-networks-neural-networks.html#backpropagation"><i class="fa fa-check"></i><b>7.2.1</b> Backpropagation</a></li>
 </ul></li>
 <li class="chapter" data-level="7.3" data-path="neural-networks-neural-networks.html"><a href="neural-networks-neural-networks.html#convolutional-neural-networks"><i class="fa fa-check"></i><b>7.3</b> Convolutional Neural Networks</a></li>
 <li class="chapter" data-level="7.4" data-path="neural-networks-neural-networks.html"><a href="neural-networks-neural-networks.html#autoencoders"><i class="fa fa-check"></i><b>7.4</b> Autoencoders</a>
 <ul>
 <li class="chapter" data-level="7.4.1" data-path="neural-networks-neural-networks.html"><a href="neural-networks-neural-networks.html#autoencoders-for-clustering"><i class="fa fa-check"></i><b>7.4.1</b> Autoencoders for clustering</a></li>
 </ul></li>
-<li class="chapter" data-level="7.5" data-path="neural-networks-neural-networks.html"><a href="neural-networks-neural-networks.html#generative-adversarial-networks"><i class="fa fa-check"></i><b>7.5</b> Generative Adversarial Networks</a></li>
-<li class="chapter" data-level="7.6" data-path="neural-networks-neural-networks.html"><a href="neural-networks-neural-networks.html#recurrent-neural-networks"><i class="fa fa-check"></i><b>7.6</b> Recurrent Neural Networks</a></li>
+<li class="chapter" data-level="7.5" data-path="neural-networks-neural-networks.html"><a href="neural-networks-neural-networks.html#generative-adversarial-networks"><i class="fa fa-check"></i><b>7.5</b> Generative adversarial networks</a></li>
+<li class="chapter" data-level="7.6" data-path="neural-networks-neural-networks.html"><a href="neural-networks-neural-networks.html#recurrent-neural-networks"><i class="fa fa-check"></i><b>7.6</b> Recurrent neural networks</a></li>
+<li class="chapter" data-level="7.7" data-path="neural-networks-neural-networks.html"><a href="neural-networks-neural-networks.html#long-short-term-memory-networks"><i class="fa fa-check"></i><b>7.7</b> Long short-term memory networks</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="explanation-and-inspection-methods.html"><a href="explanation-and-inspection-methods.html"><i class="fa fa-check"></i><b>8</b> Explanation and inspection methods</a></li>
-<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="chapter" data-level="8" data-path="explanation-and-inspection-methods.html"><a href="explanation-and-inspection-methods.html"><i class="fa fa-check"></i><b>8</b> Explanation and inspection methods</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="explanation-and-inspection-methods.html"><a href="explanation-and-inspection-methods.html#global-explainability-methods"><i class="fa fa-check"></i><b>8.1</b> Global explainability methods</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="explanation-and-inspection-methods.html"><a href="explanation-and-inspection-methods.html#inherently-explainable-algorithms"><i class="fa fa-check"></i><b>8.1.1</b> Inherently explainable algorithms</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="explanation-and-inspection-methods.html"><a href="explanation-and-inspection-methods.html#local-explainability-methods"><i class="fa fa-check"></i><b>8.2</b> Local explainability methods</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="explanation-and-inspection-methods.html"><a href="explanation-and-inspection-methods.html#shapely-method"><i class="fa fa-check"></i><b>8.2.1</b> Shapely method</a></li>
+<li class="chapter" data-level="8.2.2" data-path="explanation-and-inspection-methods.html"><a href="explanation-and-inspection-methods.html#lime"><i class="fa fa-check"></i><b>8.2.2</b> LIME</a></li>
+<li class="chapter" data-level="8.2.3" data-path="explanation-and-inspection-methods.html"><a href="explanation-and-inspection-methods.html#anchor-methods"><i class="fa fa-check"></i><b>8.2.3</b> Anchor methods</a></li>
+</ul></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -341,15 +353,44 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="explanation-and-inspection-methods" class="section level1 hasAnchor" number="8">
 <h1><span class="header-section-number">Chapter 8</span> Explanation and inspection methods<a href="explanation-and-inspection-methods.html#explanation-and-inspection-methods" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p><font color="grey"></p>
+<div id="global-explainability-methods" class="section level2 hasAnchor" number="8.1">
+<h2><span class="header-section-number">8.1</span> Global explainability methods<a href="explanation-and-inspection-methods.html#global-explainability-methods" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<!-- explain drawbacks of interpretability methods here -->
+<div id="inherently-explainable-algorithms" class="section level3 hasAnchor" number="8.1.1">
+<h3><span class="header-section-number">8.1.1</span> Inherently explainable algorithms<a href="explanation-and-inspection-methods.html#inherently-explainable-algorithms" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+</div>
+<div id="local-explainability-methods" class="section level2 hasAnchor" number="8.2">
+<h2><span class="header-section-number">8.2</span> Local explainability methods<a href="explanation-and-inspection-methods.html#local-explainability-methods" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="shapely-method" class="section level3 hasAnchor" number="8.2.1">
+<h3><span class="header-section-number">8.2.1</span> Shapely method<a href="explanation-and-inspection-methods.html#shapely-method" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+<div id="lime" class="section level3 hasAnchor" number="8.2.2">
+<h3><span class="header-section-number">8.2.2</span> LIME<a href="explanation-and-inspection-methods.html#lime" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+<div id="anchor-methods" class="section level3 hasAnchor" number="8.2.3">
+<h3><span class="header-section-number">8.2.3</span> Anchor methods<a href="explanation-and-inspection-methods.html#anchor-methods" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p></font></p>
 
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div class="csl-entry">
+Hastie, Trevor, Robert Tibshirani, and Jerome Friedman. 2009. <em><span class="nocase">The Elements of Statistical Learning</span></em>. <a href="https://doi.org/10.1007/b94608_4">https://doi.org/10.1007/b94608_4</a>.
+</div>
+<div class="csl-entry">
+Platt, John C. 1999. <span>“Probabilistic Outputs for Support Vector Machines and Comparisons to Regularized Likelihood Methods.”</span> <em>Advances in Large Margin Classifiers</em> 34(6).
+</div>
+</div>
+</div>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="neural-networks-neural-networks.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="neural-networks-neural-networks.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

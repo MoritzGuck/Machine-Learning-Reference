@@ -295,8 +295,9 @@ More info:
 
 #### Other models
 
-Other models also have means to calculate cluster probabilities for points.
-For the HDBSCAN-algorithm see [here](https://hdbscan.readthedocs.io/en/latest/soft_clustering.html).
+Other models also have means to calculate cluster probabilities for
+points. For the HDBSCAN-algorithm see
+[here](https://hdbscan.readthedocs.io/en/latest/soft_clustering.html).
 
 ### Artificial Neural Networks for Clustering
 
@@ -306,13 +307,17 @@ reference="Neural Networks"})
 
 ## Mapping to lower dimensions
 
-### Manifold learning
+<font color="grey"> 
+
+### Manifold learning 
 
 #### Isomap
 
 #### Local linear embedding
 
 #### Multi dimensional scaling
+
+</font>
 
 ### Decomposition techniques
 
@@ -323,12 +328,16 @@ data into smaller ones, with much less data, but without loosing a lot
 of information. Please visit the [mathematical explanation](#SVD1) for
 the underlying mechanisms.\
 
+<font color="grey"> 
+
 #### Principle Component analysis (PCA)
 
-MAke subchapter: Kernel PCA
+<!--# TODO: Make subchapter: Kernel PCA -->
 
 ## Outlier detection
 
 ### Local outlier factor
 
 ### Isolation forest
+
+<font color="grey"> 

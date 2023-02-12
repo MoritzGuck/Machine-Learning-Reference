@@ -1,8 +1,12 @@
-Generative models
-=================
+---
+editor_options: 
+  markdown: 
+    wrap: 72
+---
 
-Generative Models for Discrete Data
------------------------------------
+# Generative models
+
+## Generative Models for Discrete Data
 
 ### Bayesian Concept Learning
 
@@ -16,9 +20,8 @@ $p(\mathcal{D}|h)=\lbrack \frac{1}{|h|}\rbrack^N$ (sampling the $N$ data
 points from $h$). You than choose the hypothesis that has the highest
 probability (thereby you choose suspicious coincidences of too broad
 models). The priors can be chosen e.g. by giving lower priority to
-concepts with complex rules (e.g. \"all powers of 2 below 100 but not
-64.\"). This is subjective, however often beneficial for rapid
-learning.\
+concepts with complex rules (e.g. "all powers of 2 below 100 but not
+64."). This is subjective, however often beneficial for rapid learning.\
 Using Bayes rule, we can calculate the posterior:
 $$p(h|\mathcal{D}) =\dfrac{p(\mathcal{D}|h)p(h)}{p(\mathcal{D})} =  \dfrac{p(\mathcal{D}|h)p(h)}{\sum_{h' \in \mathcal{H}}p(\mathcal{D}|h')p(h')}=\dfrac{\mathbb{I}(\mathcal{D} \in h)p(h)}{\sum_{h' \in \mathcal{H}}\mathbb{I}(\mathcal{D} \in h')p(h')},$$
 where $\mathbb{I}(\mathcal{D} \in h)p(h)$ = 1 if the data adhere to the
@@ -98,3 +101,7 @@ $$\begin{aligned}
                     & =\int \theta_jp(\theta_j|\mathcal{D})\mathrm{d}\theta_j=\text{E}[\theta_j|\mathcal{D}]=\dfrac{N_j+\alpha_j}{\sum_k N_k+\alpha_k}
                 \end{aligned}$$ (Again, we avoid the the zero-count
 problem via the pseudo counts.)
+
+
+<!--# TODO: Write examples for sklearn or other library -->
+

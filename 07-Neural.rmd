@@ -8,7 +8,7 @@ editor_options:
 
 ## Introduction
 
-On the most basic level neural networks consist of many simple models
+On the most basic level, neural networks consist of many simple models
 (e.g. linear and logistic models) that are chained together in a
 directed network. The models sit on the neurons (nodes) of the network.
 The most important components of neurons are:
@@ -24,8 +24,6 @@ values and feeds its output into the activation function of the next
 nodes in the next layer, a.s.o. The later layers should thereby learn
 more and more complicated concepts or structures.
 
-\centering
-
 ![Model of an artificial neural network with one hidden layer. *Figure
 from [user LearnDataSci on
 wikimedia.org](https://commons.wikimedia.org/wiki/File:Artificial_Neural_Network.jpg).*](./figures/Artificial_Neural_Network.jpg){#CDF
@@ -36,11 +34,15 @@ width="70%"}
 Different non-linear functions can be used to generate the output of the
 neurons.
 
+<font color="grey">
+
 #### Sigmoid/Logistic Functions
 
 #### Tanh Functions
 
 #### Rectifiers/ReLU
+
+</font>
 
 #### Terminology
 
@@ -101,7 +103,7 @@ number of degrees of freedom and requires a lot of training samples.
 
             new_net = CustomNet()
 
-### Bekpropageshn
+### Backpropagation 
 
 This is the method by which neural networks learn the optimal weights
 and biases of the nodes. The components are a cost function and a
@@ -114,7 +116,7 @@ You get the direction of the next best parameter-combination by using a
 *stochastic gradient descent* algorithm using the gradient for your cost
 function:
 
-1.  We use a "mini-batch" of images for each round/step of the gradient
+1.  We use a "mini-batch" of samples for each round/step of the gradient
     descent.
 
 2.  We calculate squared residual of each feature of the output layer
@@ -141,8 +143,6 @@ problem is now:
 $$\min_{W,b} \frac{1}{N}*\sum_{i=1}^N ||x_i - \hat{x}_i||^2$$ with $x_i$
 being the original datapoint and $\hat{x}_i$ the reconstructed
 datapoint.
-
-\centering
 
 ![Model of an autoencoder. The encoder layers compress the data towards
 the code layer, the decoder layers decompress the data again. *Figure
@@ -177,6 +177,12 @@ representation of the code layer: $$\begin{split}
             \end{split}$$ with V being the sparse representation of the
 code layer ($F(X)$) .
 
-## Generative Adversarial Networks
+<font color="grey">
 
-## Recurrent Neural Networks
+## Generative adversarial networks
+
+## Recurrent neural networks
+
+## Long short-term memory networks
+
+</font>

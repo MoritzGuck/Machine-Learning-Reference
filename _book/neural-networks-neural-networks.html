@@ -307,18 +307,30 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="7.2" data-path="neural-networks-neural-networks.html"><a href="neural-networks-neural-networks.html#feedforward-neural-network-multi-layer-perceptron"><i class="fa fa-check"></i><b>7.2</b> Feedforward Neural Network / Multi-Layer Perceptron</a>
 <ul>
-<li class="chapter" data-level="7.2.1" data-path="neural-networks-neural-networks.html"><a href="neural-networks-neural-networks.html#bekpropageshn"><i class="fa fa-check"></i><b>7.2.1</b> Bekpropageshn</a></li>
+<li class="chapter" data-level="7.2.1" data-path="neural-networks-neural-networks.html"><a href="neural-networks-neural-networks.html#backpropagation"><i class="fa fa-check"></i><b>7.2.1</b> Backpropagation</a></li>
 </ul></li>
 <li class="chapter" data-level="7.3" data-path="neural-networks-neural-networks.html"><a href="neural-networks-neural-networks.html#convolutional-neural-networks"><i class="fa fa-check"></i><b>7.3</b> Convolutional Neural Networks</a></li>
 <li class="chapter" data-level="7.4" data-path="neural-networks-neural-networks.html"><a href="neural-networks-neural-networks.html#autoencoders"><i class="fa fa-check"></i><b>7.4</b> Autoencoders</a>
 <ul>
 <li class="chapter" data-level="7.4.1" data-path="neural-networks-neural-networks.html"><a href="neural-networks-neural-networks.html#autoencoders-for-clustering"><i class="fa fa-check"></i><b>7.4.1</b> Autoencoders for clustering</a></li>
 </ul></li>
-<li class="chapter" data-level="7.5" data-path="neural-networks-neural-networks.html"><a href="neural-networks-neural-networks.html#generative-adversarial-networks"><i class="fa fa-check"></i><b>7.5</b> Generative Adversarial Networks</a></li>
-<li class="chapter" data-level="7.6" data-path="neural-networks-neural-networks.html"><a href="neural-networks-neural-networks.html#recurrent-neural-networks"><i class="fa fa-check"></i><b>7.6</b> Recurrent Neural Networks</a></li>
+<li class="chapter" data-level="7.5" data-path="neural-networks-neural-networks.html"><a href="neural-networks-neural-networks.html#generative-adversarial-networks"><i class="fa fa-check"></i><b>7.5</b> Generative adversarial networks</a></li>
+<li class="chapter" data-level="7.6" data-path="neural-networks-neural-networks.html"><a href="neural-networks-neural-networks.html#recurrent-neural-networks"><i class="fa fa-check"></i><b>7.6</b> Recurrent neural networks</a></li>
+<li class="chapter" data-level="7.7" data-path="neural-networks-neural-networks.html"><a href="neural-networks-neural-networks.html#long-short-term-memory-networks"><i class="fa fa-check"></i><b>7.7</b> Long short-term memory networks</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="explanation-and-inspection-methods.html"><a href="explanation-and-inspection-methods.html"><i class="fa fa-check"></i><b>8</b> Explanation and inspection methods</a></li>
-<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="chapter" data-level="8" data-path="explanation-and-inspection-methods.html"><a href="explanation-and-inspection-methods.html"><i class="fa fa-check"></i><b>8</b> Explanation and inspection methods</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="explanation-and-inspection-methods.html"><a href="explanation-and-inspection-methods.html#global-explainability-methods"><i class="fa fa-check"></i><b>8.1</b> Global explainability methods</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="explanation-and-inspection-methods.html"><a href="explanation-and-inspection-methods.html#inherently-explainable-algorithms"><i class="fa fa-check"></i><b>8.1.1</b> Inherently explainable algorithms</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="explanation-and-inspection-methods.html"><a href="explanation-and-inspection-methods.html#local-explainability-methods"><i class="fa fa-check"></i><b>8.2</b> Local explainability methods</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="explanation-and-inspection-methods.html"><a href="explanation-and-inspection-methods.html#shapely-method"><i class="fa fa-check"></i><b>8.2.1</b> Shapely method</a></li>
+<li class="chapter" data-level="8.2.2" data-path="explanation-and-inspection-methods.html"><a href="explanation-and-inspection-methods.html#lime"><i class="fa fa-check"></i><b>8.2.2</b> LIME</a></li>
+<li class="chapter" data-level="8.2.3" data-path="explanation-and-inspection-methods.html"><a href="explanation-and-inspection-methods.html#anchor-methods"><i class="fa fa-check"></i><b>8.2.3</b> Anchor methods</a></li>
+</ul></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -343,7 +355,7 @@ div.csl-indent {
 <h1><span class="header-section-number">Chapter 7</span> Neural Networks {#Neural Networks}<a href="neural-networks-neural-networks.html#neural-networks-neural-networks" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <div id="introduction" class="section level2 hasAnchor" number="7.1">
 <h2><span class="header-section-number">7.1</span> Introduction<a href="neural-networks-neural-networks.html#introduction" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>On the most basic level neural networks consist of many simple models
+<p>On the most basic level, neural networks consist of many simple models
 (e.g. linear and logistic models) that are chained together in a
 directed network. The models sit on the neurons (nodes) of the network.
 The most important components of neurons are:</p>
@@ -367,6 +379,7 @@ wikimedia.org</a>.</em></p>
 <h3><span class="header-section-number">7.1.1</span> Non-Linearities<a href="neural-networks-neural-networks.html#non-linearities" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Different non-linear functions can be used to generate the output of the
 neurons.</p>
+<p><font color="grey"></p>
 <div id="sigmoidlogistic-functions" class="section level4 hasAnchor" number="7.1.1.1">
 <h4><span class="header-section-number">7.1.1.1</span> Sigmoid/Logistic Functions<a href="neural-networks-neural-networks.html#sigmoidlogistic-functions" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 </div>
@@ -375,6 +388,7 @@ neurons.</p>
 </div>
 <div id="rectifiersrelu" class="section level4 hasAnchor" number="7.1.1.3">
 <h4><span class="header-section-number">7.1.1.3</span> Rectifiers/ReLU<a href="neural-networks-neural-networks.html#rectifiersrelu" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p></font></p>
 </div>
 <div id="terminology-1" class="section level4 hasAnchor" number="7.1.1.4">
 <h4><span class="header-section-number">7.1.1.4</span> Terminology<a href="neural-networks-neural-networks.html#terminology-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
@@ -430,8 +444,8 @@ number of degrees of freedom and requires a lot of training samples.</p>
                 return num
 
         new_net = CustomNet()</code></pre>
-<div id="bekpropageshn" class="section level3 hasAnchor" number="7.2.1">
-<h3><span class="header-section-number">7.2.1</span> Bekpropageshn<a href="neural-networks-neural-networks.html#bekpropageshn" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="backpropagation" class="section level3 hasAnchor" number="7.2.1">
+<h3><span class="header-section-number">7.2.1</span> Backpropagation<a href="neural-networks-neural-networks.html#backpropagation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>This is the method by which neural networks learn the optimal weights
 and biases of the nodes. The components are a cost function and a
 gradient descent method.<br />
@@ -443,7 +457,7 @@ You get the direction of the next best parameter-combination by using a
 <em>stochastic gradient descent</em> algorithm using the gradient for your cost
 function:</p>
 <ol style="list-style-type: decimal">
-<li><p>We use a “mini-batch” of images for each round/step of the gradient
+<li><p>We use a “mini-batch” of samples for each round/step of the gradient
 descent.</p></li>
 <li><p>We calculate squared residual of each feature of the output layer
 for each sample.</p></li>
@@ -502,13 +516,18 @@ representation of the code layer: <span class="math display">\[\begin{split}
                 \text{s.t.} F(X) = F(X)*V \text{ and diag}(V)=0
             \end{split}\]</span> with V being the sparse representation of the
 code layer (<span class="math inline">\(F(X)\)</span>) .</p>
+<p><font color="grey"></p>
 </div>
 </div>
 <div id="generative-adversarial-networks" class="section level2 hasAnchor" number="7.5">
-<h2><span class="header-section-number">7.5</span> Generative Adversarial Networks<a href="neural-networks-neural-networks.html#generative-adversarial-networks" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<h2><span class="header-section-number">7.5</span> Generative adversarial networks<a href="neural-networks-neural-networks.html#generative-adversarial-networks" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 </div>
 <div id="recurrent-neural-networks" class="section level2 hasAnchor" number="7.6">
-<h2><span class="header-section-number">7.6</span> Recurrent Neural Networks<a href="neural-networks-neural-networks.html#recurrent-neural-networks" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<h2><span class="header-section-number">7.6</span> Recurrent neural networks<a href="neural-networks-neural-networks.html#recurrent-neural-networks" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+</div>
+<div id="long-short-term-memory-networks" class="section level2 hasAnchor" number="7.7">
+<h2><span class="header-section-number">7.7</span> Long short-term memory networks<a href="neural-networks-neural-networks.html#long-short-term-memory-networks" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p></font></p>
 
 </div>
 </div>

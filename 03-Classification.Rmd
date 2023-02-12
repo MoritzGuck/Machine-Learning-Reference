@@ -325,5 +325,6 @@ documentation](https://lightgbm.readthedocs.io/en/latest/pythonapi/lightgbm.LGBM
 [Parameter
 tuning](https://lightgbm.readthedocs.io/en/latest/Parameters-Tuning.html),\
 [Further Parameter
-tuning](https://neptune.ai/blog/lightgbm-parameters-guide) \
-Similar model: [scikit-learn.org](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingClassifier.html)\
+tuning](https://neptune.ai/blog/lightgbm-parameters-guide)\
+Similar model:
+[scikit-learn.org](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingClassifier.html)\

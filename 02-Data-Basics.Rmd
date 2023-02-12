@@ -301,7 +301,7 @@ from sklearn.feature_selection import mutual_info_classif # for regression use m
 X_new = SelectKBest(mutual_info_classif, k=8).fit_transform(X, y)
 ```
 
-More info:\
+More [info:\\](info:\){.uri}
 [scikit-learn.org](https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.SelectKBest.html)\
 [wikipedia.org/wiki/Mutual_information](https://en.wikipedia.org/wiki/Mutual_information)
 

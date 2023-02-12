@@ -175,7 +175,9 @@ reference to quickly look up things I have studied already. I published
 it to give data scientists a catalog to find methods for their problem,
 refresh their knowledge and give references for further reading. If you
 find errors or unclear explanations in this text, please file an issue
-under: \texttt{github.com/MoritzGuck/All\_of\_ML-under\_construction}
+under: \texttt{https://github.com/MoritzGuck/Machine-Learning-Reference}.
+
+The currently incomplete sections are marked in grey.
 
 \hypertarget{probability-theory-linear-algebra}{%
 \chapter{Probability Theory \& Linear Algebra}\label{probability-theory-linear-algebra}}
@@ -1142,7 +1144,7 @@ the marginal distributions.
 \end{Highlighting}
 \end{Shaded}
 
-More \url{info:/}
+More {[}\url{info://}{]}(\url{info:/})\{.uri\}
 \href{https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.SelectKBest.html}{scikit-learn.org}\\
 \href{https://en.wikipedia.org/wiki/Mutual_information}{wikipedia.org/wiki/Mutual\_information}
 
@@ -1994,7 +1996,8 @@ documentation},
 tuning},\\
 \href{https://neptune.ai/blog/lightgbm-parameters-guide}{Further Parameter
 tuning}\\
-Similar model: \href{https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingClassifier.html}{scikit-learn.org}\\
+Similar model:
+\href{https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingClassifier.html}{scikit-learn.org}\\
 
 \hypertarget{unsupervised-learning}{%
 \chapter{Unsupervised Learning}\label{unsupervised-learning}}
@@ -2348,8 +2351,9 @@ More info:
 \hypertarget{other-models}{%
 \subsubsection{Other models}\label{other-models}}
 
-Other models also have means to calculate cluster probabilities for points.
-For the HDBSCAN-algorithm see \href{https://hdbscan.readthedocs.io/en/latest/soft_clustering.html}{here}.
+Other models also have means to calculate cluster probabilities for
+points. For the HDBSCAN-algorithm see
+\href{https://hdbscan.readthedocs.io/en/latest/soft_clustering.html}{here}.
 
 \hypertarget{artificial-neural-networks-for-clustering}{%
 \subsection{Artificial Neural Networks for Clustering}\label{artificial-neural-networks-for-clustering}}
@@ -2386,8 +2390,6 @@ the underlying mechanisms.\\
 \hypertarget{principle-component-analysis-pca}{%
 \subsubsection{Principle Component analysis (PCA)}\label{principle-component-analysis-pca}}
 
-MAke subchapter: Kernel PCA
-
 \hypertarget{outlier-detection}{%
 \section{Outlier detection}\label{outlier-detection}}
 
@@ -2416,9 +2418,8 @@ true concept and calculate
 points from \(h\)). You than choose the hypothesis that has the highest
 probability (thereby you choose suspicious coincidences of too broad
 models). The priors can be chosen e.g.~by giving lower priority to
-concepts with complex rules (e.g.~"all powers of 2 below 100 but not
-64."). This is subjective, however often beneficial for rapid
-learning.\\
+concepts with complex rules (e.g.~``all powers of 2 below 100 but not
+64.''). This is subjective, however often beneficial for rapid learning.\\
 Using Bayes rule, we can calculate the posterior:
 \[p(h|\mathcal{D}) =\dfrac{p(\mathcal{D}|h)p(h)}{p(\mathcal{D})} =  \dfrac{p(\mathcal{D}|h)p(h)}{\sum_{h' \in \mathcal{H}}p(\mathcal{D}|h')p(h')}=\dfrac{\mathbb{I}(\mathcal{D} \in h)p(h)}{\sum_{h' \in \mathcal{H}}\mathbb{I}(\mathcal{D} \in h')p(h')},\]
 where \(\mathbb{I}(\mathcal{D} \in h)p(h)\) = 1 if the data adhere to the
@@ -2624,7 +2625,11 @@ More info:
 \hypertarget{time-series-forecasting}{%
 \section{Time Series Forecasting}\label{time-series-forecasting}}
 
-For ``normal'' settings the order of the samples does not play a role (e.g.~blood sugar level of one sample is independent of the others). In time series however, the samples need to be represented in an ordered vector or matrix (e.g.~The temperature of Jan 2nd is not independent of the temperature on Jan 1st).
+For ``normal'' settings the order of the samples does not play a role
+(e.g.~blood sugar level of one sample is independent of the others). In
+time series however, the samples need to be represented in an ordered
+vector or matrix (e.g.~The temperature of Jan 2nd is not independent of
+the temperature on Jan 1st).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2642,13 +2647,11 @@ univariate time series model with exogenous regressor.
 \hypertarget{varmmax-model}{%
 \subsection{VARMMA(X) Model}\label{varmmax-model}}
 
-Multivariate time series model, where the variables can influence each other and the target can influence the variables and vice versa.
+Multivariate time series model, where the variables can influence each
+other and the target can influence the variables and vice versa.
 
 \hypertarget{prophet-model}{%
 \subsection{Prophet-Model}\label{prophet-model}}
-
-Explain Prophet model from Facebook.
-Source: \url{https://otexts.com/fpp3/prophet.html}
 
 \hypertarget{neural-networks-neural-networks}{%
 \chapter{Neural Networks \{\#Neural Networks\}}\label{neural-networks-neural-networks}}
@@ -2656,7 +2659,7 @@ Source: \url{https://otexts.com/fpp3/prophet.html}
 \hypertarget{introduction}{%
 \section{Introduction}\label{introduction}}
 
-On the most basic level neural networks consist of many simple models
+On the most basic level, neural networks consist of many simple models
 (e.g.~linear and logistic models) that are chained together in a
 directed network. The models sit on the neurons (nodes) of the network.
 The most important components of neurons are:
@@ -2675,8 +2678,6 @@ The neurons (nodes) in the first layer uses as its input the sample
 values and feeds its output into the activation function of the next
 nodes in the next layer, a.s.o. The later layers should thereby learn
 more and more complicated concepts or structures.
-
-\centering
 
 \begin{figure}
 \hypertarget{CDF}{%
@@ -2769,8 +2770,8 @@ number of degrees of freedom and requires a lot of training samples.
         new_net = CustomNet()
 \end{verbatim}
 
-\hypertarget{bekpropageshn}{%
-\subsection{Bekpropageshn}\label{bekpropageshn}}
+\hypertarget{backpropagation}{%
+\subsection{Backpropagation}\label{backpropagation}}
 
 This is the method by which neural networks learn the optimal weights
 and biases of the nodes. The components are a cost function and a
@@ -2786,7 +2787,7 @@ function:
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \item
-  We use a ``mini-batch'' of images for each round/step of the gradient
+  We use a ``mini-batch'' of samples for each round/step of the gradient
   descent.
 \item
   We calculate squared residual of each feature of the output layer
@@ -2816,8 +2817,6 @@ problem is now:
 \[\min_{W,b} \frac{1}{N}*\sum_{i=1}^N ||x_i - \hat{x}_i||^2\] with \(x_i\)
 being the original datapoint and \(\hat{x}_i\) the reconstructed
 datapoint.
-
-\centering
 
 \begin{figure}
 \centering
@@ -2856,13 +2855,34 @@ representation of the code layer: \[\begin{split}
 code layer (\(F(X)\)) .
 
 \hypertarget{generative-adversarial-networks}{%
-\section{Generative Adversarial Networks}\label{generative-adversarial-networks}}
+\section{Generative adversarial networks}\label{generative-adversarial-networks}}
 
 \hypertarget{recurrent-neural-networks}{%
-\section{Recurrent Neural Networks}\label{recurrent-neural-networks}}
+\section{Recurrent neural networks}\label{recurrent-neural-networks}}
+
+\hypertarget{long-short-term-memory-networks}{%
+\section{Long short-term memory networks}\label{long-short-term-memory-networks}}
 
 \hypertarget{explanation-and-inspection-methods}{%
 \chapter{Explanation and inspection methods}\label{explanation-and-inspection-methods}}
+
+\hypertarget{global-explainability-methods}{%
+\section{Global explainability methods}\label{global-explainability-methods}}
+
+\hypertarget{inherently-explainable-algorithms}{%
+\subsection{Inherently explainable algorithms}\label{inherently-explainable-algorithms}}
+
+\hypertarget{local-explainability-methods}{%
+\section{Local explainability methods}\label{local-explainability-methods}}
+
+\hypertarget{shapely-method}{%
+\subsection{Shapely method}\label{shapely-method}}
+
+\hypertarget{lime}{%
+\subsection{LIME}\label{lime}}
+
+\hypertarget{anchor-methods}{%
+\subsection{Anchor methods}\label{anchor-methods}}
 
   \bibliography{references.bib}
 

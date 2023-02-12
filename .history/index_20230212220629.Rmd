@@ -29,6 +29,4 @@ reference to quickly look up things I have studied already. I published
 it to give data scientists a catalog to find methods for their problem,
 refresh their knowledge and give references for further reading. If you
 find errors or unclear explanations in this text, please file an issue
-under: `https://github.com/MoritzGuck/Machine-Learning-Reference`.
-
-The currently incomplete sections are marked in grey.
+under: `https://github.com/MoritzGuck/Machine-Learning-Reference`
