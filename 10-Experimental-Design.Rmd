@@ -1,0 +1,20 @@
+---
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+
+
+# Experimental Design
+
+<font color="grey">
+
+
+## 7 Deadly sins of experimental design
+
+<!-- Explain from study notes and link to lecture from Dr Markus Kalisch (unless he used yet another source) --> 
+
+## Power analysis
+
+</font>

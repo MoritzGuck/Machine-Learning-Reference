@@ -146,14 +146,14 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same} % disable monospaced font for URLs
 \hypersetup{
-  pdftitle={Moritz' Machine Learning Summary},
+  pdftitle={Machine Learning Reference},
   pdfauthor={Moritz Gück},
   hidelinks,
   pdfcreator={LaTeX via pandoc}}
 
-\title{Moritz' Machine Learning Summary}
+\title{Machine Learning Reference}
 \author{Moritz Gück}
-\date{2023-02-12}
+\date{2023-03-14}
 
 \begin{document}
 \maketitle
@@ -167,13 +167,10 @@
 \addcontentsline{toc}{chapter}{Summary}
 
 This is a reference for machine learning approaches and methods. The
-topics range from basic statistics to complex machine learning models
-and explanation methods. For each method and model, I have provided the
-underlying formulas (objective functions, prediction functions, etc.) as
-well as code snippets from the respective python libraries. I made this
-reference to quickly look up things I have studied already. I published
-it to give data scientists a catalog to find methods for their problem,
-refresh their knowledge and give references for further reading. If you
+topics range from math fundamentals to complex machine learning models
+and explanation methods. The underlying formulas or mechanisms are provided for each method as
+well as code snippets from the respective python libraries. The goal is to give data scientists a
+catalog to find solutions for their current problems, refresh their knowledge and give references for further reading. If you
 find errors or unclear explanations in this text, please file an issue
 under: \texttt{https://github.com/MoritzGuck/Machine-Learning-Reference}.
 
@@ -641,6 +638,21 @@ RVs. \(\Rightarrow\) With enough samples, the sample mean will approach
 the true mean. The \textbf{strong law of large numbers} states that
 \(|\frac{\sum_{i=1}^n X_i}{n} - \mu| < \epsilon\) for any \(\epsilon > 0\).
 
+\hypertarget{statistical-tests}{%
+\subsection{Statistical tests}\label{statistical-tests}}
+
+\hypertarget{t-test}{%
+\subsubsection{T-Test}\label{t-test}}
+
+\hypertarget{z-test}{%
+\subsubsection{Z-Test}\label{z-test}}
+
+\hypertarget{chi-squared-test}{%
+\subsubsection{Chi-Squared test}\label{chi-squared-test}}
+
+\hypertarget{statistical-tests-in-bayesian-statistics}{%
+\subsubsection{Statistical tests in Bayesian statistics}\label{statistical-tests-in-bayesian-statistics}}
+
 \hypertarget{linear-algebra}{%
 \section{Linear Algebra}\label{linear-algebra}}
 
@@ -842,15 +854,31 @@ diagonal \(r \times r\) matrix and \(V^T\) is an orthogonal \(r \times n\)
 matrix. \(U\) contains the \emph{left singular vectors}, \(V\) the \emph{right
 singular vectors} and \(\Sigma\) the \(Singular Values\).\\
 This decomposition technique can be used to approximate the original
-matrix \(A\) with only the largest singular values. Thereby you can save
-computation time in matrix operations without loosing a lot of
-information.\\
+matrix \(A\) with only the \(k\) largest singular values. This lets you work
+in a space with only \(k\) dimensions given by \(U_k \Sigma_k\). Thereby you
+can save computation time and memory space without loosing a lot of
+information.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.5\textwidth,height=\textheight]{figures/SVD_lower_dims.png}
+\caption{SVD and truncated SVD. The upper schema shows the decomposition of the
+matrix \(M\) with m rows and n columns into \(U\), \(\Sigma\) and \(V\). The
+lower schema shows the truncated SVD for lower dimensional mapping
+\(U_t \Sigma_t\) : The first \(t\) eigenvalues from \(\Sigma\) have been
+chosen to reconstruct a compressed version \(\bar{M}\). This figure has
+been adapted from \href{https://commons.wikimedia.org/wiki/File:Reduced_Singular_Value_Decompositions.svg}{user Cmglee on
+wikimedia.org.}}
+\end{figure}
+
+For more detailed explanation, see this \href{https://stats.stackexchange.com/questions/342046/explaining-dimensionality-reduction-using-svd-without-reference-to-pca}{Stack Exchange
+Thread}.\\
 For applications, please see \protect\hyperlink{SVD2}{SVD for lower dimensional mapping}.
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-\hypertarget{data-basics}{%
-\chapter{Data Basics}\label{data-basics}}
+\hypertarget{data-representation-analysis-processing}{%
+\chapter{Data: Representation, Analysis \& Processing}\label{data-representation-analysis-processing}}
 
 \hypertarget{similarity-and-distance-measures}{%
 \section{Similarity and Distance Measures}\label{similarity-and-distance-measures}}
@@ -952,81 +980,281 @@ For \(p=2\) the Minkowski distance is equal to the Euclidian distance, for
 Chebyshev distance for \(p \to \infty\). ~ More info at
 \href{https://en.wikipedia.org/wiki/Minkowski_distance}{wikipedia.org}.
 
+\hypertarget{kernels}{%
+\subsection{Kernels}\label{kernels}}
+
+Kernels are functions that output the relationship between points in
+your data. They correspond to mapping the data into high-dimensional
+space and allow to implicitly draw nonlinear decision boundaries with
+linear models.
+
+\hypertarget{closure-properties-of-kernels}{%
+\subsubsection{Closure properties of kernels}\label{closure-properties-of-kernels}}
+
+\begin{itemize}
+\item
+  If \(k_1\) and \(k_2\) are kernels, then \(k_1 + k_2\) is a kernel as
+  well.
+\item
+  If \(k_1\) and \(k_2\) are kernels, then their product is a kernel as
+  well.
+\item
+  If \(k\) is a kernel and \(\alpha\) is a kernel, then \(\alpha k\) is a
+  kernel as well.
+\item
+  If you define \(k\) only on a set \(D\), then points that are not in \(D\)
+  will have a value of \(k_0=0\) which is still a valid kernel.
+\end{itemize}
+
+\hypertarget{linear-kernel}{%
+\subsubsection{Linear kernel}\label{linear-kernel}}
+
+\hypertarget{polynomial-kernel}{%
+\subsubsection{polynomial kernel}\label{polynomial-kernel}}
+
+\hypertarget{gaussian-radial-basis-function-rbf-kernel}{%
+\subsubsection{Gaussian Radial Basis Function (RBF) kernel}\label{gaussian-radial-basis-function-rbf-kernel}}
+
+\hypertarget{constant-kernel}{%
+\subsubsection{constant kernel}\label{constant-kernel}}
+
+\hypertarget{delta-dirac-kernel}{%
+\subsubsection{delta dirac kernel}\label{delta-dirac-kernel}}
+
+\hypertarget{r-convolution-kernels}{%
+\subsubsection{R convolution kernels}\label{r-convolution-kernels}}
+
+\hypertarget{string-kernels}{%
+\subsubsection{String kernels}\label{string-kernels}}
+
+\hypertarget{data-analysis}{%
+\section{Data Analysis}\label{data-analysis}}
+
+Data analysis is conducted iteratively once you get hold of your data,
+when you cleaned it, when you processed it and when you analyse the
+outputs of your model.
+
+\hypertarget{exploratory-data-analysis}{%
+\subsection{Exploratory data analysis}\label{exploratory-data-analysis}}
+
+\hypertarget{initial-analysis}{%
+\subsubsection{Initial analysis}\label{initial-analysis}}
+
+After getting hold of the data, these are important properties to
+extract:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ pandas }\ImportTok{as}\NormalTok{ pd}
+\BuiltInTok{print}\NormalTok{(}\StringTok{"First 5 samples:"}
+\BuiltInTok{print}\NormalTok{(df.head())}
+\BuiltInTok{print}\NormalTok{(}\StringTok{":.. and last 5 samples:"}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(df.tail())}
+\BuiltInTok{print}\NormalTok{(}\StringTok{"First sample per month:"}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(df\_transport.groupby(}\StringTok{\textquotesingle{}Month\textquotesingle{}}\NormalTok{).first())}
+\CommentTok{\# The number of non{-}null values and the respective data type per column:}
+\NormalTok{df.info() }
+\CommentTok{\# The count, uniques, mean, standard deviation, min, max, quartiles per column:}
+\NormalTok{df.describe(include}\OperatorTok{=}\StringTok{\textquotesingle{}all\textquotesingle{}}\NormalTok{) }
+\BuiltInTok{print}\NormalTok{(}\StringTok{"rows: "}\OperatorTok{+}\NormalTok{ df.shape[}\DecValTok{0}\NormalTok{])}
+\BuiltInTok{print}\NormalTok{(}\StringTok{"columns: "}\OperatorTok{+}\NormalTok{ df.shape[}\DecValTok{1}\NormalTok{])}
+\BuiltInTok{print}\NormalTok{(}\StringTok{"empty rows: "}\OperatorTok{+}\NormalTok{ df\_transport.isnull().}\BuiltInTok{sum}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+Check:
+
+\begin{itemize}
+\item[$\square$]
+  Was the dataset correctly imported?
+
+  \begin{itemize}
+  \item
+    No column index as first row values.
+  \item
+    No trailing comment as last row values.
+  \end{itemize}
+\item[$\square$]
+  Are the sample values what you expect?
+\item[$\square$]
+  Are columns in correct and efficient data type?
+
+  \begin{itemize}
+  \item
+    Has there been a shift of data between columns / rows?
+  \item
+    Are there strings in a column for numerical values?
+  \end{itemize}
+\item[$\square$]
+  Is the range what you expect?
+
+  \begin{itemize}
+  \item
+    Are there heavy outliers?
+  \item
+    Is the data biased towards certain values?
+  \end{itemize}
+\item[$\square$]
+  How many empty values are there?
+\end{itemize}
+
+\hypertarget{after-preprocessing}{%
+\subsubsection{After preprocessing}\label{after-preprocessing}}
+
+\hypertarget{univariate-analysis}{%
+\paragraph{Univariate Analysis}\label{univariate-analysis}}
+
+Analyse only one attribute.
+
+\hypertarget{categorical-discrete-data-bar-chart}{%
+\subparagraph{Categorical / discrete data: Bar chart}\label{categorical-discrete-data-bar-chart}}
+
+Plot the number of occurrences of each category / number. This helps you
+find the distribution of your data.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ seaborn }\ImportTok{as}\NormalTok{ sns}
+\NormalTok{sns.countplot(df[}\StringTok{"sex"}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{figures/countplot.png}
+
+\hypertarget{continuous-data-histogram}{%
+\subparagraph{Continuous data: Histogram}\label{continuous-data-histogram}}
+
+Group data into ranges and plot number of occurrences in each range.
+This helps you find the distribution of your data.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sns.set\_style(}\StringTok{\textquotesingle{}whitegrid\textquotesingle{}}\NormalTok{)}
+\NormalTok{sns.histplot(data}\OperatorTok{=}\NormalTok{df\_USAhousing, x}\OperatorTok{=}\StringTok{\textquotesingle{}median\_house\_value\textquotesingle{}}\NormalTok{, bins}\OperatorTok{=}\DecValTok{30}\NormalTok{)}
+\NormalTok{plt.xlabel(}\StringTok{\textquotesingle{}median value\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics[width=0.6\textwidth,height=\textheight]{figures/hist_med_house_value.png}
+
+More info:
+\href{https://seaborn.pydata.org/tutorial/distributions.html}{seaborn.pydata.org}
+
+\hypertarget{multivariate-analysis}{%
+\paragraph{Multivariate Analysis}\label{multivariate-analysis}}
+
+\hypertarget{continuous-vs-continuous}{%
+\subparagraph{Continuous vs Continuous}\label{continuous-vs-continuous}}
+
+\textbf{Scatter-plots} plot the values of the datapoints of one attribute on
+the x-axis and the other attribute on the y-axis. This helps you find
+the correlations, order of the relationship, outliers etc.
+
+Use a \textbf{pairplot} to make a scatter plot of multiple features against
+each other.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sns.pairplot(df\_USAhousing[[}\StringTok{"median\_income"}\NormalTok{, }\StringTok{"median\_house\_value"}\NormalTok{, }\StringTok{"total\_rooms"}\NormalTok{]], diag\_kind}\OperatorTok{=}\StringTok{"hist"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics[width=0.8\textwidth,height=\textheight]{figures/pairplot_usa_housing.png}
+
+Alternatively use \textbf{joint plots}, to visualize the marginal
+(univariate) distributions on the sides:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sns.jointplot(data}\OperatorTok{=}\NormalTok{df\_USAhousing, x}\OperatorTok{=}\StringTok{"median\_income"}\NormalTok{, y}\OperatorTok{=}\StringTok{"median\_house\_value"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics[width=0.65\textwidth,height=\textheight]{figures/jointplot_housing.png}
+
+\textbf{Heatmaps} plot the magnitude of values in different categories. It is
+commonly used in exploratory data analysis to show the correlation of
+the different attributes.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sns.heatmap(df.corr(), cmap}\OperatorTok{=}\StringTok{"coolwarm"}\NormalTok{, vmin}\OperatorTok{={-}}\DecValTok{1}\NormalTok{, vmax}\OperatorTok{=}\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics[width=0.65\textwidth,height=\textheight]{figures/heatmap_usa_housing.png}
+
+More info:
+\href{https://seaborn.pydata.org/tutorial/relational.html}{seaborn.pydata.org}
+
+\hypertarget{continuous-vs.-categorical-data}{%
+\subparagraph{Continuous vs.~Categorical data}\label{continuous-vs.-categorical-data}}
+
+\textbf{Overlapping histograms} plot the marginal distribution of the
+continuous distributions, using different colors for each category:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sns.set\_style(}\StringTok{\textquotesingle{}whitegrid\textquotesingle{}}\NormalTok{)}
+\NormalTok{sns.histplot(data}\OperatorTok{=}\NormalTok{df\_USAhousing, x}\OperatorTok{=}\StringTok{\textquotesingle{}median\_house\_value\textquotesingle{}}\NormalTok{, hue}\OperatorTok{=}\StringTok{"ocean\_proximity"}\NormalTok{, element}\OperatorTok{=}\StringTok{"poly"}\NormalTok{,  bins}\OperatorTok{=}\DecValTok{30}\NormalTok{)}
+\NormalTok{plt.xlabel(}\StringTok{\textquotesingle{}median value\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics[width=0.6\textwidth,height=\textheight]{figures/overlap_hist_usa_housing.png}
+
+Use separate \textbf{violin plots} for each of the different categories:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sns.catplot(data}\OperatorTok{=}\NormalTok{df, x}\OperatorTok{=}\StringTok{"cont\_col"}\NormalTok{, y}\OperatorTok{=}\StringTok{"cat\_col"}\NormalTok{, hue}\OperatorTok{=}\StringTok{"binary\_col"}\NormalTok{, kind}\OperatorTok{=}\StringTok{"violin"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Use \textbf{heatmaps} with two categorical feature as x- and y-axis
+respectively and a continuous attribute as magnitude (``heat'').
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sns.heatmap(df.pivot(index}\OperatorTok{=}\StringTok{"cat\_col1"}\NormalTok{, columns}\OperatorTok{=}\StringTok{"cat\_col2"}\NormalTok{, values}\OperatorTok{=}\StringTok{"cont\_col"}\NormalTok{), annot}\OperatorTok{=}\VariableTok{True}\NormalTok{, linewidth}\OperatorTok{=}\FloatTok{0.5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{categorical-vs-categorical}{%
+\subparagraph{Categorical vs Categorical}\label{categorical-vs-categorical}}
+
+\textbf{Categorical plots} plot the count / percentage of different
+categorical attributes in side-by-side bar charts
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sns.catplot(data}\OperatorTok{=}\NormalTok{df, y}\OperatorTok{=}\StringTok{"cat\_col1"}\NormalTok{, hue}\OperatorTok{=}\StringTok{"cat\_col2"}\NormalTok{, kind}\OperatorTok{=}\StringTok{"bar"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+More info:
+\href{https://seaborn.pydata.org/tutorial/categorical.html}{seaborn.pydata.org}
+
+\hypertarget{output-analysis}{%
+\subsection{Output Analysis}\label{output-analysis}}
+
+\hypertarget{ethical-ai}{%
+\subsubsection{Ethical AI}\label{ethical-ai}}
+
+\hypertarget{explanation-methods}{%
+\subsubsection{Explanation methods}\label{explanation-methods}}
+
+\hypertarget{performance}{%
+\subsubsection{Performance}\label{performance}}
+
+\hypertarget{monitoring}{%
+\subsection{Monitoring}\label{monitoring}}
+
 \hypertarget{preprocessing-data}{%
 \section{Preprocessing data}\label{preprocessing-data}}
 
-\hypertarget{standardization}{%
-\subsection{Standardization}\label{standardization}}
-
-Many machine learning models assume that the features are centered
-around 0 and that all have a similar variance. Therefore the data has to
-be centered and scaled to unit variance before training and prediction.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\ImportTok{from}\NormalTok{ sklearn.preprocessing }\ImportTok{import}\NormalTok{ StandardScaler}
-\NormalTok{scaler }\OperatorTok{=}\NormalTok{ StandardScaler()}
-\NormalTok{scaler.fit(input\_df)}
-\end{Highlighting}
-\end{Shaded}
-
-More info:
-\href{https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html}{scikit-learn.org}
-
-Another option for scaling is normalization. This is used, when the
-values have to fall strictly between a max and min value.\\
-More info:
-\href{https://scikit-learn.org/stable/modules/preprocessing.html\#normalization}{scikit-learn.org}
-
-\hypertarget{encoding-categorical-features}{%
-\subsection{Encoding categorical features}\label{encoding-categorical-features}}
-
-The string values (e.g.~``male'', ``female'') of features have to be
-converted into integers. This can be done by two methods:
-
-\hypertarget{ordinal-encoding}{%
-\subsubsection{Ordinal Encoding}\label{ordinal-encoding}}
-
-An integer is assigned to each category (e.g.~``male''=0, ``female''=1)
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\ImportTok{from}\NormalTok{ sklearn.preprocessing }\ImportTok{import}\NormalTok{ OrdinalEncoder}
-\NormalTok{ord\_enc }\OperatorTok{=}\NormalTok{ preprocessing.OrdinalEncoder()}
-\NormalTok{ord\_enc.fit(X)}
-\NormalTok{ord\_enc.transform(X)}
-\end{Highlighting}
-\end{Shaded}
-
-More info:
-\href{https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OrdinalEncoder.html\#sklearn.preprocessing.OrdinalEncoder}{scikit-learn.org}\\
-This method is useful when the categories have an ordered relationship
-(e.g.~``bad'', ``medium'', ``good''). If this is not the case (e.g.~``dog'',
-``cat'', ``bunny'') this is to be avoided since the algorithm might deduct
-an ordered relationship where there is none. For these cases
-one-hot-encoding is to be used.
-
-\hypertarget{one-hot-encoding}{%
-\subsubsection{One-Hot Encoding}\label{one-hot-encoding}}
-
-One-hot encoding assigns a separate feature-column for each category and
-encodes it binarily (e.g.~if the sample is a dog, it has 1 in the
-dog-column and 0 in the cat and bunny column).
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\ImportTok{from}\NormalTok{ sklearn.preprocessing }\ImportTok{import}\NormalTok{ OneHotEncoder}
-\NormalTok{onehot\_enc }\OperatorTok{=}\NormalTok{ OneHotEncoder(handle\_unknown}\OperatorTok{=}\StringTok{\textquotesingle{}ignore\textquotesingle{}}\NormalTok{)}
-\NormalTok{onehot\_enc.fit(X)}
-\NormalTok{onehot\_enc.transform(X)}
-\end{Highlighting}
-\end{Shaded}
-
-More info:
-\href{https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html}{scikit-learn.org}\\
-
-\hypertarget{imputing-missing-values}{%
-\subsection{Imputing missing values}\label{imputing-missing-values}}
+\hypertarget{handling-missing-values}{%
+\subsection{Handling missing values}\label{handling-missing-values}}
 
 Some algorithms assume that all features of all samples have numerical
 values. In these cases missing values have to be imputed (i.e.~inferred)
@@ -1056,8 +1284,160 @@ samples and \(d\) is the number of features.
 More info:
 \href{https://scikit-learn.org/stable/modules/generated/sklearn.impute.IterativeImputer.html}{scikit-learn.org}\\
 
+\hypertarget{deleting-missing-values}{%
+\subsubsection{Deleting missing values}\label{deleting-missing-values}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ pandas }\ImportTok{as}\NormalTok{ pd}
+\NormalTok{df.dropna(how}\OperatorTok{=}\StringTok{"any"}\NormalTok{) }\CommentTok{\# how="all" would delete a sample if all values were missing}
+\end{Highlighting}
+\end{Shaded}
+
+More info:
+\href{https://pandas.pydata.org/pandas-docs/version/0.18.1/generated/pandas.DataFrame.dropna.html}{pandas.pydata.org}\\
+
+\hypertarget{date-and-time}{%
+\subsection{Date and time}\label{date-and-time}}
+
+\hypertarget{converting-to-datetime-format}{%
+\subsubsection{Converting to datetime format}\label{converting-to-datetime-format}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ pandas }\ImportTok{as}\NormalTok{ pd}
+\NormalTok{pd.to\_datetime(df.date\_col, infer\_datetime\_format}\OperatorTok{=}\VariableTok{True}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{create-columns-for-year-month-day}{%
+\subsubsection{Create columns for year, month, day}\label{create-columns-for-year-month-day}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ pandas }\ImportTok{as}\NormalTok{ pd}
+\NormalTok{df[}\StringTok{\textquotesingle{}year\textquotesingle{}}\NormalTok{] }\OperatorTok{=}\NormalTok{ df.Date.dt.year}
+\NormalTok{df[}\StringTok{\textquotesingle{}month\textquotesingle{}}\NormalTok{] }\OperatorTok{=}\NormalTok{ df.Date.dt.month}
+\NormalTok{df[}\StringTok{\textquotesingle{}day\textquotesingle{}}\NormalTok{] }\OperatorTok{=}\NormalTok{ df.Date.dt.day}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{replacing-data}{%
+\subsection{Replacing data}\label{replacing-data}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ pandas }\ImportTok{as}\NormalTok{ pd}
+\NormalTok{df.Col.}\BuiltInTok{apply}\NormalTok{(}\KeywordTok{lambda}\NormalTok{ x: }\DecValTok{0} \ControlFlowTok{if}\NormalTok{ x}\OperatorTok{==}\StringTok{\textquotesingle{}zero\textquotesingle{}} \ControlFlowTok{else} \DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{encoding-data}{%
+\subsection{Encoding data}\label{encoding-data}}
+
+There are multiple ways to encode data, especially non-vectorized data,
+to make it suitable for machine learning algorithms.
+
+\hypertarget{encoding-categorical-features}{%
+\subsubsection{Encoding categorical features}\label{encoding-categorical-features}}
+
+The string values (e.g.~``male'', ``female'') of features have to be
+converted into integers. This can be done by two methods:
+
+\hypertarget{ordinal-encoding}{%
+\paragraph{Ordinal Encoding}\label{ordinal-encoding}}
+
+An integer is assigned to each category (e.g.~``male''=0, ``female''=1)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ sklearn.preprocessing }\ImportTok{import}\NormalTok{ OrdinalEncoder}
+\NormalTok{ord\_enc }\OperatorTok{=}\NormalTok{ preprocessing.OrdinalEncoder()}
+\NormalTok{ord\_enc.fit(X)}
+\NormalTok{ord\_enc.transform(X)}
+\end{Highlighting}
+\end{Shaded}
+
+More info:
+\href{https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OrdinalEncoder.html\#sklearn.preprocessing.OrdinalEncoder}{scikit-learn.org}\\
+This method is useful when the categories have an ordered relationship
+(e.g.~``bad'', ``medium'', ``good''). If this is not the case (e.g.~``dog'',
+``cat'', ``bunny'') this is to be avoided since the algorithm might deduct
+an ordered relationship where there is none. For these cases
+one-hot-encoding is to be used.
+
+\hypertarget{one-hot-encoding}{%
+\paragraph{One-Hot Encoding}\label{one-hot-encoding}}
+
+One-hot encoding assigns a separate feature-column for each category and
+encodes it binarily (e.g.~if the sample is a dog, it has 1 in the
+dog-column and 0 in the cat and bunny column).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ sklearn.preprocessing }\ImportTok{import}\NormalTok{ OneHotEncoder}
+\NormalTok{onehot\_enc }\OperatorTok{=}\NormalTok{ OneHotEncoder(handle\_unknown}\OperatorTok{=}\StringTok{\textquotesingle{}ignore\textquotesingle{}}\NormalTok{)}
+\NormalTok{onehot\_enc.fit(X)}
+\NormalTok{onehot\_enc.transform(X)}
+\end{Highlighting}
+\end{Shaded}
+
+More info:
+\href{https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html}{scikit-learn.org}\\
+
+\hypertarget{graph-representation-of-data}{%
+\subsubsection{Graph representation of data}\label{graph-representation-of-data}}
+
+The similarity/distance between points can be represented in graphs. The
+data points are represented as nodes, the distances/similarities as
+edges.
+
+\hypertarget{encoding-text-data}{%
+\subsubsection{Encoding Text data}\label{encoding-text-data}}
+
+\hypertarget{bag-of-words}{%
+\paragraph{Bag of words}\label{bag-of-words}}
+
+\hypertarget{word-counts}{%
+\subparagraph{Word Counts}\label{word-counts}}
+
+\hypertarget{word-frequencies-tfidf}{%
+\subparagraph{Word Frequencies / Tfidf}\label{word-frequencies-tfidf}}
+
+\hypertarget{hashing}{%
+\subparagraph{Hashing}\label{hashing}}
+
+\hypertarget{encoding-image-data}{%
+\subsubsection{Encoding image data}\label{encoding-image-data}}
+
+\hypertarget{patches}{%
+\paragraph{Patches}\label{patches}}
+
+\hypertarget{standardization}{%
+\subsection{Standardization}\label{standardization}}
+
+Many machine learning models assume that the features are centered
+around 0 and that all have a similar variance. Therefore the data has to
+be centered and scaled to unit variance before training and prediction.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ sklearn.preprocessing }\ImportTok{import}\NormalTok{ StandardScaler}
+\NormalTok{scaler }\OperatorTok{=}\NormalTok{ StandardScaler()}
+\NormalTok{scaler.fit(input\_df)}
+\end{Highlighting}
+\end{Shaded}
+
+More info:
+\href{https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html}{scikit-learn.org}
+
+Another option for scaling is normalization. This is used, when the
+values have to fall strictly between a max and min value.\\
+More info:
+\href{https://scikit-learn.org/stable/modules/preprocessing.html\#normalization}{scikit-learn.org}
+
 \hypertarget{splitting-in-training--and-test-data}{%
-\section{Splitting in training- and test-data}\label{splitting-in-training--and-test-data}}
+\subsection{Splitting in training- and test-data}\label{splitting-in-training--and-test-data}}
 
 You need to split your training set into test- and training-samples. The
 algorithm uses the training samples with the known label/target value
@@ -1091,7 +1471,7 @@ More info:
 \href{https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html}{scikit-learn.org}
 
 \hypertarget{feature-selection}{%
-\section{Feature selection}\label{feature-selection}}
+\subsection{Feature selection}\label{feature-selection}}
 
 Usually the label does not depend on all available features. To detect
 causal features, remove noisy ones and reduce the running and training
@@ -1102,10 +1482,10 @@ methods (integrated with the prediction algorithm to be used).\\
 such as decision trees.
 
 \hypertarget{a-priori-feature-selection}{%
-\subsection{A priori feature selection}\label{a-priori-feature-selection}}
+\subsubsection{A priori feature selection}\label{a-priori-feature-selection}}
 
 \hypertarget{low-variance-threshold}{%
-\subsubsection{Low variance threshold}\label{low-variance-threshold}}
+\paragraph{Low variance threshold}\label{low-variance-threshold}}
 
 A cheap method is to remove all features with variance below a
 threshold.
@@ -1122,7 +1502,7 @@ More info:
 \href{https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.VarianceThreshold.html\#sklearn.feature_selection.VarianceThreshold}{scikit-learn.org}
 
 \hypertarget{mutual_info}{%
-\subsubsection{Mutual information}\label{mutual_info}}
+\paragraph{Mutual information}\label{mutual_info}}
 
 This method works by choosing the features that have the highest
 dependency between the features and the label.
@@ -1144,15 +1524,15 @@ the marginal distributions.
 \end{Highlighting}
 \end{Shaded}
 
-More {[}\url{info://}{]}(\url{info:/})\{.uri\}
+More \href{\%5Binfo:\%5D(info:)\%7B.uri\%7D}{{[}info:\textbackslash\textbackslash{]}(info:)\{.uri\}}
 \href{https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.SelectKBest.html}{scikit-learn.org}\\
 \href{https://en.wikipedia.org/wiki/Mutual_information}{wikipedia.org/wiki/Mutual\_information}
 
 \hypertarget{wrapper-methods}{%
-\subsection{wrapper methods}\label{wrapper-methods}}
+\subsubsection{wrapper methods}\label{wrapper-methods}}
 
 \hypertarget{greedy-feature-selection}{%
-\subsubsection{Greedy feature selection}\label{greedy-feature-selection}}
+\paragraph{Greedy feature selection}\label{greedy-feature-selection}}
 
 Using greedy feature selection as a wrapper method, one commonly starts
 with 0 features and adds the feature that returns the highest score with
@@ -1172,7 +1552,7 @@ More info:
 \href{https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.SequentialFeatureSelector.html}{scikit-learn.org}
 
 \hypertarget{advice-pitfalls}{%
-\subsection{Advice \& Pitfalls}\label{advice-pitfalls}}
+\subsubsection{Advice \& Pitfalls}\label{advice-pitfalls}}
 
 Selected advice from paper from \href{https://jmlr.csail.mit.edu/papers/volume3/guyon03a/guyon03a.pdf}{Guyon and
 Elisseeff}:
@@ -1203,7 +1583,7 @@ Other advice:
 \end{itemize}
 
 \hypertarget{hyper-parameter-tuning}{%
-\section{Hyper-parameter tuning}\label{hyper-parameter-tuning}}
+\subsection{Hyper-parameter tuning}\label{hyper-parameter-tuning}}
 
 The hyper-parameters (e.g.~kernel, gamma, number of nodes in tree) are
 not trained by algorithm itself. An outer loop of hyper-parameter tuning
@@ -1214,7 +1594,7 @@ training-, validation- and test-set). See \protect\hyperlink{crossval}{Cross Val
 for best practice.
 
 \hypertarget{grid-search}{%
-\subsection{Grid search}\label{grid-search}}
+\subsubsection{Grid search}\label{grid-search}}
 
 The classic approach is exhaustive grid search: You create a grid of
 hyperparameters and iterate over all combinations. The combination with
@@ -1222,7 +1602,7 @@ the best score is used in the end. This approach causes big
 computational costs due to the combinatorial explosion.
 
 \hypertarget{randomized-search}{%
-\subsection{randomized search}\label{randomized-search}}
+\subsubsection{Randomized search}\label{randomized-search}}
 
 This approach is used, if there are too many combinations of
 hyper-parameters for tuning. You allocate a budget of iterations and the
@@ -1259,7 +1639,7 @@ More info:
 \href{https://scikit-learn.org/stable/modules/grid_search.html\#searching-for-optimal-parameters-with-successive-halving}{scikit-learn.org}\\
 
 \hypertarget{model-selection}{%
-\section{Model selection}\label{model-selection}}
+\subsection{Model selection}\label{model-selection}}
 
 The candidates for hyper-parameters must not be evaluated on the same
 data that you trained it on (over-fitting risk). Thus, we separate
@@ -1268,7 +1648,7 @@ reduces the amount of training data drastically. Therefore we use the
 approaches of Cross Validation and Bootstrapping.
 
 \hypertarget{crossval}{%
-\subsection{Cross Validation}\label{crossval}}
+\subsubsection{Cross Validation}\label{crossval}}
 
 In k-fold Cross Validation, we split the training set into k sub-sets.
 We train on the samples in k-1 sub-sets and validate using the data in
@@ -1301,20 +1681,20 @@ More info:
 \textbf{!} If you have time-series data (and other clearly not i.i.d.) data,
 you have to use \href{https://scikit-learn.org/stable/modules/cross_validation.html\#time-series-split}{special cross-validation
 strategies}.
-~ There are \href{https://scikit-learn.org/stable/modules/cross_validation.html\#time-series-split}{further
+There are \href{https://scikit-learn.org/stable/modules/cross_validation.html\#time-series-split}{further
 strategies}
 worth considering.
 
 \hypertarget{bootstrapping}{%
-\subsection{Bootstrapping}\label{bootstrapping}}
+\subsubsection{Bootstrapping}\label{bootstrapping}}
 
 Instead of splitting the data into k subsets, you can also just sample
 data into training and validation sets.\\
 More info:
 \href{https://en.wikipedia.org/wiki/Bootstrapping_(statistics)}{wikipedia.org}.
 
-\hypertarget{errors-in-machine-learning}{%
-\section{Errors in machine learning}\label{errors-in-machine-learning}}
+\hypertarget{errors-regularization}{%
+\section{Errors \& regularization}\label{errors-regularization}}
 
 There are irreducible errors and reducible errors. Irreducible errors
 stem from unknown variables or variables we have no data on. Reducible
@@ -1505,7 +1885,7 @@ Domingos}:
 \end{itemize}
 
 \hypertarget{common-mistakes}{%
-\section{Common mistakes}\label{common-mistakes}}
+\subsection{Common mistakes}\label{common-mistakes}}
 
 Be aware: This list will never capture everything that can go wrong. ;-)
 
@@ -1536,8 +1916,8 @@ Be aware: This list will never capture everything that can go wrong. ;-)
     \textbf{Remedy:} Careful preliminary data analysis, deduplication,
   \end{itemize}
 \item
-  \textbf{Using bad quality measures on unbalanced data:} E.g. Accuracy on
-  unbalanced data is not a reasonable quality measure.
+  \textbf{Using the wrong quality measures on unbalanced data:} E.g.
+  Accuracy on unbalanced data is not a reasonable quality measure.
 \item
   \href{https://scikit-learn.org/stable/common_pitfalls.html\#inconsistent-preprocessing}{\textbf{Inconsistent
   preprocessing}}\textbf{:}
@@ -1562,7 +1942,7 @@ Be aware: This list will never capture everything that can go wrong. ;-)
     Your distance measure is not suitable for high-dimensional space
     (e.g.~Hamming distance, Euclidean distance)
   \item
-    \textbf{Remedy:} Use lower-dimensional mapping.
+    \textbf{Remedy:} Use lower-dimensional mapping, feature selection.
   \end{itemize}
 \item
   \textbf{Overfitting:}
@@ -2355,6 +2735,27 @@ Other models also have means to calculate cluster probabilities for
 points. For the HDBSCAN-algorithm see
 \href{https://hdbscan.readthedocs.io/en/latest/soft_clustering.html}{here}.
 
+\hypertarget{hierarchical-clustering}{%
+\subsubsection{Hierarchical Clustering}\label{hierarchical-clustering}}
+
+Instead of clustering a point to only one cluster, you assign it to a hierarchy.
+
+\textbf{Pros:}
+
+\begin{itemize}
+\tightlist
+\item
+  Hierarchies of clusters reflects the data set and therefore the relationship between points better.
+\end{itemize}
+
+\textbf{Cons:}
+
+\begin{itemize}
+\tightlist
+\item
+  It is more difficult to make clear statements of cluster membership \(\rightarrow\) define a limit for hierarchical depth
+\end{itemize}
+
 \hypertarget{artificial-neural-networks-for-clustering}{%
 \subsection{Artificial Neural Networks for Clustering}\label{artificial-neural-networks-for-clustering}}
 
@@ -2386,6 +2787,15 @@ Singular value decomposition is used to compress large matrices of your
 data into smaller ones, with much less data, but without loosing a lot
 of information. Please visit the \protect\hyperlink{SVD1}{mathematical explanation} for
 the underlying mechanisms.\\
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ sklearn.decomposition }\ImportTok{import}\NormalTok{ TruncatedSVD}
+\NormalTok{svd }\OperatorTok{=}\NormalTok{ TruncatedSVD(n\_components}\OperatorTok{=}\DecValTok{10}\NormalTok{)}
+\NormalTok{svd.fit\_transform(X\_train)}
+\NormalTok{svd.transform(X\_test)}
+\end{Highlighting}
+\end{Shaded}
 
 \hypertarget{principle-component-analysis-pca}{%
 \subsubsection{Principle Component analysis (PCA)}\label{principle-component-analysis-pca}}
@@ -2513,11 +2923,46 @@ problem via the pseudo counts.)
 \hypertarget{evaluation-of-regression-models}{%
 \section{Evaluation of regression models}\label{evaluation-of-regression-models}}
 
-\hypertarget{r2-score}{%
-\subsection{R\^{}2 score}\label{r2-score}}
-
 \hypertarget{mean-squared-error}{%
 \subsection{Mean squared error}\label{mean-squared-error}}
+
+This measure shows the deviation of the predicted value \(\hat{y}\) to the target value \(y\). The squaring penalized large deviations and avoids respective cancellation of positive and negative errors.
+
+\[ MSE = 1/n \sum_i (y_i - \hat{y}_i)^2\]
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ sklearn.metrics }\ImportTok{import}\NormalTok{ mean\_squared\_error}
+\NormalTok{mean\_squared\_error(y\_true, y\_pred)}
+\end{Highlighting}
+\end{Shaded}
+
+More info: \href{https://scikit-learn.org/stable/modules/generated/sklearn.metrics.mean_squared_error.html\#sklearn.metrics.mean_squared_error}{scikit-learn.org}
+
+\hypertarget{r2-score-coefficient-of-determination}{%
+\subsection{R\^{}2 score / coefficient of determination}\label{r2-score-coefficient-of-determination}}
+
+This measure shows how much of the \protect\hyperlink{dist_prop}{variance} of the
+target/dependent variable \(y\) can be explained by the model/independent
+variable \(\hat{y}\).
+
+\[ 
+R^2 = 1 - \frac{\text{Unexplained Variance}}{\text{Total Variance}} = \frac{SS_{res}}{SS_{tot}} \\
+SS_{res} = \sum_i(y_i-\hat{y}_i)^2 \\
+SS_{tot} = \sum_i(y_i - \bar{y}_i)^2
+\] where \(\bar{y}\) is the mean of the target \(y\).
+
+The value commonly reaches from 0 (model always predicts the mean of \(y\)) to 1 (perfect fit of model to data). It can however be negative (e.g.~wrong model, heavy overfitting, \ldots). The \emph{adjusted R\^{}2} compensates for the size of the model (more variables), favoring simpler models.
+More info: \href{https://en.wikipedia.org/wiki/Coefficient_of_determination}{wikipedia.org}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ sklearn.metrics }\ImportTok{import}\NormalTok{ r2\_score}
+\NormalTok{r2 }\OperatorTok{=}\NormalTok{ r2\_score(y\_true, y\_pred)}
+\end{Highlighting}
+\end{Shaded}
+
+More info: \href{https://scikit-learn.org/stable/modules/generated/sklearn.metrics.r2_score.html\#sklearn.metrics.r2_score}{scikit-learn.org}
 
 \hypertarget{visual-tools}{%
 \subsection{Visual tools}\label{visual-tools}}
@@ -2539,6 +2984,9 @@ problem via the pseudo counts.)
 
 \hypertarget{bayesian-regression}{%
 \subsection{Bayesian regression}\label{bayesian-regression}}
+
+\hypertarget{anova}{%
+\subsection{ANOVA}\label{anova}}
 
 \hypertarget{generalized-linear-models}{%
 \subsection{Generalized linear models}\label{generalized-linear-models}}
@@ -2863,27 +3311,210 @@ code layer (\(F(X)\)) .
 \hypertarget{long-short-term-memory-networks}{%
 \section{Long short-term memory networks}\label{long-short-term-memory-networks}}
 
-\hypertarget{explanation-and-inspection-methods}{%
-\chapter{Explanation and inspection methods}\label{explanation-and-inspection-methods}}
+\hypertarget{machine-learning-automation-productivity}{%
+\chapter{Machine learning Automation \& Productivity}\label{machine-learning-automation-productivity}}
 
-\hypertarget{global-explainability-methods}{%
-\section{Global explainability methods}\label{global-explainability-methods}}
+To quickly get a confirmation that a target variable can actually be predicted with a certain accuracy, automated machine learning approaches are a huge time saver.
+To be useful in practice, the resulting models \& pipelines need to be highly configurable upon investigation of their initial performance and shortcomings. Many auto-ML libraries we tested tend to overfitting. Using an uncommonly high number of cross validation folds usually helps.
+\textbackslash{} Here are a few auto-ML packages:
 
-\hypertarget{inherently-explainable-algorithms}{%
-\subsection{Inherently explainable algorithms}\label{inherently-explainable-algorithms}}
+\hypertarget{holistic-approach}{%
+\section{Holistic approach}\label{holistic-approach}}
 
-\hypertarget{local-explainability-methods}{%
-\section{Local explainability methods}\label{local-explainability-methods}}
+\hypertarget{autosklearn}{%
+\subsection{Autosklearn}\label{autosklearn}}
 
-\hypertarget{shapely-method}{%
-\subsection{Shapely method}\label{shapely-method}}
+Auto-Sklearn does preprocessing, model selection, training and hyperparameter tuning. \textbackslash{}
+More info: \href{https://proceedings.neurips.cc/paper/2015/file/11d0e6287202fced83f79975ec59a3a6-Paper.pdf}{neurips.cc}
 
-\hypertarget{lime}{%
-\subsection{LIME}\label{lime}}
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ autosklearn.classification }\ImportTok{import}\NormalTok{ AutoSklearnClassifier}
+\NormalTok{clf }\OperatorTok{=}\NormalTok{ AutoSklearnClassifier(time\_left\_for\_this\_task}\OperatorTok{=}\DecValTok{120}\NormalTok{, per\_run\_time\_limit}\OperatorTok{=}\DecValTok{30}\NormalTok{, resampling\_strategy\_arguments}\OperatorTok{=}\NormalTok{\{}\StringTok{"folds"}\NormalTok{:}\DecValTok{10}\NormalTok{\}, include}\OperatorTok{=}\NormalTok{\{}\StringTok{\textquotesingle{}data\_preprocessor\textquotesingle{}}\NormalTok{: [}\StringTok{\textquotesingle{}NoPreprocessing\textquotesingle{}}\NormalTok{]\})}
+\NormalTok{clf.fit(X\_train, y\_train)}
+\NormalTok{y\_pred }\OperatorTok{=}\NormalTok{ clf.predict(X\_test)}
+\end{Highlighting}
+\end{Shaded}
 
-\hypertarget{anchor-methods}{%
-\subsection{Anchor methods}\label{anchor-methods}}
+More info: \href{https://automl.github.io/auto-sklearn/master/index.html}{automl.github.io}
 
-  \bibliography{references.bib}
+\hypertarget{flaml}{%
+\subsection{FLAML}\label{flaml}}
+
+\hypertarget{h2o.ai}{%
+\subsection{H2O.ai}\label{h2o.ai}}
+
+H2O.ai's library includes an auto-ML library as well. For now it is not as configurable as desired. The library however contains further modules for admissible AI (ML that does not discriminated minarities etc.) and model explainability. \textbackslash{}
+More info: \href{https://docs.h2o.ai/h2o/latest-stable/h2o-docs/automl.html}{h2o.ai}
+
+\hypertarget{autokeras}{%
+\subsection{AutoKeras}\label{autokeras}}
+
+\hypertarget{model-selection-automation}{%
+\section{Model selection automation}\label{model-selection-automation}}
+
+\hypertarget{feature-engineering-automation}{%
+\section{Feature engineering automation}\label{feature-engineering-automation}}
+
+\hypertarget{cookie-cutter-visualizations}{%
+\section{cookie-cutter Visualizations}\label{cookie-cutter-visualizations}}
+
+\hypertarget{comprehensive-validation-reports}{%
+\section{Comprehensive validation reports}\label{comprehensive-validation-reports}}
+
+\hypertarget{machine-learning-project-management}{%
+\chapter{Machine Learning Project Management}\label{machine-learning-project-management}}
+
+\hypertarget{basis-for-machine-learning-in-companies}{%
+\section{Basis for Machine Learning in Companies}\label{basis-for-machine-learning-in-companies}}
+
+\hypertarget{how-to-automate-business-processes-with-machine-learning}{%
+\section{How to automate business processes with machine learning}\label{how-to-automate-business-processes-with-machine-learning}}
+
+\hypertarget{the-stages-from-manual-to-ml}{%
+\subsection{The stages from ManuaL to ML}\label{the-stages-from-manual-to-ml}}
+
+A good business process entails a feedback loop from the client
+(receiver of the output) to further optimize the process:
+
+\emph{Input} \(\rightarrow\) Process \(\rightarrow\) \emph{Output} \(\rightarrow\)
+\emph{Feedback} \(\rightarrow\) Optimization \(\rightarrow\) new Process
+\(\rightarrow\) \ldots{}
+
+Business processes evolve along these phases, whose steps should not be
+skipped:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{Individual employee} works on tasks, commonly informal rules and
+  heuristics are used.
+\item
+  \textbf{Team} works on the tasks. The process is formalized and
+  standardized to ensure quality and effective collaboration. Don't
+  stay here for too long, since it is not scaleable.
+\item
+  \textbf{Digitization} is used to automate (parts of) the process. This
+  step should be done before ML, since you need the data and
+  architecture for your ML part anyway. Here you are more flexible and
+  can fail and adapt quicker. Don't stay here to long, since you
+  cannot assess quaility of your process well.
+\item
+  \textbf{Analytics} are used to measure the performance of the process and
+  if its optimizations are successful. Don't skip this since you need
+  these indicators for your ML optimizationa and monitoring anyway.
+  Don't stay here too long to miss out on automation and scalability.
+\item
+  \textbf{Machine Learning} is used to automate and optimize analysis,
+  insights and decision making on the data. You still need some people
+  from step 2 to analyse outcomes, failures and react to it
+  (monitoring).
+\end{enumerate}
+
+More info: \href{https://www.cloudskillsboost.google/course_templates/10}{Google Cloud: How Google Does Machine
+Learning}
+
+\hypertarget{phases-of-the-ml-project}{%
+\subsection{Phases of the ML project}\label{phases-of-the-ml-project}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Framing the problem
+\item
+  Data collection \& management
+\item
+  Building infrastructure (data pipeline, databases, training \&
+  deployment pipelines should at least work the same way as the
+  designated product unless its a quick'n'dirty PoC)
+\item
+  Data ingestion, transformation \& feature engineering
+\item
+  Model selection, training, testing \& evaluation
+\item
+  Deployment \& integration
+\item
+  Monitoring
+\end{enumerate}
+
+More info: \href{https://www.cloudskillsboost.google/course_templates/10}{Google Cloud: How Google Does Machine
+Learning}
+
+\hypertarget{how-to-frame-ml-problems}{%
+\subsection{How to frame ML problems}\label{how-to-frame-ml-problems}}
+
+\begin{itemize}
+\item
+  \textbf{The ML-view:}
+
+  \begin{itemize}
+  \item
+    What is being predicted?
+  \item
+    What data do we need as target and input?
+  \end{itemize}
+\item
+  \textbf{Software development view:}
+
+  \begin{itemize}
+  \item
+    What info do we need from users to make a decision? (This
+    defines the API)
+  \item
+    Who will use the service? How many people will that be?
+  \item
+    How is the process conducted today?
+  \end{itemize}
+\item
+  \textbf{Data view:}
+
+  \begin{itemize}
+  \item
+    What data needs to be collected? From where?
+  \item
+    How do we need to transform the data to analyze it \& make
+    decisions on it? (Feature engineering)
+  \item
+    How do we react to the outputs of the algorithm? (e.g.~kick off
+    automatic process, inform stakeholders\ldots)
+  \end{itemize}
+\end{itemize}
+
+More info: \href{https://www.cloudskillsboost.google/course_templates/10}{Google Cloud: How Google Does Machine
+Learning}
+
+\hypertarget{common-pitfalls-in-machine-learning}{%
+\section{Common pitfalls in machine learning}\label{common-pitfalls-in-machine-learning}}
+
+\begin{itemize}
+\item
+  Underestimate the effort for data collection, engineering,
+  transformation \& ingestion
+\item
+  Focus too much effort in optimizing the machine learning algorithm
+  instead of getting more data
+\item
+  Having too few samples and diversity (independent attributes) or
+  outdated/unrepresentative data
+\item
+  Data is not properly maintained or not available as needed for the
+  project
+\item
+  Assume that no oversight will be necessary in data-,
+  target-selection, feature engineering and monitoring from subject
+  matter experts
+\item
+  Optimize for a skewed indicator that causes unwanted side-effects in
+  model decisions
+\item
+  Building models from scratch, where pre-trained / off-the-shelf
+  models do the job (especially text, image, audio and video tasks
+  employing neural networks)
+\item
+  Having no process for monitoring and retraining
+\end{itemize}
+
+More info: \href{https://www.cloudskillsboost.google/course_templates/10}{Google Cloud: How Google Does Machine
+Learning}
 
 \end{document}

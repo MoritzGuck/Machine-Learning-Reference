@@ -384,6 +384,20 @@ RVs. $\Rightarrow$ With enough samples, the sample mean will approach
 the true mean. The **strong law of large numbers** states that
 $|\frac{\sum_{i=1}^n X_i}{n} - \mu| < \epsilon$ for any $\epsilon > 0$.
 
+<font color="grey">
+
+### Statistical tests
+
+#### T-Test
+
+#### Z-Test
+
+#### Chi-Squared test
+
+#### Statistical tests in Bayesian statistics
+
+</font>
+
 ## Linear Algebra
 
 This section is meant to give an intuitive understanding of the
@@ -575,7 +589,19 @@ diagonal $r \times r$ matrix and $V^T$ is an orthogonal $r \times n$
 matrix. $U$ contains the *left singular vectors*, $V$ the *right
 singular vectors* and $\Sigma$ the $Singular Values$.\
 This decomposition technique can be used to approximate the original
-matrix $A$ with only the largest singular values. Thereby you can save
-computation time in matrix operations without loosing a lot of
-information.\
+matrix $A$ with only the $k$ largest singular values. This lets you work
+in a space with only $k$ dimensions given by $U_k \Sigma_k$. Thereby you
+can save computation time and memory space without loosing a lot of
+information.
+
+![SVD and truncated SVD. The upper schema shows the decomposition of the
+matrix $M$ with m rows and n columns into $U$, $\Sigma$ and $V$. The
+lower schema shows the truncated SVD for lower dimensional mapping
+$U_t \Sigma_t$ : The first $t$ eigenvalues from $\Sigma$ have been
+chosen to reconstruct a compressed version $\bar{M}$. This figure has
+been adapted from [user Cmglee on
+wikimedia.org.](https://commons.wikimedia.org/wiki/File:Reduced_Singular_Value_Decompositions.svg)](figures/SVD_lower_dims.png){width="50%"}
+
+For more detailed explanation, see this [Stack Exchange
+Thread](https://stats.stackexchange.com/questions/342046/explaining-dimensionality-reduction-using-svd-without-reference-to-pca).\
 For applications, please see [SVD for lower dimensional mapping](#SVD2).

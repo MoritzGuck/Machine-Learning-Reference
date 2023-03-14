@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 6 Regression | Machine Learning Reference</title>
-  <meta name="description" content="Chapter 6 Regression | Machine Learning Reference" />
+  <title>Chapter 9 Machine Learning Project Management | Machine Learning Reference</title>
+  <meta name="description" content="Chapter 9 Machine Learning Project Management | Machine Learning Reference" />
   <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 6 Regression | Machine Learning Reference" />
+  <meta property="og:title" content="Chapter 9 Machine Learning Project Management | Machine Learning Reference" />
   <meta property="og:type" content="book" />
   
   
   <meta name="github-repo" content="MoritzGuck/Machine-Learning-Reference" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 6 Regression | Machine Learning Reference" />
+  <meta name="twitter:title" content="Chapter 9 Machine Learning Project Management | Machine Learning Reference" />
   
   
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="generative-models.html"/>
-<link rel="next" href="neural-networks-neural-networks.html"/>
+<link rel="prev" href="machine-learning-automation-productivity.html"/>
+
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -333,149 +333,124 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="regression" class="section level1 hasAnchor" number="6">
-<h1><span class="header-section-number">Chapter 6</span> Regression<a href="regression.html#regression" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<!-- Look at this https://scikit-learn.org/stable/auto_examples/inspection/plot_linear_model_coefficient_interpretation.html#sphx-glr-auto-examples-inspection-plot-linear-model-coefficient-interpretation-py -->
-<div id="evaluation-of-regression-models" class="section level2 hasAnchor" number="6.1">
-<h2><span class="header-section-number">6.1</span> Evaluation of regression models<a href="regression.html#evaluation-of-regression-models" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="mean-squared-error" class="section level3 hasAnchor" number="6.1.1">
-<h3><span class="header-section-number">6.1.1</span> Mean squared error<a href="regression.html#mean-squared-error" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>This measure shows the deviation of the predicted value <span class="math inline">\(\hat{y}\)</span> to the target value <span class="math inline">\(y\)</span>. The squaring penalized large deviations and avoids respective cancellation of positive and negative errors.</p>
-<p><span class="math display">\[ MSE = 1/n \sum_i (y_i - \hat{y}_i)^2\]</span></p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb45-1"><a href="regression.html#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> mean_squared_error</span>
-<span id="cb45-2"><a href="regression.html#cb45-2" aria-hidden="true" tabindex="-1"></a>mean_squared_error(y_true, y_pred)</span></code></pre></div>
-<p>More info: <a href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.mean_squared_error.html#sklearn.metrics.mean_squared_error">scikit-learn.org</a></p>
-</div>
-<div id="r2-score-coefficient-of-determination" class="section level3 hasAnchor" number="6.1.2">
-<h3><span class="header-section-number">6.1.2</span> R^2 score / coefficient of determination<a href="regression.html#r2-score-coefficient-of-determination" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>This measure shows how much of the <a href="probability-theory-linear-algebra.html#dist_prop">variance</a> of the
-target/dependent variable <span class="math inline">\(y\)</span> can be explained by the model/independent
-variable <span class="math inline">\(\hat{y}\)</span>.</p>
-<p><span class="math display">\[
-R^2 = 1 - \frac{\text{Unexplained Variance}}{\text{Total Variance}} = \frac{SS_{res}}{SS_{tot}} \\
-SS_{res} = \sum_i(y_i-\hat{y}_i)^2 \\
-SS_{tot} = \sum_i(y_i - \bar{y}_i)^2
-\]</span> where <span class="math inline">\(\bar{y}\)</span> is the mean of the target <span class="math inline">\(y\)</span>.</p>
-<p>The value commonly reaches from 0 (model always predicts the mean of <span class="math inline">\(y\)</span>) to 1 (perfect fit of model to data). It can however be negative (e.g. wrong model, heavy overfitting, …). The <em>adjusted R^2</em> compensates for the size of the model (more variables), favoring simpler models.
-More info: <a href="https://en.wikipedia.org/wiki/Coefficient_of_determination">wikipedia.org</a></p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb46-1"><a href="regression.html#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> r2_score</span>
-<span id="cb46-2"><a href="regression.html#cb46-2" aria-hidden="true" tabindex="-1"></a>r2 <span class="op">=</span> r2_score(y_true, y_pred)</span></code></pre></div>
-<p>More info: <a href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.r2_score.html#sklearn.metrics.r2_score">scikit-learn.org</a></p>
+<div id="machine-learning-project-management" class="section level1 hasAnchor" number="9">
+<h1><span class="header-section-number">Chapter 9</span> Machine Learning Project Management<a href="machine-learning-project-management.html#machine-learning-project-management" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><font color="grey"></p>
-</div>
-<div id="visual-tools" class="section level3 hasAnchor" number="6.1.3">
-<h3><span class="header-section-number">6.1.3</span> Visual tools<a href="regression.html#visual-tools" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-</div>
-</div>
-<div id="linear-models" class="section level2 hasAnchor" number="6.2">
-<h2><span class="header-section-number">6.2</span> Linear Models<a href="regression.html#linear-models" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="ordinary-least-squares" class="section level3 hasAnchor" number="6.2.1">
-<h3><span class="header-section-number">6.2.1</span> Ordinary Least Squares<a href="regression.html#ordinary-least-squares" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-</div>
-<div id="lasso-regression" class="section level3 hasAnchor" number="6.2.2">
-<h3><span class="header-section-number">6.2.2</span> Lasso regression<a href="regression.html#lasso-regression" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-</div>
-<div id="ridge-regression" class="section level3 hasAnchor" number="6.2.3">
-<h3><span class="header-section-number">6.2.3</span> Ridge regression<a href="regression.html#ridge-regression" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div id="kernel-ridge-regression" class="section level4 hasAnchor" number="6.2.3.1">
-<h4><span class="header-section-number">6.2.3.1</span> Kernel ridge regression<a href="regression.html#kernel-ridge-regression" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-</div>
-</div>
-<div id="bayesian-regression" class="section level3 hasAnchor" number="6.2.4">
-<h3><span class="header-section-number">6.2.4</span> Bayesian regression<a href="regression.html#bayesian-regression" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-</div>
-<div id="anova" class="section level3 hasAnchor" number="6.2.5">
-<h3><span class="header-section-number">6.2.5</span> ANOVA<a href="regression.html#anova" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-</div>
-<div id="generalized-linear-models" class="section level3 hasAnchor" number="6.2.6">
-<h3><span class="header-section-number">6.2.6</span> Generalized linear models<a href="regression.html#generalized-linear-models" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p></font></p>
-</div>
-</div>
-<div id="gaussian-process-regression" class="section level2 hasAnchor" number="6.3">
-<h2><span class="header-section-number">6.3</span> Gaussian process regression<a href="regression.html#gaussian-process-regression" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Gaussian process regression is based on Bayesian Probability: You
-generate many models and calculate the probability of your models given
-the samples. You make predictions based on the probabilities of your
-models.</p>
-<p>You get non-linear functions to your data by using non-linear kernels:
-You assume that input data points that are similar, will have similar
-target values. The concept of similarity (e.g. same hour of the day) is
-encoded in the kernels that you use.</p>
-<div class="figure">
-<img src="figures/Gaussian_Process_Regression.png" alt="" />
-<p class="caption">Schema of the training process of Gaussian process regression. The
-left graph shows the prior samples of functions before. These functions
-are then conditioned on the data (graph in middle). The right graph
-shows the predictions with the credible intervals in gray. <em>Source:
-<a href="https://commons.wikimedia.org/wiki/File:Gaussian_Process_Regression.png">user Cdipaolo96 on
-wikimedia.org</a>
-.</em></p>
-</div>
-<p><strong>Pros:</strong></p>
-<ul>
-<li><p>The model reports the predictions with a certain probability.</p></li>
-<li></li>
-</ul>
-<p><strong>Cons:</strong></p>
-<ul>
-<li><p>Training scales with <span class="math inline">\(O(n^3)\)</span>.</p></li>
-<li><p>You need to design or choose a kernel.</p></li>
-</ul>
-<div class="sourceCode" id="cb47"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb47-1"><a href="regression.html#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.gaussian_process <span class="im">import</span> GaussianProcessRegressor</span>
-<span id="cb47-2"><a href="regression.html#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.gaussian_process.kernels <span class="im">import</span> DotProduct, WhiteKernel, RBF, ExpSineSquared</span>
-<span id="cb47-3"><a href="regression.html#cb47-3" aria-hidden="true" tabindex="-1"></a>kernel <span class="op">=</span> DotProduct() <span class="op">+</span> WhiteKernel() <span class="op">+</span> RBF() <span class="op">+</span> ExpSineSquared() <span class="co"># The kernel hyperparameters are tuned by the model</span></span>
-<span id="cb47-4"><a href="regression.html#cb47-4" aria-hidden="true" tabindex="-1"></a>gpr <span class="op">=</span> GaussianProcessRegressor(kernel<span class="op">=</span>kernel)</span>
-<span id="cb47-5"><a href="regression.html#cb47-5" aria-hidden="true" tabindex="-1"></a>gpr.fit(X, y)</span>
-<span id="cb47-6"><a href="regression.html#cb47-6" aria-hidden="true" tabindex="-1"></a>gpr.predict(X, return_std<span class="op">=</span><span class="va">True</span>)</span></code></pre></div>
-<p>More info:
-<a href="https://scikit-learn.org/stable/modules/generated/sklearn.gaussian_process.GaussianProcessRegressor.html">scikit-learn.org</a><br />
-</p>
-</div>
-<div id="gradient-boosted-tree-regression" class="section level2 hasAnchor" number="6.4">
-<h2><span class="header-section-number">6.4</span> Gradient boosted tree regression<a href="regression.html#gradient-boosted-tree-regression" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Apart from classification, gradient boosted trees also allow for
-regression. It works like gradient boosted trees for classification: You
-iteratively add decision tree regressors that minimize the regression
-loss of the already fitted ensemble. A <a href="https://scikit-learn.org/stable/auto_examples/tree/plot_tree_regression.html">decision tree
-regressor</a>
-is a decision tree that is trained on continuous data instead of
-discrete classification data, but its <a href="https://medium.com/analytics-vidhya/regression-trees-decision-tree-for-regression-machine-learning-e4d7525d8047">output is still
-discrete</a>.</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb48-1"><a href="regression.html#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> GradientBoostingRegressor</span>
-<span id="cb48-2"><a href="regression.html#cb48-2" aria-hidden="true" tabindex="-1"></a>gbr <span class="op">=</span> GradientBoostingRegressor(n_estimators <span class="op">=</span> <span class="dv">500</span>, min_samples_split <span class="op">=</span><span class="dv">5</span>, max_depth <span class="op">=</span> <span class="dv">4</span>, max_features<span class="op">=</span><span class="st">&quot;sqrt&quot;</span>, n_iter_no_change<span class="op">=</span><span class="dv">15</span>)</span>
-<span id="cb48-3"><a href="regression.html#cb48-3" aria-hidden="true" tabindex="-1"></a>gbr.fit(X, y)</span></code></pre></div>
-<p>More info:
-<a href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingRegressor.html">scikit-learn.org</a><br />
-</p>
-</div>
-<div id="time-series-forecasting" class="section level2 hasAnchor" number="6.5">
-<h2><span class="header-section-number">6.5</span> Time Series Forecasting<a href="regression.html#time-series-forecasting" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>For “normal” settings the order of the samples does not play a role
-(e.g. blood sugar level of one sample is independent of the others). In
-time series however, the samples need to be represented in an ordered
-vector or matrix (e.g. The temperature of Jan 2nd is not independent of
-the temperature on Jan 1st).</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb49-1"><a href="regression.html#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb49-2"><a href="regression.html#cb49-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">&quot;data.csv&quot;</span>, header<span class="op">=</span><span class="dv">0</span>, index_col<span class="op">=</span><span class="dv">0</span>, names<span class="op">=</span>[<span class="st">&quot;date&quot;</span>, <span class="st">&quot;sales&quot;</span>])</span>
-<span id="cb49-3"><a href="regression.html#cb49-3" aria-hidden="true" tabindex="-1"></a>sales_series <span class="op">=</span> df[<span class="st">&quot;sales&quot;</span>] <span class="co"># pandas series make working with time series easier </span></span></code></pre></div>
-<p><font color="grey"></p>
-<div id="arimax-model" class="section level3 hasAnchor" number="6.5.1">
-<h3><span class="header-section-number">6.5.1</span> ARIMA(X) Model<a href="regression.html#arimax-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>univariate time series model with exogenous regressor.</p>
-</div>
-<div id="varmmax-model" class="section level3 hasAnchor" number="6.5.2">
-<h3><span class="header-section-number">6.5.2</span> VARMMA(X) Model<a href="regression.html#varmmax-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Multivariate time series model, where the variables can influence each
-other and the target can influence the variables and vice versa.</p>
-</div>
-<div id="prophet-model" class="section level3 hasAnchor" number="6.5.3">
-<h3><span class="header-section-number">6.5.3</span> Prophet-Model<a href="regression.html#prophet-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<!-- Explain Prophet model from Facebook. Source:
-<https://otexts.com/fpp3/prophet.html> -->
-<p></font></p>
+<div id="basis-for-machine-learning-in-companies" class="section level2 hasAnchor" number="9.1">
+<h2><span class="header-section-number">9.1</span> Basis for Machine Learning in Companies<a href="machine-learning-project-management.html#basis-for-machine-learning-in-companies" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<!-- 
+Cover Topics:
 
+-   Data Strategy
+
+-   Data Management
+
+-   Architecture for carrying machine learning workloads
+-->
+<p></font></p>
 </div>
+<div id="how-to-automate-business-processes-with-machine-learning" class="section level2 hasAnchor" number="9.2">
+<h2><span class="header-section-number">9.2</span> How to automate business processes with machine learning<a href="machine-learning-project-management.html#how-to-automate-business-processes-with-machine-learning" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="the-stages-from-manual-to-ml" class="section level3 hasAnchor" number="9.2.1">
+<h3><span class="header-section-number">9.2.1</span> The stages from ManuaL to ML<a href="machine-learning-project-management.html#the-stages-from-manual-to-ml" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>A good business process entails a feedback loop from the client
+(receiver of the output) to further optimize the process:</p>
+<p><em>Input</em> <span class="math inline">\(\rightarrow\)</span> Process <span class="math inline">\(\rightarrow\)</span> <em>Output</em> <span class="math inline">\(\rightarrow\)</span>
+<em>Feedback</em> <span class="math inline">\(\rightarrow\)</span> Optimization <span class="math inline">\(\rightarrow\)</span> new Process
+<span class="math inline">\(\rightarrow\)</span> …</p>
+<p>Business processes evolve along these phases, whose steps should not be
+skipped:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Individual employee</strong> works on tasks, commonly informal rules and
+heuristics are used.</p></li>
+<li><p><strong>Team</strong> works on the tasks. The process is formalized and
+standardized to ensure quality and effective collaboration. Don’t
+stay here for too long, since it is not scaleable.</p></li>
+<li><p><strong>Digitization</strong> is used to automate (parts of) the process. This
+step should be done before ML, since you need the data and
+architecture for your ML part anyway. Here you are more flexible and
+can fail and adapt quicker. Don’t stay here to long, since you
+cannot assess quaility of your process well.</p></li>
+<li><p><strong>Analytics</strong> are used to measure the performance of the process and
+if its optimizations are successful. Don’t skip this since you need
+these indicators for your ML optimizationa and monitoring anyway.
+Don’t stay here too long to miss out on automation and scalability.</p></li>
+<li><p><strong>Machine Learning</strong> is used to automate and optimize analysis,
+insights and decision making on the data. You still need some people
+from step 2 to analyse outcomes, failures and react to it
+(monitoring).</p></li>
+</ol>
+<p>More info: <a href="https://www.cloudskillsboost.google/course_templates/10">Google Cloud: How Google Does Machine
+Learning</a></p>
+</div>
+<div id="phases-of-the-ml-project" class="section level3 hasAnchor" number="9.2.2">
+<h3><span class="header-section-number">9.2.2</span> Phases of the ML project<a href="machine-learning-project-management.html#phases-of-the-ml-project" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ol style="list-style-type: decimal">
+<li><p>Framing the problem</p></li>
+<li><p>Data collection &amp; management</p></li>
+<li><p>Building infrastructure (data pipeline, databases, training &amp;
+deployment pipelines should at least work the same way as the
+designated product unless its a quick’n’dirty PoC)</p></li>
+<li><p>Data ingestion, transformation &amp; feature engineering</p></li>
+<li><p>Model selection, training, testing &amp; evaluation</p></li>
+<li><p>Deployment &amp; integration</p></li>
+<li><p>Monitoring</p></li>
+</ol>
+<p>More info: <a href="https://www.cloudskillsboost.google/course_templates/10">Google Cloud: How Google Does Machine
+Learning</a></p>
+</div>
+<div id="how-to-frame-ml-problems" class="section level3 hasAnchor" number="9.2.3">
+<h3><span class="header-section-number">9.2.3</span> How to frame ML problems<a href="machine-learning-project-management.html#how-to-frame-ml-problems" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><p><strong>The ML-view:</strong></p>
+<ul>
+<li><p>What is being predicted?</p></li>
+<li><p>What data do we need as target and input?</p></li>
+</ul></li>
+<li><p><strong>Software development view:</strong></p>
+<ul>
+<li><p>What info do we need from users to make a decision? (This
+defines the API)</p></li>
+<li><p>Who will use the service? How many people will that be?</p></li>
+<li><p>How is the process conducted today?</p></li>
+</ul></li>
+<li><p><strong>Data view:</strong></p>
+<ul>
+<li><p>What data needs to be collected? From where?</p></li>
+<li><p>How do we need to transform the data to analyze it &amp; make
+decisions on it? (Feature engineering)</p></li>
+<li><p>How do we react to the outputs of the algorithm? (e.g. kick off
+automatic process, inform stakeholders…)</p></li>
+</ul></li>
+</ul>
+<p>More info: <a href="https://www.cloudskillsboost.google/course_templates/10">Google Cloud: How Google Does Machine
+Learning</a></p>
+</div>
+</div>
+<div id="common-pitfalls-in-machine-learning" class="section level2 hasAnchor" number="9.3">
+<h2><span class="header-section-number">9.3</span> Common pitfalls in machine learning<a href="machine-learning-project-management.html#common-pitfalls-in-machine-learning" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li><p>Underestimate the effort for data collection, engineering,
+transformation &amp; ingestion</p></li>
+<li><p>Focus too much effort in optimizing the machine learning algorithm
+instead of getting more data</p></li>
+<li><p>Having too few samples and diversity (independent attributes) or
+outdated/unrepresentative data</p></li>
+<li><p>Data is not properly maintained or not available as needed for the
+project</p></li>
+<li><p>Assume that no oversight will be necessary in data-,
+target-selection, feature engineering and monitoring from subject
+matter experts</p></li>
+<li><p>Optimize for a skewed indicator that causes unwanted side-effects in
+model decisions</p></li>
+<li><p>Building models from scratch, where pre-trained / off-the-shelf
+models do the job (especially text, image, audio and video tasks
+employing neural networks)</p></li>
+<li><p>Having no process for monitoring and retraining</p></li>
+</ul>
+<p>More info: <a href="https://www.cloudskillsboost.google/course_templates/10">Google Cloud: How Google Does Machine
+Learning</a></p>
+
 </div>
 </div>
             </section>
@@ -483,8 +458,8 @@ other and the target can influence the variables and vice versa.</p>
           </div>
         </div>
       </div>
-<a href="generative-models.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="neural-networks-neural-networks.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="machine-learning-automation-productivity.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -511,7 +486,7 @@ gitbook.start({
 },
 "fontsettings": null,
 "edit": {
-"link": "https://github.com/MoritzGuck/Machine-Learning-Reference/edit/master/06-Regression.Rmd",
+"link": "https://github.com/MoritzGuck/Machine-Learning-Reference/edit/master/11-ML_PM.Rmd",
 "text": "Edit"
 },
 "history": {

@@ -4,32 +4,26 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 4 Unsupervised Learning | Moritz’ Machine Learning Summary</title>
-  <meta name="description" content="<p>This is a minimal example of using the bookdown package to write a book.
-set in the _output.yml file.
-The HTML output format for this example is bookdown::gitbook,</p>" />
+  <title>Chapter 4 Unsupervised Learning | Machine Learning Reference</title>
+  <meta name="description" content="Chapter 4 Unsupervised Learning | Machine Learning Reference" />
   <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 4 Unsupervised Learning | Moritz’ Machine Learning Summary" />
+  <meta property="og:title" content="Chapter 4 Unsupervised Learning | Machine Learning Reference" />
   <meta property="og:type" content="book" />
   
-  <meta property="og:description" content="<p>This is a minimal example of using the bookdown package to write a book.
-set in the _output.yml file.
-The HTML output format for this example is bookdown::gitbook,</p>" />
-  <meta name="github-repo" content="rstudio/bookdown-demo" />
+  
+  <meta name="github-repo" content="MoritzGuck/Machine-Learning-Reference" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 4 Unsupervised Learning | Moritz’ Machine Learning Summary" />
+  <meta name="twitter:title" content="Chapter 4 Unsupervised Learning | Machine Learning Reference" />
   
-  <meta name="twitter:description" content="<p>This is a minimal example of using the bookdown package to write a book.
-set in the _output.yml file.
-The HTML output format for this example is bookdown::gitbook,</p>" />
+  
   
 
 <meta name="author" content="Moritz Gück" />
 
 
-<meta name="date" content="2023-02-12" />
+<meta name="date" content="2023-03-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -125,28 +119,6 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<style type="text/css">
-/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}
-</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -161,7 +133,7 @@ div.csl-indent {
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./">A Minimal Book Example</a></li>
+<li><a href="./"><b>Machine Learning Reference</b></a></li>
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Summary</a></li>
@@ -174,55 +146,52 @@ div.csl-indent {
 <li class="chapter" data-level="1.1.3" data-path="probability-theory-linear-algebra.html"><a href="probability-theory-linear-algebra.html#CLT"><i class="fa fa-check"></i><b>1.1.3</b> Central limit theorem</a></li>
 <li class="chapter" data-level="1.1.4" data-path="probability-theory-linear-algebra.html"><a href="probability-theory-linear-algebra.html#bayesian-probability"><i class="fa fa-check"></i><b>1.1.4</b> Bayesian probability</a></li>
 <li class="chapter" data-level="1.1.5" data-path="probability-theory-linear-algebra.html"><a href="probability-theory-linear-algebra.html#further-concepts"><i class="fa fa-check"></i><b>1.1.5</b> Further Concepts</a></li>
+<li class="chapter" data-level="1.1.6" data-path="probability-theory-linear-algebra.html"><a href="probability-theory-linear-algebra.html#statistical-tests"><i class="fa fa-check"></i><b>1.1.6</b> Statistical tests</a></li>
 </ul></li>
 <li class="chapter" data-level="1.2" data-path="probability-theory-linear-algebra.html"><a href="probability-theory-linear-algebra.html#linear-algebra"><i class="fa fa-check"></i><b>1.2</b> Linear Algebra</a>
 <ul>
 <li class="chapter" data-level="1.2.1" data-path="probability-theory-linear-algebra.html"><a href="probability-theory-linear-algebra.html#vectors"><i class="fa fa-check"></i><b>1.2.1</b> Vectors</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="data-basics.html"><a href="data-basics.html"><i class="fa fa-check"></i><b>2</b> Data Basics</a>
+<li class="chapter" data-level="2" data-path="data-representation-analysis-processing.html"><a href="data-representation-analysis-processing.html"><i class="fa fa-check"></i><b>2</b> Data: Representation, Analysis &amp; Processing</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="data-basics.html"><a href="data-basics.html#similarity-and-distance-measures"><i class="fa fa-check"></i><b>2.1</b> Similarity and Distance Measures</a>
+<li class="chapter" data-level="2.1" data-path="data-representation-analysis-processing.html"><a href="data-representation-analysis-processing.html#similarity-and-distance-measures"><i class="fa fa-check"></i><b>2.1</b> Similarity and Distance Measures</a>
 <ul>
-<li class="chapter" data-level="2.1.1" data-path="data-basics.html"><a href="data-basics.html#metrics"><i class="fa fa-check"></i><b>2.1.1</b> Metrics</a></li>
-<li class="chapter" data-level="2.1.2" data-path="data-basics.html"><a href="data-basics.html#similarity-measures-on-vectors"><i class="fa fa-check"></i><b>2.1.2</b> Similarity measures on vectors</a></li>
+<li class="chapter" data-level="2.1.1" data-path="data-representation-analysis-processing.html"><a href="data-representation-analysis-processing.html#metrics"><i class="fa fa-check"></i><b>2.1.1</b> Metrics</a></li>
+<li class="chapter" data-level="2.1.2" data-path="data-representation-analysis-processing.html"><a href="data-representation-analysis-processing.html#similarity-measures-on-vectors"><i class="fa fa-check"></i><b>2.1.2</b> Similarity measures on vectors</a></li>
+<li class="chapter" data-level="2.1.3" data-path="data-representation-analysis-processing.html"><a href="data-representation-analysis-processing.html#kernels"><i class="fa fa-check"></i><b>2.1.3</b> Kernels</a></li>
 </ul></li>
-<li class="chapter" data-level="2.2" data-path="data-basics.html"><a href="data-basics.html#preprocessing-data"><i class="fa fa-check"></i><b>2.2</b> Preprocessing data</a>
+<li class="chapter" data-level="2.2" data-path="data-representation-analysis-processing.html"><a href="data-representation-analysis-processing.html#data-analysis"><i class="fa fa-check"></i><b>2.2</b> Data Analysis</a>
 <ul>
-<li class="chapter" data-level="2.2.1" data-path="data-basics.html"><a href="data-basics.html#standardization"><i class="fa fa-check"></i><b>2.2.1</b> Standardization</a></li>
-<li class="chapter" data-level="2.2.2" data-path="data-basics.html"><a href="data-basics.html#encoding-categorical-features"><i class="fa fa-check"></i><b>2.2.2</b> Encoding categorical features</a></li>
-<li class="chapter" data-level="2.2.3" data-path="data-basics.html"><a href="data-basics.html#imputing-missing-values"><i class="fa fa-check"></i><b>2.2.3</b> Imputing missing values</a></li>
+<li class="chapter" data-level="2.2.1" data-path="data-representation-analysis-processing.html"><a href="data-representation-analysis-processing.html#exploratory-data-analysis"><i class="fa fa-check"></i><b>2.2.1</b> Exploratory data analysis</a></li>
+<li class="chapter" data-level="2.2.2" data-path="data-representation-analysis-processing.html"><a href="data-representation-analysis-processing.html#output-analysis"><i class="fa fa-check"></i><b>2.2.2</b> Output Analysis</a></li>
+<li class="chapter" data-level="2.2.3" data-path="data-representation-analysis-processing.html"><a href="data-representation-analysis-processing.html#monitoring"><i class="fa fa-check"></i><b>2.2.3</b> Monitoring</a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="data-basics.html"><a href="data-basics.html#splitting-in-training--and-test-data"><i class="fa fa-check"></i><b>2.3</b> Splitting in training- and test-data</a></li>
-<li class="chapter" data-level="2.4" data-path="data-basics.html"><a href="data-basics.html#feature-selection"><i class="fa fa-check"></i><b>2.4</b> Feature selection</a>
+<li class="chapter" data-level="2.3" data-path="data-representation-analysis-processing.html"><a href="data-representation-analysis-processing.html#preprocessing-data"><i class="fa fa-check"></i><b>2.3</b> Preprocessing data</a>
 <ul>
-<li class="chapter" data-level="2.4.1" data-path="data-basics.html"><a href="data-basics.html#a-priori-feature-selection"><i class="fa fa-check"></i><b>2.4.1</b> A priori feature selection</a></li>
-<li class="chapter" data-level="2.4.2" data-path="data-basics.html"><a href="data-basics.html#wrapper-methods"><i class="fa fa-check"></i><b>2.4.2</b> wrapper methods</a></li>
-<li class="chapter" data-level="2.4.3" data-path="data-basics.html"><a href="data-basics.html#advice-pitfalls"><i class="fa fa-check"></i><b>2.4.3</b> Advice &amp; Pitfalls</a></li>
+<li class="chapter" data-level="2.3.1" data-path="data-representation-analysis-processing.html"><a href="data-representation-analysis-processing.html#handling-missing-values"><i class="fa fa-check"></i><b>2.3.1</b> Handling missing values</a></li>
+<li class="chapter" data-level="2.3.2" data-path="data-representation-analysis-processing.html"><a href="data-representation-analysis-processing.html#date-and-time"><i class="fa fa-check"></i><b>2.3.2</b> Date and time</a></li>
+<li class="chapter" data-level="2.3.3" data-path="data-representation-analysis-processing.html"><a href="data-representation-analysis-processing.html#replacing-data"><i class="fa fa-check"></i><b>2.3.3</b> Replacing data</a></li>
+<li class="chapter" data-level="2.3.4" data-path="data-representation-analysis-processing.html"><a href="data-representation-analysis-processing.html#encoding-data"><i class="fa fa-check"></i><b>2.3.4</b> Encoding data</a></li>
+<li class="chapter" data-level="2.3.5" data-path="data-representation-analysis-processing.html"><a href="data-representation-analysis-processing.html#standardization"><i class="fa fa-check"></i><b>2.3.5</b> Standardization</a></li>
+<li class="chapter" data-level="2.3.6" data-path="data-representation-analysis-processing.html"><a href="data-representation-analysis-processing.html#splitting-in-training--and-test-data"><i class="fa fa-check"></i><b>2.3.6</b> Splitting in training- and test-data</a></li>
+<li class="chapter" data-level="2.3.7" data-path="data-representation-analysis-processing.html"><a href="data-representation-analysis-processing.html#feature-selection"><i class="fa fa-check"></i><b>2.3.7</b> Feature selection</a></li>
+<li class="chapter" data-level="2.3.8" data-path="data-representation-analysis-processing.html"><a href="data-representation-analysis-processing.html#hyper-parameter-tuning"><i class="fa fa-check"></i><b>2.3.8</b> Hyper-parameter tuning</a></li>
+<li class="chapter" data-level="2.3.9" data-path="data-representation-analysis-processing.html"><a href="data-representation-analysis-processing.html#model-selection"><i class="fa fa-check"></i><b>2.3.9</b> Model selection</a></li>
 </ul></li>
-<li class="chapter" data-level="2.5" data-path="data-basics.html"><a href="data-basics.html#hyper-parameter-tuning"><i class="fa fa-check"></i><b>2.5</b> Hyper-parameter tuning</a>
+<li class="chapter" data-level="2.4" data-path="data-representation-analysis-processing.html"><a href="data-representation-analysis-processing.html#errors-regularization"><i class="fa fa-check"></i><b>2.4</b> Errors &amp; regularization</a>
 <ul>
-<li class="chapter" data-level="2.5.1" data-path="data-basics.html"><a href="data-basics.html#grid-search"><i class="fa fa-check"></i><b>2.5.1</b> Grid search</a></li>
-<li class="chapter" data-level="2.5.2" data-path="data-basics.html"><a href="data-basics.html#randomized-search"><i class="fa fa-check"></i><b>2.5.2</b> randomized search</a></li>
+<li class="chapter" data-level="2.4.1" data-path="data-representation-analysis-processing.html"><a href="data-representation-analysis-processing.html#bias-and-variance"><i class="fa fa-check"></i><b>2.4.1</b> Bias and Variance</a></li>
+<li class="chapter" data-level="2.4.2" data-path="data-representation-analysis-processing.html"><a href="data-representation-analysis-processing.html#regularization"><i class="fa fa-check"></i><b>2.4.2</b> Regularization</a></li>
+<li class="chapter" data-level="2.4.3" data-path="data-representation-analysis-processing.html"><a href="data-representation-analysis-processing.html#bagging"><i class="fa fa-check"></i><b>2.4.3</b> Bagging</a></li>
+<li class="chapter" data-level="2.4.4" data-path="data-representation-analysis-processing.html"><a href="data-representation-analysis-processing.html#boosting"><i class="fa fa-check"></i><b>2.4.4</b> Boosting</a></li>
+<li class="chapter" data-level="2.4.5" data-path="data-representation-analysis-processing.html"><a href="data-representation-analysis-processing.html#stacking"><i class="fa fa-check"></i><b>2.4.5</b> Stacking</a></li>
 </ul></li>
-<li class="chapter" data-level="2.6" data-path="data-basics.html"><a href="data-basics.html#model-selection"><i class="fa fa-check"></i><b>2.6</b> Model selection</a>
+<li class="chapter" data-level="2.5" data-path="data-representation-analysis-processing.html"><a href="data-representation-analysis-processing.html#tips-for-machine-learning-projects"><i class="fa fa-check"></i><b>2.5</b> Tips for machine learning projects</a>
 <ul>
-<li class="chapter" data-level="2.6.1" data-path="data-basics.html"><a href="data-basics.html#crossval"><i class="fa fa-check"></i><b>2.6.1</b> Cross Validation</a></li>
-<li class="chapter" data-level="2.6.2" data-path="data-basics.html"><a href="data-basics.html#bootstrapping"><i class="fa fa-check"></i><b>2.6.2</b> Bootstrapping</a></li>
+<li class="chapter" data-level="2.5.1" data-path="data-representation-analysis-processing.html"><a href="data-representation-analysis-processing.html#general-advice"><i class="fa fa-check"></i><b>2.5.1</b> General advice</a></li>
+<li class="chapter" data-level="2.5.2" data-path="data-representation-analysis-processing.html"><a href="data-representation-analysis-processing.html#common-mistakes"><i class="fa fa-check"></i><b>2.5.2</b> Common mistakes</a></li>
 </ul></li>
-<li class="chapter" data-level="2.7" data-path="data-basics.html"><a href="data-basics.html#errors-in-machine-learning"><i class="fa fa-check"></i><b>2.7</b> Errors in machine learning</a>
-<ul>
-<li class="chapter" data-level="2.7.1" data-path="data-basics.html"><a href="data-basics.html#bias-and-variance"><i class="fa fa-check"></i><b>2.7.1</b> Bias and Variance</a></li>
-<li class="chapter" data-level="2.7.2" data-path="data-basics.html"><a href="data-basics.html#regularization"><i class="fa fa-check"></i><b>2.7.2</b> Regularization</a></li>
-<li class="chapter" data-level="2.7.3" data-path="data-basics.html"><a href="data-basics.html#bagging"><i class="fa fa-check"></i><b>2.7.3</b> Bagging</a></li>
-<li class="chapter" data-level="2.7.4" data-path="data-basics.html"><a href="data-basics.html#boosting"><i class="fa fa-check"></i><b>2.7.4</b> Boosting</a></li>
-<li class="chapter" data-level="2.7.5" data-path="data-basics.html"><a href="data-basics.html#stacking"><i class="fa fa-check"></i><b>2.7.5</b> Stacking</a></li>
-</ul></li>
-<li class="chapter" data-level="2.8" data-path="data-basics.html"><a href="data-basics.html#tips-for-machine-learning-projects"><i class="fa fa-check"></i><b>2.8</b> Tips for machine learning projects</a>
-<ul>
-<li class="chapter" data-level="2.8.1" data-path="data-basics.html"><a href="data-basics.html#general-advice"><i class="fa fa-check"></i><b>2.8.1</b> General advice</a></li>
-</ul></li>
-<li class="chapter" data-level="2.9" data-path="data-basics.html"><a href="data-basics.html#common-mistakes"><i class="fa fa-check"></i><b>2.9</b> Common mistakes</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="classification-methods.html"><a href="classification-methods.html"><i class="fa fa-check"></i><b>3</b> Classification Methods</a>
 <ul>
@@ -278,8 +247,8 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="6.1" data-path="regression.html"><a href="regression.html#evaluation-of-regression-models"><i class="fa fa-check"></i><b>6.1</b> Evaluation of regression models</a>
 <ul>
-<li class="chapter" data-level="6.1.1" data-path="regression.html"><a href="regression.html#r2-score"><i class="fa fa-check"></i><b>6.1.1</b> R^2 score</a></li>
-<li class="chapter" data-level="6.1.2" data-path="regression.html"><a href="regression.html#mean-squared-error"><i class="fa fa-check"></i><b>6.1.2</b> Mean squared error</a></li>
+<li class="chapter" data-level="6.1.1" data-path="regression.html"><a href="regression.html#mean-squared-error"><i class="fa fa-check"></i><b>6.1.1</b> Mean squared error</a></li>
+<li class="chapter" data-level="6.1.2" data-path="regression.html"><a href="regression.html#r2-score-coefficient-of-determination"><i class="fa fa-check"></i><b>6.1.2</b> R^2 score / coefficient of determination</a></li>
 <li class="chapter" data-level="6.1.3" data-path="regression.html"><a href="regression.html#visual-tools"><i class="fa fa-check"></i><b>6.1.3</b> Visual tools</a></li>
 </ul></li>
 <li class="chapter" data-level="6.2" data-path="regression.html"><a href="regression.html#linear-models"><i class="fa fa-check"></i><b>6.2</b> Linear Models</a>
@@ -288,7 +257,8 @@ div.csl-indent {
 <li class="chapter" data-level="6.2.2" data-path="regression.html"><a href="regression.html#lasso-regression"><i class="fa fa-check"></i><b>6.2.2</b> Lasso regression</a></li>
 <li class="chapter" data-level="6.2.3" data-path="regression.html"><a href="regression.html#ridge-regression"><i class="fa fa-check"></i><b>6.2.3</b> Ridge regression</a></li>
 <li class="chapter" data-level="6.2.4" data-path="regression.html"><a href="regression.html#bayesian-regression"><i class="fa fa-check"></i><b>6.2.4</b> Bayesian regression</a></li>
-<li class="chapter" data-level="6.2.5" data-path="regression.html"><a href="regression.html#generalized-linear-models"><i class="fa fa-check"></i><b>6.2.5</b> Generalized linear models</a></li>
+<li class="chapter" data-level="6.2.5" data-path="regression.html"><a href="regression.html#anova"><i class="fa fa-check"></i><b>6.2.5</b> ANOVA</a></li>
+<li class="chapter" data-level="6.2.6" data-path="regression.html"><a href="regression.html#generalized-linear-models"><i class="fa fa-check"></i><b>6.2.6</b> Generalized linear models</a></li>
 </ul></li>
 <li class="chapter" data-level="6.3" data-path="regression.html"><a href="regression.html#gaussian-process-regression"><i class="fa fa-check"></i><b>6.3</b> Gaussian process regression</a></li>
 <li class="chapter" data-level="6.4" data-path="regression.html"><a href="regression.html#gradient-boosted-tree-regression"><i class="fa fa-check"></i><b>6.4</b> Gradient boosted tree regression</a></li>
@@ -318,18 +288,30 @@ div.csl-indent {
 <li class="chapter" data-level="7.6" data-path="neural-networks-neural-networks.html"><a href="neural-networks-neural-networks.html#recurrent-neural-networks"><i class="fa fa-check"></i><b>7.6</b> Recurrent neural networks</a></li>
 <li class="chapter" data-level="7.7" data-path="neural-networks-neural-networks.html"><a href="neural-networks-neural-networks.html#long-short-term-memory-networks"><i class="fa fa-check"></i><b>7.7</b> Long short-term memory networks</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="explanation-and-inspection-methods.html"><a href="explanation-and-inspection-methods.html"><i class="fa fa-check"></i><b>8</b> Explanation and inspection methods</a>
+<li class="chapter" data-level="8" data-path="machine-learning-automation-productivity.html"><a href="machine-learning-automation-productivity.html"><i class="fa fa-check"></i><b>8</b> Machine learning Automation &amp; Productivity</a>
 <ul>
-<li class="chapter" data-level="8.1" data-path="explanation-and-inspection-methods.html"><a href="explanation-and-inspection-methods.html#global-explainability-methods"><i class="fa fa-check"></i><b>8.1</b> Global explainability methods</a>
+<li class="chapter" data-level="8.1" data-path="machine-learning-automation-productivity.html"><a href="machine-learning-automation-productivity.html#holistic-approach"><i class="fa fa-check"></i><b>8.1</b> Holistic approach</a>
 <ul>
-<li class="chapter" data-level="8.1.1" data-path="explanation-and-inspection-methods.html"><a href="explanation-and-inspection-methods.html#inherently-explainable-algorithms"><i class="fa fa-check"></i><b>8.1.1</b> Inherently explainable algorithms</a></li>
+<li class="chapter" data-level="8.1.1" data-path="machine-learning-automation-productivity.html"><a href="machine-learning-automation-productivity.html#autosklearn"><i class="fa fa-check"></i><b>8.1.1</b> Autosklearn</a></li>
+<li class="chapter" data-level="8.1.2" data-path="machine-learning-automation-productivity.html"><a href="machine-learning-automation-productivity.html#flaml"><i class="fa fa-check"></i><b>8.1.2</b> FLAML</a></li>
+<li class="chapter" data-level="8.1.3" data-path="machine-learning-automation-productivity.html"><a href="machine-learning-automation-productivity.html#h2o.ai"><i class="fa fa-check"></i><b>8.1.3</b> H2O.ai</a></li>
+<li class="chapter" data-level="8.1.4" data-path="machine-learning-automation-productivity.html"><a href="machine-learning-automation-productivity.html#autokeras"><i class="fa fa-check"></i><b>8.1.4</b> AutoKeras</a></li>
 </ul></li>
-<li class="chapter" data-level="8.2" data-path="explanation-and-inspection-methods.html"><a href="explanation-and-inspection-methods.html#local-explainability-methods"><i class="fa fa-check"></i><b>8.2</b> Local explainability methods</a>
-<ul>
-<li class="chapter" data-level="8.2.1" data-path="explanation-and-inspection-methods.html"><a href="explanation-and-inspection-methods.html#shapely-method"><i class="fa fa-check"></i><b>8.2.1</b> Shapely method</a></li>
-<li class="chapter" data-level="8.2.2" data-path="explanation-and-inspection-methods.html"><a href="explanation-and-inspection-methods.html#lime"><i class="fa fa-check"></i><b>8.2.2</b> LIME</a></li>
-<li class="chapter" data-level="8.2.3" data-path="explanation-and-inspection-methods.html"><a href="explanation-and-inspection-methods.html#anchor-methods"><i class="fa fa-check"></i><b>8.2.3</b> Anchor methods</a></li>
+<li class="chapter" data-level="8.2" data-path="machine-learning-automation-productivity.html"><a href="machine-learning-automation-productivity.html#model-selection-automation"><i class="fa fa-check"></i><b>8.2</b> Model selection automation</a></li>
+<li class="chapter" data-level="8.3" data-path="machine-learning-automation-productivity.html"><a href="machine-learning-automation-productivity.html#feature-engineering-automation"><i class="fa fa-check"></i><b>8.3</b> Feature engineering automation</a></li>
+<li class="chapter" data-level="8.4" data-path="machine-learning-automation-productivity.html"><a href="machine-learning-automation-productivity.html#cookie-cutter-visualizations"><i class="fa fa-check"></i><b>8.4</b> cookie-cutter Visualizations</a></li>
+<li class="chapter" data-level="8.5" data-path="machine-learning-automation-productivity.html"><a href="machine-learning-automation-productivity.html#comprehensive-validation-reports"><i class="fa fa-check"></i><b>8.5</b> Comprehensive validation reports</a></li>
 </ul></li>
+<li class="chapter" data-level="9" data-path="machine-learning-project-management.html"><a href="machine-learning-project-management.html"><i class="fa fa-check"></i><b>9</b> Machine Learning Project Management</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="machine-learning-project-management.html"><a href="machine-learning-project-management.html#basis-for-machine-learning-in-companies"><i class="fa fa-check"></i><b>9.1</b> Basis for Machine Learning in Companies</a></li>
+<li class="chapter" data-level="9.2" data-path="machine-learning-project-management.html"><a href="machine-learning-project-management.html#how-to-automate-business-processes-with-machine-learning"><i class="fa fa-check"></i><b>9.2</b> How to automate business processes with machine learning</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="machine-learning-project-management.html"><a href="machine-learning-project-management.html#the-stages-from-manual-to-ml"><i class="fa fa-check"></i><b>9.2.1</b> The stages from ManuaL to ML</a></li>
+<li class="chapter" data-level="9.2.2" data-path="machine-learning-project-management.html"><a href="machine-learning-project-management.html#phases-of-the-ml-project"><i class="fa fa-check"></i><b>9.2.2</b> Phases of the ML project</a></li>
+<li class="chapter" data-level="9.2.3" data-path="machine-learning-project-management.html"><a href="machine-learning-project-management.html#how-to-frame-ml-problems"><i class="fa fa-check"></i><b>9.2.3</b> How to frame ML problems</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="machine-learning-project-management.html"><a href="machine-learning-project-management.html#common-pitfalls-in-machine-learning"><i class="fa fa-check"></i><b>9.3</b> Common pitfalls in machine learning</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -343,7 +325,7 @@ div.csl-indent {
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Moritz’ Machine Learning Summary</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Machine Learning Reference</a>
           </h1>
         </div>
 
@@ -381,12 +363,12 @@ highest silhouette coefficients.</p>
 <li>The silhouette coefficient is mainly suitable for convex clusters,
 since it gives high values to this kind of clusters.</li>
 </ul>
-<div class="sourceCode" id="cb23"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb23-1"><a href="unsupervised-learning.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> silhouette_score</span>
-<span id="cb23-2"><a href="unsupervised-learning.html#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cluster <span class="im">import</span> KMeans</span>
-<span id="cb23-3"><a href="unsupervised-learning.html#cb23-3" aria-hidden="true" tabindex="-1"></a>clu <span class="op">=</span> KMeans(n_clusters<span class="op">=</span><span class="dv">4</span>)</span>
-<span id="cb23-4"><a href="unsupervised-learning.html#cb23-4" aria-hidden="true" tabindex="-1"></a>clu.fit(X)</span>
-<span id="cb23-5"><a href="unsupervised-learning.html#cb23-5" aria-hidden="true" tabindex="-1"></a>labels <span class="op">=</span> clu.labels_</span>
-<span id="cb23-6"><a href="unsupervised-learning.html#cb23-6" aria-hidden="true" tabindex="-1"></a>silhouette_score(X, labels, metric<span class="op">=</span><span class="st">&#39;manhattan&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb37-1"><a href="unsupervised-learning.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> silhouette_score</span>
+<span id="cb37-2"><a href="unsupervised-learning.html#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cluster <span class="im">import</span> KMeans</span>
+<span id="cb37-3"><a href="unsupervised-learning.html#cb37-3" aria-hidden="true" tabindex="-1"></a>clu <span class="op">=</span> KMeans(n_clusters<span class="op">=</span><span class="dv">4</span>)</span>
+<span id="cb37-4"><a href="unsupervised-learning.html#cb37-4" aria-hidden="true" tabindex="-1"></a>clu.fit(X)</span>
+<span id="cb37-5"><a href="unsupervised-learning.html#cb37-5" aria-hidden="true" tabindex="-1"></a>labels <span class="op">=</span> clu.labels_</span>
+<span id="cb37-6"><a href="unsupervised-learning.html#cb37-6" aria-hidden="true" tabindex="-1"></a>silhouette_score(X, labels, metric<span class="op">=</span><span class="st">&#39;manhattan&#39;</span>)</span></code></pre></div>
 <p>More info:
 <a href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.silhouette_score.html">scikit-learn.org</a><br />
 </p>
@@ -396,11 +378,11 @@ where values closer to 0 indicate a better clustering.</p>
 </div>
 <div id="adjusted-mutual-information-score" class="section level4 hasAnchor" number="4.1.1.2">
 <h4><span class="header-section-number">4.1.1.2</span> Adjusted mutual information score<a href="unsupervised-learning.html#adjusted-mutual-information-score" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>If you have labelled samples, you can use the <a href="data-basics.html#mutual_info">mutual information
+<p>If you have labelled samples, you can use the <a href="data-representation-analysis-processing.html#mutual_info">mutual information
 score</a> to test if the classes correspond to your clusters.
 The <em>adjusted</em> mutual information score adjusts for chance.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb24-1"><a href="unsupervised-learning.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> adjusted_mutual_info_score</span>
-<span id="cb24-2"><a href="unsupervised-learning.html#cb24-2" aria-hidden="true" tabindex="-1"></a>adjusted_mutual_info_score(Y, clusters)</span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb38-1"><a href="unsupervised-learning.html#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> adjusted_mutual_info_score</span>
+<span id="cb38-2"><a href="unsupervised-learning.html#cb38-2" aria-hidden="true" tabindex="-1"></a>adjusted_mutual_info_score(Y, clusters)</span></code></pre></div>
 </div>
 </div>
 <div id="k-means-clustering" class="section level3 hasAnchor" number="4.1.2">
@@ -423,10 +405,10 @@ k-Means. On the right the data points have been assigned to their actual
 species. <em>Figure from <a href="https://commons.wikimedia.org/wiki/File:Autoencoder_schema.png">user Chire on
 wikimedia.org</a>.</em></p>
 </div>
-<div class="sourceCode" id="cb25"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb25-1"><a href="unsupervised-learning.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cluster <span class="im">import</span> KMeans</span>
-<span id="cb25-2"><a href="unsupervised-learning.html#cb25-2" aria-hidden="true" tabindex="-1"></a>kmeans <span class="op">=</span> KMeans(n_clusters<span class="op">=</span><span class="dv">4</span>)</span>
-<span id="cb25-3"><a href="unsupervised-learning.html#cb25-3" aria-hidden="true" tabindex="-1"></a>kmeans.fit(X)</span>
-<span id="cb25-4"><a href="unsupervised-learning.html#cb25-4" aria-hidden="true" tabindex="-1"></a>kmeans.predict([[<span class="dv">5</span>, <span class="dv">1</span>]])</span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb39-1"><a href="unsupervised-learning.html#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cluster <span class="im">import</span> KMeans</span>
+<span id="cb39-2"><a href="unsupervised-learning.html#cb39-2" aria-hidden="true" tabindex="-1"></a>kmeans <span class="op">=</span> KMeans(n_clusters<span class="op">=</span><span class="dv">4</span>)</span>
+<span id="cb39-3"><a href="unsupervised-learning.html#cb39-3" aria-hidden="true" tabindex="-1"></a>kmeans.fit(X)</span>
+<span id="cb39-4"><a href="unsupervised-learning.html#cb39-4" aria-hidden="true" tabindex="-1"></a>kmeans.predict([[<span class="dv">5</span>, <span class="dv">1</span>]])</span></code></pre></div>
 <p>More info:
 <a href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html">scikit-learn.org</a><br />
 </p>
@@ -464,9 +446,9 @@ any cluster).</p></li>
 </ol>
 <p><strong>!</strong> For points between clusters, the assignment to a cluster depends
 on the order of point assignments.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb26-1"><a href="unsupervised-learning.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cluster <span class="im">import</span> DBSCAN</span>
-<span id="cb26-2"><a href="unsupervised-learning.html#cb26-2" aria-hidden="true" tabindex="-1"></a>dbscan <span class="op">=</span> DBSCAN(eps<span class="op">=</span><span class="dv">3</span>, min_samples<span class="op">=</span><span class="dv">4</span>)</span>
-<span id="cb26-3"><a href="unsupervised-learning.html#cb26-3" aria-hidden="true" tabindex="-1"></a>dbscan.fit(X)</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb40-1"><a href="unsupervised-learning.html#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cluster <span class="im">import</span> DBSCAN</span>
+<span id="cb40-2"><a href="unsupervised-learning.html#cb40-2" aria-hidden="true" tabindex="-1"></a>dbscan <span class="op">=</span> DBSCAN(eps<span class="op">=</span><span class="dv">3</span>, min_samples<span class="op">=</span><span class="dv">4</span>)</span>
+<span id="cb40-3"><a href="unsupervised-learning.html#cb40-3" aria-hidden="true" tabindex="-1"></a>dbscan.fit(X)</span></code></pre></div>
 <p>More info:
 <a href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.DBSCAN.html">scikit-learn.org</a><br />
 </p>
@@ -530,12 +512,12 @@ at 0 or median value.</p></li>
 <li><p>You get the final cluster assignments by normalizing the now
 k-dimensional data and applying k-means clustering to it.</p></li>
 </ul>
-<div class="sourceCode" id="cb27"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb27-1"><a href="unsupervised-learning.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cluster <span class="im">import</span> SpectralClustering</span>
-<span id="cb27-2"><a href="unsupervised-learning.html#cb27-2" aria-hidden="true" tabindex="-1"></a>scl <span class="op">=</span> SpectralClustering(n_clusters<span class="op">=</span><span class="dv">4</span>,</span>
-<span id="cb27-3"><a href="unsupervised-learning.html#cb27-3" aria-hidden="true" tabindex="-1"></a>        affinity<span class="op">=</span><span class="st">&#39;rbf&#39;</span>,</span>
-<span id="cb27-4"><a href="unsupervised-learning.html#cb27-4" aria-hidden="true" tabindex="-1"></a>        assign_labels<span class="op">=</span><span class="st">&#39;cluster_qr&#39;</span>, <span class="co"># assigns labels directly from Eig vecs,</span></span>
-<span id="cb27-5"><a href="unsupervised-learning.html#cb27-5" aria-hidden="true" tabindex="-1"></a>        n<span class="op">-</span>jobs <span class="op">=</span> <span class="op">-</span><span class="dv">1</span>)</span>
-<span id="cb27-6"><a href="unsupervised-learning.html#cb27-6" aria-hidden="true" tabindex="-1"></a>scl.fit(X)</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb41-1"><a href="unsupervised-learning.html#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cluster <span class="im">import</span> SpectralClustering</span>
+<span id="cb41-2"><a href="unsupervised-learning.html#cb41-2" aria-hidden="true" tabindex="-1"></a>scl <span class="op">=</span> SpectralClustering(n_clusters<span class="op">=</span><span class="dv">4</span>,</span>
+<span id="cb41-3"><a href="unsupervised-learning.html#cb41-3" aria-hidden="true" tabindex="-1"></a>        affinity<span class="op">=</span><span class="st">&#39;rbf&#39;</span>,</span>
+<span id="cb41-4"><a href="unsupervised-learning.html#cb41-4" aria-hidden="true" tabindex="-1"></a>        assign_labels<span class="op">=</span><span class="st">&#39;cluster_qr&#39;</span>, <span class="co"># assigns labels directly from Eig vecs,</span></span>
+<span id="cb41-5"><a href="unsupervised-learning.html#cb41-5" aria-hidden="true" tabindex="-1"></a>        n<span class="op">-</span>jobs <span class="op">=</span> <span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb41-6"><a href="unsupervised-learning.html#cb41-6" aria-hidden="true" tabindex="-1"></a>scl.fit(X)</span></code></pre></div>
 <p>More info:
 <a href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.SpectralClustering.html">scikit-learn.org</a><br />
 </p>
@@ -556,9 +538,9 @@ you a sparse matrix). This matrix can then be used for e.g. spectral
 clustering.</p>
 <p>More details in the <a href="https://ieeexplore.ieee.org/document/7780794">original paper on
 SSC-OMP</a>.</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb28-1"><a href="unsupervised-learning.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> cluster.selfrepresentation <span class="im">import</span> SparseSubspaceClusteringOMP</span>
-<span id="cb28-2"><a href="unsupervised-learning.html#cb28-2" aria-hidden="true" tabindex="-1"></a>ssc <span class="op">=</span> SparseSubspaceClusteringOMP(n_clusters<span class="op">=</span><span class="dv">3</span>,affinity<span class="op">=</span><span class="st">&quot;symmetrize&quot;</span>)</span>
-<span id="cb28-3"><a href="unsupervised-learning.html#cb28-3" aria-hidden="true" tabindex="-1"></a>ssc.fit(X)</span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb42-1"><a href="unsupervised-learning.html#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> cluster.selfrepresentation <span class="im">import</span> SparseSubspaceClusteringOMP</span>
+<span id="cb42-2"><a href="unsupervised-learning.html#cb42-2" aria-hidden="true" tabindex="-1"></a>ssc <span class="op">=</span> SparseSubspaceClusteringOMP(n_clusters<span class="op">=</span><span class="dv">3</span>,affinity<span class="op">=</span><span class="st">&quot;symmetrize&quot;</span>)</span>
+<span id="cb42-3"><a href="unsupervised-learning.html#cb42-3" aria-hidden="true" tabindex="-1"></a>ssc.fit(X)</span></code></pre></div>
 <p>More info: <a href="https://github.com/ChongYou/subspace-clustering">github.com</a></p>
 </div>
 <div id="soft-assignment-clustering" class="section level3 hasAnchor" number="4.1.6">
@@ -585,10 +567,10 @@ the cluster probabilities for all points.</p></li>
 via Bayes theorem.</p>
 <p>More info on the theory:
 <a href="https://brilliant.org/wiki/gaussian-mixture-model/">brilliant.org</a>.</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb29-1"><a href="unsupervised-learning.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.mixture <span class="im">import</span> GaussianMixture</span>
-<span id="cb29-2"><a href="unsupervised-learning.html#cb29-2" aria-hidden="true" tabindex="-1"></a>gm <span class="op">=</span> GaussianMixture(n_components<span class="op">=</span><span class="dv">4</span>, covariance_type<span class="op">=</span><span class="st">&#39;full&#39;</span>)</span>
-<span id="cb29-3"><a href="unsupervised-learning.html#cb29-3" aria-hidden="true" tabindex="-1"></a>gm.fit(X)</span>
-<span id="cb29-4"><a href="unsupervised-learning.html#cb29-4" aria-hidden="true" tabindex="-1"></a>gm.predict_proba(X)</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb43-1"><a href="unsupervised-learning.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.mixture <span class="im">import</span> GaussianMixture</span>
+<span id="cb43-2"><a href="unsupervised-learning.html#cb43-2" aria-hidden="true" tabindex="-1"></a>gm <span class="op">=</span> GaussianMixture(n_components<span class="op">=</span><span class="dv">4</span>, covariance_type<span class="op">=</span><span class="st">&#39;full&#39;</span>)</span>
+<span id="cb43-3"><a href="unsupervised-learning.html#cb43-3" aria-hidden="true" tabindex="-1"></a>gm.fit(X)</span>
+<span id="cb43-4"><a href="unsupervised-learning.html#cb43-4" aria-hidden="true" tabindex="-1"></a>gm.predict_proba(X)</span></code></pre></div>
 <p>More info:
 <a href="https://scikit-learn.org/stable/modules/generated/sklearn.mixture.GaussianMixture.html">scikit-learn.org</a></p>
 </div>
@@ -597,6 +579,18 @@ via Bayes theorem.</p>
 <p>Other models also have means to calculate cluster probabilities for
 points. For the HDBSCAN-algorithm see
 <a href="https://hdbscan.readthedocs.io/en/latest/soft_clustering.html">here</a>.</p>
+</div>
+<div id="hierarchical-clustering" class="section level4 hasAnchor" number="4.1.6.3">
+<h4><span class="header-section-number">4.1.6.3</span> Hierarchical Clustering<a href="unsupervised-learning.html#hierarchical-clustering" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Instead of clustering a point to only one cluster, you assign it to a hierarchy.</p>
+<p><strong>Pros:</strong></p>
+<ul>
+<li>Hierarchies of clusters reflects the data set and therefore the relationship between points better.</li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul>
+<li>It is more difficult to make clear statements of cluster membership <span class="math inline">\(\rightarrow\)</span> define a limit for hierarchical depth</li>
+</ul>
 </div>
 </div>
 <div id="artificial-neural-networks-for-clustering" class="section level3 hasAnchor" number="4.1.7">
@@ -630,10 +624,15 @@ data into smaller ones, with much less data, but without loosing a lot
 of information. Please visit the <a href="probability-theory-linear-algebra.html#SVD1">mathematical explanation</a> for
 the underlying mechanisms.<br />
 </p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb44-1"><a href="unsupervised-learning.html#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.decomposition <span class="im">import</span> TruncatedSVD</span>
+<span id="cb44-2"><a href="unsupervised-learning.html#cb44-2" aria-hidden="true" tabindex="-1"></a>svd <span class="op">=</span> TruncatedSVD(n_components<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb44-3"><a href="unsupervised-learning.html#cb44-3" aria-hidden="true" tabindex="-1"></a>svd.fit_transform(X_train)</span>
+<span id="cb44-4"><a href="unsupervised-learning.html#cb44-4" aria-hidden="true" tabindex="-1"></a>svd.transform(X_test)</span></code></pre></div>
 <p><font color="grey"></p>
 </div>
 <div id="principle-component-analysis-pca" class="section level4 hasAnchor" number="4.2.2.2">
 <h4><span class="header-section-number">4.2.2.2</span> Principle Component analysis (PCA)<a href="unsupervised-learning.html#principle-component-analysis-pca" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<!-- use this for the explanation https://stats.stackexchange.com/questions/134282/relationship-between-svd-and-pca-how-to-use-svd-to-perform-pca?rq=1 -->
 <!--# TODO: Make subchapter: Kernel PCA -->
 </div>
 </div>
@@ -672,8 +671,8 @@ gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
 "github": false,
-"facebook": true,
-"twitter": true,
+"facebook": false,
+"twitter": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
@@ -681,13 +680,9 @@ gitbook.start({
 "whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
+"fontsettings": null,
 "edit": {
-"link": "https://github.com/USERNAME/REPO/edit/BRANCH/04-unsupervised.Rmd",
+"link": "https://github.com/MoritzGuck/Machine-Learning-Reference/edit/master/04-unsupervised.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -708,7 +703,8 @@ gitbook.start({
 },
 "toolbar": {
 "position": "static"
-}
+},
+"info": false
 });
 });
 </script>

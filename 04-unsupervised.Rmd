@@ -299,6 +299,20 @@ Other models also have means to calculate cluster probabilities for
 points. For the HDBSCAN-algorithm see
 [here](https://hdbscan.readthedocs.io/en/latest/soft_clustering.html).
 
+#### Hierarchical Clustering
+
+Instead of clustering a point to only one cluster, you assign it to a hierarchy. 
+
+**Pros:**
+
+- Hierarchies of clusters reflects the data set and therefore the relationship between points better.
+
+**Cons:**
+
+- It is more difficult to make clear statements of cluster membership $\rightarrow$ define a limit for hierarchical depth
+
+
+
 ### Artificial Neural Networks for Clustering
 
 See chapter *Neural Networks*
@@ -307,9 +321,9 @@ reference="Neural Networks"})
 
 ## Mapping to lower dimensions
 
-<font color="grey"> 
+<font color="grey">
 
-### Manifold learning 
+### Manifold learning
 
 #### Isomap
 
@@ -328,10 +342,18 @@ data into smaller ones, with much less data, but without loosing a lot
 of information. Please visit the [mathematical explanation](#SVD1) for
 the underlying mechanisms.\
 
-<font color="grey"> 
+```python
+from sklearn.decomposition import TruncatedSVD
+svd = TruncatedSVD(n_components=10)
+svd.fit_transform(X_train)
+svd.transform(X_test)
+```
+
+<font color="grey">
 
 #### Principle Component analysis (PCA)
 
+<!-- use this for the explanation https://stats.stackexchange.com/questions/134282/relationship-between-svd-and-pca-how-to-use-svd-to-perform-pca?rq=1 -->
 <!--# TODO: Make subchapter: Kernel PCA -->
 
 ## Outlier detection
@@ -340,4 +362,4 @@ the underlying mechanisms.\
 
 ### Isolation forest
 
-<font color="grey"> 
+<font color="grey">

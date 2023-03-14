@@ -1,5 +1,6 @@
 delete_merged_file: true
 edit: false
+rmd_files: ["index.Rmd", "01-Probability-Theory.Rmd", "02-Data.Rmd", "03-Classification.Rmd", "04-unsupervised.Rmd", "05-Generative.rmd", "06-Regression.Rmd", "07-Neural.rmd", "09-Automation.Rmd", "11-ML_PM.Rmd"]
 language:
   ui:
     chapter_name: "Chapter "

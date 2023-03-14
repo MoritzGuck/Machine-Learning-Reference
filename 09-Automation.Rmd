@@ -1,0 +1,54 @@
+---
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+
+
+# Machine learning Automation & Productivity
+
+To quickly get a confirmation that a target variable can actually be predicted with a certain accuracy, automated machine learning approaches are a huge time saver.
+To be useful in practice, the resulting models & pipelines need to be highly configurable upon investigation of their initial performance and shortcomings. Many auto-ML libraries we tested tend to overfitting. Using an uncommonly high number of cross validation folds usually helps. 
+\\ Here are a few auto-ML packages: 
+
+## Holistic approach
+
+### Autosklearn
+
+Auto-Sklearn does preprocessing, model selection, training and hyperparameter tuning. \\
+More info: [neurips.cc](https://proceedings.neurips.cc/paper/2015/file/11d0e6287202fced83f79975ec59a3a6-Paper.pdf)
+
+```python
+from autosklearn.classification import AutoSklearnClassifier
+clf = AutoSklearnClassifier(time_left_for_this_task=120, per_run_time_limit=30, resampling_strategy_arguments={"folds":10}, include={'data_preprocessor': ['NoPreprocessing']})
+clf.fit(X_train, y_train)
+y_pred = clf.predict(X_test)
+```
+More info: [automl.github.io](https://automl.github.io/auto-sklearn/master/index.html)
+
+<font color="grey">
+
+### FLAML 
+
+<!-- https://microsoft.github.io/FLAML/ -> Apparently easy to customize -->
+
+### H2O.ai
+
+H2O.ai's library includes an auto-ML library as well. For now it is not as configurable as desired. The library however contains further modules for admissible AI (ML that does not discriminated minarities etc.) and model explainability. \\
+More info: [h2o.ai](https://docs.h2o.ai/h2o/latest-stable/h2o-docs/automl.html)
+
+
+### AutoKeras
+
+<!-- https://autokeras.com/ -->
+
+## Model selection automation
+
+## Feature engineering automation
+
+## cookie-cutter Visualizations
+
+## Comprehensive validation reports
+
+</font>
