@@ -12,7 +12,7 @@ bookdown::gitbook:
       twitter: false
     download: ["pdf", "epub"]
     toolbar:
-      position: static
+      position: fixed
     info: false
     fontsettings: null
 

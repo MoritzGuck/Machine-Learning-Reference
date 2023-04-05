@@ -121,7 +121,7 @@ width="60%"}
 -   The **variance** measures the spread of a distribution:
     $var[X] = \sigma^2 = E[(X-\mu)^2] = E[X]^2 - \mu^2$.
 
--   The **standard deviation** is given by: $\sqrt{var[X]} = \sigma$.
+-   The **standard deviation** is given by: $\sqrt{var[X]} = \sigma$. It is interpreted as the deviation from the mean that needs to be expected.
 
 -   The **mode** is the value with the highest probability (or the point
     in the PDF with the highest value):

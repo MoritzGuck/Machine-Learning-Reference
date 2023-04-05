@@ -119,7 +119,7 @@ label of its $k$ nearest neighbors in the training data set.
 -   The prediction is time consuming and scales with n.
 
 ```{python , eval = FALSE }
-from sklearn import KNeighborsClassifier
+from sklearn.neighbors import KNeighborsClassifier
 kn_model = KNeighborsClassifier(n_neighbors=5)
 kn_model.fit(X, y)
 kn_model.predict([[5,1]])

@@ -43,6 +43,10 @@ More info: [h2o.ai](https://docs.h2o.ai/h2o/latest-stable/h2o-docs/automl.html)
 
 <!-- https://autokeras.com/ -->
 
+### Fastai
+
+<!-- https://docs.fast.ai/ -->
+
 ## Model selection automation
 
 ## Feature engineering automation

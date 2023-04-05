@@ -177,7 +177,6 @@ linear models.
 
 </font>
 
-
 ## Data Analysis
 
 Data analysis is conducted iteratively once you get hold of your data,
@@ -297,7 +296,7 @@ commonly used in exploratory data analysis to show the correlation of
 the different attributes.
 
 ``` python
-sns.heatmap(df.corr(), cmap="coolwarm", vmin=-1, vmax=1)
+sns.heatmap(df.corr(), cmap="coolwarm", vmin=-1, vmax=1, annot=True)
 ```
 
 ![](figures/heatmap_usa_housing.png){width="65%"}
@@ -373,7 +372,7 @@ More info:
 
 ## Preprocessing data
 
-### Handling missing values
+### Handling missing & wrong data
 
 Some algorithms assume that all features of all samples have numerical
 values. In these cases missing values have to be imputed (i.e. inferred)
@@ -392,7 +391,7 @@ samples and $d$ is the number of features.
 from sklearn.experimental import enable_iterative_imputer # necessary since the imputor is still experimental
 from sklearn.impute import IterativeImputer
 from sklearn.ensemble import RandomForestRegressor 
-rf_estimator = RamdomForestRegressor(n_estimators = 8, max_depth = 6, bootstrap = true)
+rf_estimator = RamdomForestRegressor(n_estimators = 8, max_depth = 6, bootstrap = True)
 imputor = IterativeImputer(random_state=0, estimator = rf_estimator, max_iter = 25)
 imputor.fit_transform(X)
 ```
@@ -410,16 +409,33 @@ df.dropna(how="any") # how="all" would delete a sample if all values were missin
 More info:
 [pandas.pydata.org](https://pandas.pydata.org/pandas-docs/version/0.18.1/generated/pandas.DataFrame.dropna.html)\
 
-### Date and time
+#### Deleting duplicate entries
 
-#### Converting to datetime format
+Duplicate entries need to be removed (exception: time series), to avoid
+over representation and leakage into test set.
+
+``` python
+import pandas as pd
+df.drop_duplicates(keep=False)
+```
+
+#### Replacing data
+
+``` python
+import pandas as pd
+df.Col.apply(lambda x: 0 if x=='zero' else 1)
+```
+
+### Working with Date and Time
+
+You can convert to the **datetime format** as follows:
 
 ``` python
 import pandas as pd
 pd.to_datetime(df.date_col, infer_datetime_format=True)
 ```
 
-#### Create columns for year, month, day
+You create columns for **year**, **month**, **day** like this:
 
 ``` python
 import pandas as pd
@@ -428,24 +444,14 @@ df['month'] = df.Date.dt.month
 df['day'] = df.Date.dt.day
 ```
 
-### Replacing data
-
-``` python
-import pandas as pd
-df.Col.apply(lambda x: 0 if x=='zero' else 1)
-```
-
-### Encoding data
+### Encoding & discretizing data
 
 There are multiple ways to encode data, especially non-vectorized data,
-to make it suitable for machine learning algorithms.
+to make it suitable for machine learning algorithms. The string values
+(e.g. "male", "female") of categorical features have to be converted
+into integers. This can be done by two methods:
 
-#### Encoding categorical features
-
-The string values (e.g. "male", "female") of features have to be
-converted into integers. This can be done by two methods:
-
-##### Ordinal Encoding
+#### Ordinal Encoding
 
 An integer is assigned to each category (e.g. "male"=0, "female"=1)
 
@@ -464,7 +470,7 @@ This method is useful when the categories have an ordered relationship
 an ordered relationship where there is none. For these cases
 one-hot-encoding is to be used.
 
-##### One-Hot Encoding
+#### One-Hot Encoding
 
 One-hot encoding assigns a separate feature-column for each category and
 encodes it binarily (e.g. if the sample is a dog, it has 1 in the
@@ -479,6 +485,56 @@ onehot_enc.transform(X)
 
 More info:
 [scikit-learn.org](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html)\
+
+Alternative:
+
+``` python
+import pandas as pd
+pd.get_dummies(X, columns = ["Sex", "Type"], drop_first=True)
+```
+
+More info:
+[pandas.pydata.org](https://pandas.pydata.org/docs/reference/api/pandas.get_dummies.html)
+
+#### Discretizing / binning data
+
+You can discretize features and targets from continuous to
+discrete/categorical (e.g. age in years to child, teenager, adult,
+elderly).
+
+``` python
+pd.cut(x=cont_series, bins= 4, labels=["child", "teenager", "adult", "elderly"])
+```
+
+More info:
+[pandas.pydata.org](https://pandas.pydata.org/docs/reference/api/pandas.cut.html)\
+
+Pros:
+
+-   It makes sense for the specific problem (e.g. targeting groups for
+    marketing).
+
+-   Improved signal-to-noise ratio (bins work like regularization).
+
+-   possibly highly non-linear relationship of continuous feature to
+    target is hard to learn for model.
+
+-   Better interpretability of features, results and model.
+
+-   Can be used to incorporate domain knowledge and make learning
+    easier.
+
+Cons:
+
+-   Your model and results lose information
+
+-   Senseless cut-offs between bins can create "artificial noise" and
+    make learning harder.
+
+More info:
+[stackexchange.com](https://datascience.stackexchange.com/q/19782/148392)\
+See also: [wikipedia: Sampling (signal
+processing)](https://en.wikipedia.org/wiki/Sampling_(signal_processing)).
 
 <font color="grey">
 
@@ -517,7 +573,7 @@ be centered and scaled to unit variance before training and prediction.
 ``` python
 from sklearn.preprocessing import StandardScaler
 scaler = StandardScaler()
-scaler.fit(input_df)
+scaler.fit_transform(input_df)
 ```
 
 More info:
@@ -568,10 +624,8 @@ such as decision trees.
 
 #### A priori feature selection
 
-##### Low variance threshold
-
-A cheap method is to remove all features with variance below a
-threshold.
+A cheap method is to remove all features with **variance** below a
+certain threshold.
 
 ``` python
 from sklearn.feature_selection import VarianceThreshold
@@ -582,10 +636,9 @@ selector.fit_transform(X)
 More info:
 [scikit-learn.org](https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.VarianceThreshold.html#sklearn.feature_selection.VarianceThreshold)
 
-##### Mutual information {#mutual_info}
-
-This method works by choosing the features that have the highest
-dependency between the features and the label.
+The **Mutual information {#mutual_info} score** works by choosing the
+features that have the highest dependency between the features and the
+label.
 
 $$ I(X, Y) =D_{KL} \left( P(X=x, Y=y), P(X=x) \otimes P(Y=y) \right) =\sum_{y \in Y} \sum_{x \in X}
     { P(X=x, Y=y) \log\left(\frac{P(X=x, Y=y)}{P(X=x)P(Y=y)}\right) }$$
@@ -608,11 +661,9 @@ More [[info:\\\\](info:){.uri}](%5Binfo:%5D(info:)%7B.uri%7D){.uri}
 
 #### wrapper methods
 
-##### Greedy feature selection
-
-Using greedy feature selection as a wrapper method, one commonly starts
-with 0 features and adds the feature that returns the highest score with
-the used classifier.
+Using **greedy feature selection** as a wrapper method, one commonly
+starts with 0 features and adds the feature that returns the highest
+score with the used classifier.
 
 ``` python
 from sklearn.feature_selection import SequentialFeatureSelector
@@ -662,9 +713,22 @@ for best practice.
 #### Grid search
 
 The classic approach is exhaustive grid search: You create a grid of
-hyperparameters and iterate over all combinations. The combination with
+hyper-parameters and iterate over all combinations. The combination with
 the best score is used in the end. This approach causes big
 computational costs due to the combinatorial explosion.
+
+```python
+from sklearn.model_selection import GridSearchCV # combines grid search with cross-validation
+from sklearn.neighbors import KNeighborsClassifier
+
+kn_model = KNeighborsClassifier(n_neighbors=3)
+parameters = {"n_neighbors": range(2,10), "p": [1,2], "weights": ["uniform", "distance"]}
+clf = GridSearchCV(kn_model, parameters, cv=5) 
+clf.fit(X_train, y_train)
+```
+
+More info:
+[scikit-learn.org](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html)\
 
 #### Randomized search
 
