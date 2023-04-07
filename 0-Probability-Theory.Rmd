@@ -1,0 +1,630 @@
+---
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+# Probability Theory & Linear Algebra
+
+## Probability Theory
+
+A probability is a measure of how frequent or likely an event will take
+place.
+
+### Probability Basics
+
+#### Probability interpretations
+
+-   **Frequentist:** Fraction of positive samples, if we measured
+    infinitely many samples.
+
+-   **Objectivist:** Probabilities are due to inherent uncertainty
+    properties. Probabilities are calculated by putting outcomes of
+    interest into relation with all possible outcomes.
+
+-   **Subjectivist:** An agent's *rational* degree of belief (not
+    external). The belief needs to be coherent (i.e. if you make bets
+    using your probabilities you should not be guaranteed to lose money)
+    and therefore need to follow the rules of probability.
+
+-   **Bayesian:** (Building on subjectivism) A reasonable expectation /
+    degree of belief based on the information available to the
+    statistician / system. It allows to give certainties to events,
+    where we don't have samples on (e.g. disappearance of the south pole
+    until 2030).
+
+Also the frequentist view is not free of subjectivity since you need to
+compare events on otherwise similar objects. Usually there are no
+completely similar objects, so you need to define them.
+
+#### Probability Space
+
+The probability space is a triplet space containing a sample/outcome
+space $\Omega$ (containing all possible atomic events), a collection of
+events $S$ (containing a subset of $\Omega$ to which we want to assign
+probabilities) and the mapping $P$ between $\Omega$ and $S$.
+
+#### Axioms of Probability
+
+The mapping $P$ must fulfill the axioms of probability:
+
+1.  $P(a) \geq 0$
+
+2.  $P(\Omega) = 1$
+
+3.  $a,b \in S$ and $a \cap b = \{\}$
+    $\Rightarrow P(a \cup b) = P(a) + P(b)$
+
+$a$, $b$ are events.
+
+#### Random Variable (RV)
+
+A RV is a **function** that maps points from the sample space $\Omega$
+to some range (e.g. Real numbers or booleans). They are characterized by
+their distribution function. E.g. for a coin toss:
+$$X(\omega) = \begin{cases} 
+                0, \text{ if } \omega = heads\\
+                1, \text{ if } \omega = tails.
+            \end{cases}$$
+
+#### Proposition
+
+A Proposition is a conclusion of a statistical inference/prediction that
+can be true or false (e.g. a classification of a datapoint). More
+formally: A disjunction of events where the logic model holds. An event
+can be written as a **propositional logic model**:\
+$A = true, B = false \Rightarrow a \land \neg b$. Propositions can be
+continuous, discrete or boolean.
+
+### Probability distributions
+
+Probability distributions assign probabilities to to all possible points
+in $\Omega$ (e.g. $P(Weather) = \langle 0.3, 0.4, 0.2, 0.1 \rangle$,
+representing Rain, sunshine, clouds and snow). Joint probability
+distributions give you a probability for each atomic event of the RVs
+(e.g. $P(weather, accident)$ gives you a $2\times 4$ matrix.)
+
+#### Cumulative Distribution Function (CDF)
+
+The CDF is defined as $F_X(x) = P(X \leq x)$ (See figure
+[$CDF$](#CDF){reference-type="ref" reference="CDF"}).
+
+![Cumulative distribution function of a normal distribution for
+different mean ($\mu$) and variance ($\sigma$). *Source: [user
+Inductiveload on
+wikimedia.org](https://commons.wikimedia.org/wiki/File:Normal_Distribution_CDF.svg).*](./figures/Normal_Distribution_CDF.png){#CDF
+width="60%"}
+
+#### Probability Density Function (PDF)
+
+For continuous functions the PDF is defined by
+$$p(x) =  {d \over dx} p(X \leq x).$$ The probability of x being in a
+finite interval is $$P(a < X \leq b) = \int_a^b p(x) dx$$ A PDF is shown
+in the following figure.
+
+![Probability density function of a normal distribution with variance
+($\sigma$). In red a range from a Box-plot is shown with
+[quartiles](#dist_prop) (Q1, Q3) and interquartile range (IQR). For the
+cutoffs (borders to darker blue regions) the IQR (on top) and $\sigma$
+are chosen. Another common cutoff is the confidence interval with light
+blue regions having a probability mass of $2 * \alpha / 2$. *Source:
+[user Jhguch on
+wikimedia.org](https://commons.wikimedia.org/wiki/File:Boxplot_vs_PDF.svg).*](./figures/Boxplot_vs_PDF.png){#Boxplot
+width="60%"}
+
+#### Properties of Distributions {#dist_prop}
+
+-   The **expected value** ($E$) or **mean** ($\mu$) is given by
+    $E[X] = \sum_{x \in X} x*p(x)$ for discrete RVs and
+    $E[X] = \int_X x*p(x) dx$ for continuous RVs.
+
+-   The **variance** measures the spread of a distribution:
+    $var[X] = \sigma^2 = E[(X-\mu)^2] = E[X]^2 - \mu^2$.
+
+-   The **standard deviation** is given by: $\sqrt{var[X]} = \sigma$. It is interpreted as the deviation from the mean that needs to be expected.
+
+-   The **mode** is the value with the highest probability (or the point
+    in the PDF with the highest value):
+
+-   The **median** is the point at which all point less than the median
+    and all points greater than the median have the same probability
+    ($0.5$).
+
+-   The **quantiles** ($Q$) divide the datapoints into sets of equal
+    number. The $Q_1$ qua**r**tile has 25% of the values below it. The
+    **interquartile range** (IQR) is a measure to show the variability
+    in the data (how distant the points from the first and last quartile
+    are)
+
+#### Dirac delta function {#diracdelta}
+
+The **dirac delta** is simply a function that is infinite at one point
+and 0 everywhere else:
+$$\delta(x)=\begin{cases} \infty , \; \text{ if } x = 0 \\0, \quad \text{if } x \neq 0 \end{cases} \qquad \text{and } \int_{-\infty}^{\infty} \delta(x) dx = 1$$
+(Needed for distributions further on)
+
+#### Uniform distribution
+
+The uniform distribution has the same probability throughout a specific
+interval:
+$$\text{Unif}(a,b) = \frac{1}{b-a} 1 \mkern-6mu 1 (a < x \leq b) = \begin{cases} 
+                \frac{1}{b-a}, \quad \text{if } x \in [ a,b ] \\
+                0, \qquad \text{else}
+            \end{cases}$$ $1 \mkern-6mu 1$ is a vector of ones.
+
+![Uniform distribution. *Source: [user IkamusumeFan on
+wikimedia.org](https://commons.wikimedia.org/wiki/File:Uniform_Distribution_PDF_SVG.svg).*](./figures/Uniform_Distribution.png){width="40%"}
+
+#### Discrete distributions
+
+Used for random variables that have discrete states.
+
+##### Binomial distribution
+
+Used for series of experiments with two outcomes (success or miss. e.g.
+a series of coin flips).
+$$X \sim \text{Bin}(n, \theta ), \quad \text{Bin}(k|n,\theta)={n \choose k} \theta^k (1-\theta)^{n-k} , \quad {n \choose k} = \frac{n!}{k!(n-k)!},$$
+where $n$ is the number of total experiments, $k$ is the number of
+successful experiments and $\theta$ is the probability of success of an
+experiment.
+
+![Binomial distribution of balls in [Pascals
+triangles](https://en.wikipedia.org/wiki/Pascal%27s_triangle) with
+different numbers of layers (The top one has 0 layers). Example: For a
+triangle with $n=6$ layers, the probability that a ball lands in the
+middle box $k=3$ is $20/64$. *Source: [user Watchduck on
+wikimedia.org](https://commons.wikimedia.org/wiki/File:Pascal%27s_triangle;_binomial_distribution.svg)*](./figures/Pascals_triangle_binomial_distribution.png)
+
+##### Bernoulli distribution
+
+Is a special case of the binomial distribution with $n=1$ (e.g. one coin
+toss).
+$$X \sim \text{Ber}(\theta ), \quad \text{Ber}(x | \theta)=\theta^{1 \mkern-6mu 1 (x=1)} (1-\theta)^{1 \mkern-6mu 1(x=0)}= \begin{cases}
+                    \theta, \qquad \text{if } x=1 \\
+                    1 - \theta, \; \text{if } x=0
+                \end{cases}$$
+
+##### Multinomial distribution
+
+Used for experiments with k different outcomes (e.g. dice rolls:
+Probability of different counts of the different sides).
+$$\text{Mu}(x|n,\theta) =  {n \choose x_1, ..., x_K}\prod_{i=1}^K\theta_j^{x_j} = \frac{n!}{x_1!, ..., x_k!}\prod_{i=1}^K\theta_j^{x_j},$$
+where $k$ is the number of outcomes, $x_j$ is the number times that
+outcome $j$ happens. $X = (X_1, ..., X_K)$ is the *random vector*.
+
+##### Multinoulli distribution
+
+Is a special case of the multinomial distribution with $n=1$. The random
+vector is then represented in *dummy-* or *one-hot-encoding* (e.g.
+$(0,0,1,0,0,0)$ if outcome 3 takes place).
+$$\text{Mu}(x|1,\theta) = \prod_{j=0}^K \theta_j^{1 \mkern-6mu 1(x_j=1)}$$
+
+##### Empirical distribution
+
+The empirical distribution follows the empirical measurements strictly.
+The CDF jumps by 1/n every time a sample is "encountered" (see figure).
+
+$$\text{p}_{\text{emp}}(A) = \frac{1}{N} \sum_{i=1}^N \delta_{x_i}(A), \quad \delta_{x_i}=\begin{cases}1, \quad \text{if } x \in A \\0, \quad \text{if } x \notin A \end{cases},$$
+w where $x_1, ..., x_N$ is a data set with N points. The points can also
+be weighted: $$p(x) =  \sum_{i=1}^N w_i \delta_{x_i}(x)$$
+
+![Cumulative empirical distribution function (blue line) for samples
+drawn from a standard normal distribution (green line). The values of
+the drawn samples is shown as grey lines at the bottom. Source: [user
+nagualdesign on
+wikimedia.org.](https://commons.wikimedia.org/wiki/File:Empirical_distribution_function.png)](./figures/Empirical_distribution_function.png){width="50%"}
+
+#### Continuous distributions
+
+Used for random variables that have continuous states.
+
+##### Normal/Gaussian distribution
+
+Often chosen for random noise because it is simple and needs few
+assumptions (see sect. [CLT](#CLT)). The PDF is given by:
+
+$$p(x|\mu\sigma^2)= \frac{1}{\sqrt{2\pi\sigma^2}}\exp\left[-\frac{(x-\mu)^2}{2\sigma^2}\right],$$
+where $\mu$ is the mean and $\sigma^2$ is the variance. The CDF is given
+by:
+$$\Phi(x) = \frac{1}{\sqrt{2\pi}}\int_{\infty}^xe^{\frac{-t^2}{2}dt}$$
+
+##### Multivariate normal/Gaussian distribution
+
+For T datapoints with k dimensions (features). The pdf is:
+$$p(x|\mu,\Sigma) = \dfrac{1}{\sqrt{(2\pi)^k|\Sigma|}}\exp\left[-\dfrac{1}{2}(x-\mu)^\top\Sigma^{-1}(x-\mu)\right],$$
+where x now has multiple dimension ($x_1, x_2, ..., x_k$) and $\Sigma$
+is the $k \times k$ covariance matrix:
+$\Sigma = \text{E}[(X-\mu)(X-\mu)]$. The covariance between features is:
+$\text{Cov}[X_i, X_j] = \text{E}[(X_i-\mu_i)(X_j-\mu_j)]$
+
+##### Beta distribution
+
+defined for $0 \leq x \leq 1$ (see figure [Beta
+distribution](#Beta_distr)). The pdf is:
+$$f(x|\alpha, \beta) = \frac{1}{B(\alpha,\beta)}x^{\alpha-1}(1-x)^{\beta-1}$$
+The [beta function](https://en.wikipedia.org/wiki/Beta_function) $B$ is
+there to normalize and ensure that the total probability is 1 .
+
+![Probability density function of a beta-distribution with different
+parameter values. *Source: [user MarkSweep on
+wikimedia.org](https://commons.wikimedia.org/wiki/File:Beta_distribution_pdf.png).*](./figures/Beta_distribution_pdf.png){label="Beta_distr"
+width="60%"}
+
+##### Dirichlet distribution
+
+The multivariate version of the Beta distribution. The PDF is:
+$$\text{Dir}({x}|{\alpha}) \triangleq \dfrac{1}{B({\alpha})}\prod\limits_{i=1}^K x_i^{\alpha_i-1},\quad \sum_{i=1}^K x_i =1, \quad x_i \geq 0 \text{ }\forall i$$
+
+![Probability density function of a Dirichlet-distribution on a
+2-simplex (triangle) with different parameter values. Clockwise from top
+left: $\alpha$ = (6,2,2), (3,7,5), (6,2,6), (2,3,4). *Source: [user ThG
+on
+wikimedia.org](https://commons.wikimedia.org/wiki/File:Dirichlet_distributions.png).*](./figures/Dirichlet_distributions.png){width="60%"
+label="#Dirichlet_distr"}
+
+##### Marginal distributions
+
+Are the probability distributions of subsets of the original
+distribution. Marginal distributions of normal distributions are also
+normal distributions.
+
+![Data following a 2D-Gaussian distribution. Marginal distributions are
+shown on the sides in blue and orange. *Source: [user Auguel on
+wikimedia.org](https://commons.wikimedia.org/wiki/File:Multivariate_Gaussian_inequality_demonstration.svg).*](./figures/Multivariate_gaussian.png){width="60%"}
+
+### Central limit theorem {#CLT}
+
+In many cases the sum of random variables will follow a normal
+distribution as n goes to infinity.
+
+<font color="grey">
+
+### Bayesian probability
+
+Baeysian probability represents the plausibility of a proposition based
+on the available information (i.e. the degree at which the information
+supports the proposition). The use of this form of statistics is
+especially useful if random variables cannot be assumed to be i.i.d.
+(i.e. When an event is not independent of the event before it (e.g.
+drawing balls without laying them back into the urn)).
+
+#### Conditional/Posterior Probability
+
+Expresses the probability of one event ($Y$) under the condition that
+another event ($E$) has occurred. (e.g. $C$ = "gets cancer", $S$ = "is a
+smoker" $\rightarrow$ $p(C|S)=0.2$, meaning: "given the *sole
+information* that someone is a smoker, their probability of getting
+cancer is 20%.")\
+\
+The conditional probability can be calculated like follows. By defining
+the joined probability like so: $$P(A \cap B) = P(A \mid B) P(B)$$ you
+solve for $P(A \mid B)$:
+$$P(A \mid B) = \frac{P(A \cap B)}{P(B)}=\frac{P(A, B)}{P(B)}=\alpha{P(A, B)},$$
+where $\alpha$ is used as a normalization constant. If you have hidden
+variables (confounding factors) you need to sum them out like so:
+$$P(Y|E=e)=\alpha P(Y,E=e)=\alpha\sum_h P(Y,E=e,H=h)$$ where $X$
+contains all variables, $Y$ is called *query variable*, $E$ is called
+*evidence variable*, $H=X-Y-E$ is called *hidden variable* or
+*confounding factor*. You get the joint probabilities by summing out the
+hidden variable. <!--# check if the formula is correct -->
+
+**!** Usually $p(A|B) \neq p(B|A)$\
+**!** Priors are often forgotten: E.g. $P(\text{"COVID-19"})$ is
+confused with $P(\text{"COVID-19"}|\text{"Person is getting tested"})$
+(because only people with symptoms go to the testing station).\
+**!** Base rate neglect: Under-representing the prior probability. E.g.
+You have a test with a 5% false positive rate and a incidence of disease
+of 2% in the population. If you are tested positive in a population
+screening your probability of having the disease is only 29%.\
+Conditional distributions of Gaussian distributions are Gaussian
+distributions themselves.
+
+#### Independence
+
+For independent variables it holds: $P(A|B)=P(A)$ or $P(B|A)=P(B)$
+
+#### Conditional independence
+
+Two events $A$ and $B$ are independent, given $C$: $P(A|B,C)=P(A|C)$.
+$A$ and $B$ must not have any information on each other, given the
+information on $C$. E.g. for school children:
+$P(\text{"vocabulary"}|\text{"height"}, \text{"age"})= P(\text{"vocabulary"}|\text{"age"})$.
+
+#### Bayes Rule
+
+Bayes rule is a structured approach to update prior beliefs /
+probabilities with new information (data). With the conditional
+probability from before ($P(A,B)=P(A|B)P(B)=P(B|A)P(A)$) we get **Bayes
+rule** by transforming the right-side equation
+to:$$P(\text{hypothesis}|\text{evidence}) =\dfrac{P(\text{evidence}|\text{hypothesis})P(\text{hypothesis})}{P(\text{evidence})}$$
+often used as:
+$$P(\text{model}|\text{data}) =\dfrac{P(\text{data}|\text{model})P(\text{model})}{P(\text{data})}$$
+
+##### Terminology:
+
+-   $P(\text{hypothesis}|\text{evidence})$ = Posterior (How probable
+    hypothesis is after incorporating new evidence)
+
+-   $P(\text{evidence}|\text{hypothesis})$ = Likelihood (How probable
+    the evidence is, if the hypothesis is true)
+
+-   $P(\text{hypothesis})$ = Prior (How probable hypothesis was before
+    seeing evidence)
+
+-   $P(\text{evidence})$ = Marginal (How probable evidence is under all
+    possible hypotheses)
+
+-   $\dfrac{P(\text{evidence}|\text{hypothesis})}{P(\text{evidence})}$ =
+    Support $B$ provides for $A$
+
+-   $P(\text{data}|\text{model})P(\text{model})$ = joint probability
+    ($P(A,B)$)
+
+##### Example for Bayes Rule using COVID-19 Diagnostics
+
+$$P(\text{COVID-19}|\text{cough}) =\dfrac{P(\text{cough}|\text{COVID-19})P(\text{COVID-19})}{P(\text{cough})} = \frac{0.7*0.01}{0.1}=0.07$$
+Estimating $P(\text{COVID-19}|\text{cough})$ is difficult, because there
+can be an outbreak and the number changes. However,
+$P(\text{cough}|\text{COVID-19})$ stays stable, $P(\text{COVID-19})$ and
+$P(\text{cough})$ can be easily determined.
+
+### Further Concepts
+
+#### Convergence in Probability of Random Variables
+
+You expect your random variables ($X_i$) to converge to an expected
+random variable $X$. I.e. after looking at infinite samples, the
+probability that your random variable $X_n$ differs more than a
+threshold $\epsilon$ from your target $X$ should be zero.
+$$\lim_{n \rightarrow \infty} P(|X_n - X| > \epsilon) = 0$$
+
+#### Bernoulli's Theorem / Weak Law of Large Numbers
+
+$$\lim_{n \rightarrow \infty} P(|\frac{\sum_{i=1}^n X_i}{n} - \mu| > \epsilon) = 0,$$
+where $X_1,...,X_n$ are independent & identically distributed (i.i.d.)
+RVs. $\Rightarrow$ With enough samples, the sample mean will approach
+the true mean. The **strong law of large numbers** states that
+$|\frac{\sum_{i=1}^n X_i}{n} - \mu| < \epsilon$ for any $\epsilon > 0$.
+
+### Statistical Significance Tests
+
+#### p-values
+
+<!-- Tests how extreme your values are and if they are over the significance threshold -->
+
+#### z-test
+
+<!-- not recommended due to assumptions 
+
+$$ z-statistic = \frac{X - \mu}{\sigma} $$
+
+-->
+
+#### t-test
+
+<!--
+$$ t-statistic = \frac{\hat{X}- \mu}{\frac{sd}{\sqrt{n}}}$$
+--> 
+
+#### f-test
+
+
+#### Chi-squared test
+
+<!-- tests for significant relationships between categorical features -->
+
+
+#### Statistical Tests in bayesian statistics
+</font>
+
+## Linear Algebra
+
+This section is meant to give an intuitive understanding of the
+underlying mechanisms of many algorithms. It is mainly a summary of the
+course from
+[3Blue1Brown](https://youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab)
+and
+[deepai.org](https://deepai.org/machine-learning-glossary-and-terms/vector).
+
+For details on the calculations see wikipedia.org.
+
+### Vectors
+
+There are two relevant perspectives for us:
+
+-   **Mathematical:** Generally quantities that cannot be expressed by
+    single number. They are objects in a *vector space*. Such objects
+    can also be e.g. functions.
+
+-   **Programmatical / Data:** Vectors are ordered lists of numbers. You
+    model each sample as such an ordered list of numbers and the numbers
+    represent the feature-value of that feature.
+
+Your vectors are organized in a *coordinate system* and commonly rooted
+in the *origin* (point $[0,0]$.\
+
+#### Linear combinations
+
+You create *linear combinations* of vectors by adding their components
+(entries in a coordinate). Th All points that you can reach by linear
+combinations are called the *span* of these vectors. If a vector lies in
+the span of another vector, they are *linearly dependent*.\
+You can *scale* (stretch or squish) vectors multiply vectors by
+*scalars* (i.e. numbers). A vector with length $1$ is called *unit
+vector*. The unit vectors in each direction of the coordinate system are
+its *basis vectors*. The basis vectors stacked together form an
+*identity matrix*: a matrix with 1s on its diagonal. Since there are
+only values on its diagonal it is also a *diagonal matrix*.\
+
+$$
+I = \begin{bmatrix}
+1 \quad 0 \quad 0 \\
+0 \quad 1 \quad 0 \\
+0 \quad 0 \quad 1
+\end{bmatrix}
+$$
+
+#### Linear transformations
+
+*Linear transformations* are functions that move points around in a
+vector space, while preserving the linear relationships between the
+points (straight lines stay straight, the origin stays the origin). They
+include rotations and reflections. You can understand the calculation of
+the linear transformation of a point as follows: You give the basis
+vectors a new location. You scale the new location basis vectors with
+the components of the respective dimension of the vector you want to
+transform. You take the linear combination of the scaled, transformed
+basis vectors:
+
+$$\begin{bmatrix} a \quad b \\ c \quad d \end{bmatrix} 
+\begin{bmatrix} x \\ y \end{bmatrix}
+  = x \begin{bmatrix} a \\ c \end{bmatrix} + y \begin{bmatrix} b \\ d \end{bmatrix} = \begin{bmatrix} x a  + y b \\ x c + y d \end{bmatrix}
+$$
+
+<!-- Construct a graph visualization to show how the transformation impacts the original vector -->
+
+likewise, you can view matrix vector multiplication as a transformation
+of your space. Full explanation: [youtube.com -
+3Blue1Brown](https://youtu.be/kYB8IZa5AuE) Multiplying two matrices
+represents the sequential combination of two linear transformations in
+your vector space.
+
+A *transpose* $A^T$ of a matrix $A$ is achieved by mirroring the matrix
+on its diagonal and therefore swapping its rows and columns. This
+commonly makes sense when evaluating if elements of two matrices line up
+in regard to their scale. You can also check if matrices are
+[orthogonal](https://en.wikipedia.org/wiki/Orthogonal_matrix).
+
+An *orthogonal/orthonormal matrix* is a matrix for which holds
+$A^TA=AA^T=I$, where $I$ is the identity matrix. The columns of
+orthogonal matrices are linearly independent of each other.
+
+An *inverse matrix* $A^{-1}$ of a matrix $A$ is the matrix that would
+yield no transformation at all, if multiplied with $A$.
+
+The *dot product* of two vectors is calculated like a linear
+transformation between a $1 \times 2$ matrix and a $2 \times 1$ matrix.
+It therefor maps onto the 1-D Space and can be used as a measure of
+collinearity.
+
+The *cross product* of two vectors is a perpendicular vector that
+describes the parallelogram that the two vectors span. Its magnitude can
+be seen as the area of the parallelogram. Beware: The order of the
+vectors in the operation matters. The cross product can be expressed by
+a determinant. If two vectors are collinear or perpendicular, the cross
+product is zero.
+
+#### Determinants, rank and column space
+
+*Determinants* can be used to measure how much a linear transformation
+compresses or stretches the space. If a transformation inverts the
+space, the determinant will be negative. If a determinant is 0 it means
+that the transformation maps the space onto a lower dimension.
+
+$$\det \left( \begin{bmatrix} a \quad b \\ c \quad d \end{bmatrix} \right) = (a*d)-(c*b)  $$
+
+The dimensions that come out of a transformation/matrix are its *rank*.
+All possible outputs of your matrix (the span constructed by its
+columns) is the *column space*. All vectors that are mapped to 0 (onto
+the origin) are the *null space* or *kernel* of the matrix.
+
+Determinants can only be calculated for square matrices. An e.g.
+$3 \times 2$ matrix can be viewed as a transformation mapping from 2-D
+to 3-D space.\
+
+
+
+#### System of equations
+
+Linear algebra can help you solve systems of equations.
+
+$$
+\begin{array}{ll} 1x+2y+3z=4 \\ 4x+5y+6z=-7 \\8x + 9y +0z = 1 \end{array}
+\quad  \rightarrow  \quad
+\begin{bmatrix} 1 \quad 2 \quad 3 \\ 4 \quad 5 \quad 6 \\ 8 \quad \ 9 \quad 0 \end{bmatrix} 
+\begin{bmatrix} x \\ y \\ z\end{bmatrix} = 
+\begin{bmatrix} 4 \\ -7 \\ 1 \end{bmatrix} 
+\quad \rightarrow \quad
+A \vec{x} = \vec{v}
+$$
+
+You can imagine this as as searching a vector $\vec{x}$ that will land
+on $\vec{v}$ after the transformation $A$.
+
+To find $\vec{x}$ you need the *inverse* of $A$:
+
+$$
+A^{-1}A = \begin{bmatrix} 1 \quad 0 \\ 0 \quad 1 \end{bmatrix}
+$$
+
+You now multiply the matrix equation with $A^{-1}$ and get:
+
+$$
+A^{-1} A \vec{x} = A^{-1} \vec{v}
+\quad \rightarrow \quad
+\vec{x} = A^{-1} \vec{v}
+$$
+
+#### Eigenvalues and Eigenvectors
+
+For a linear transformation $A$, the eigenvectors $\vec{v}$ represent
+the vectors that stay on their span (keep orientation) and the
+eigenvalues $\lambda$ are the scalars by which the eigenvectors get
+scaled.
+
+$$
+A \vec{v} = \lambda \vec{v}
+$$
+
+Transforming $\lambda$ to a scaled identity matrix $I$ and factoring out
+$\vec{v}$, we get: $$
+(A - \lambda I) \vec{v} =  \vec{0}
+$$ This tells us, that the transformation $(A - \lambda I)$ needs to map
+the vector $\vec{v}$ onto a lower dimension.
+
+An *eigenbasis* $\lambda I$ is a basis where the basis vectors are
+eigenvectors. They will sit on the diagonal of your basis matrix
+($\rightarrow$ it will be a *diagonal matrix*).
+
+#### Eigenvalue decomposition {#EV_Dec}
+
+An *eigen(value)decomposition* is the decomposition of a matrix into the
+matrix of eigenvalues and eigenvectors.
+
+$$
+AU = U \Lambda  \quad \rightarrow \quad A = U \Lambda U^{-1}
+$$
+
+where $U$ is the matrix of the eigenvectors of $A$ and $\Lambda$ is the
+eigenbasis. Thus matrix operations can be computed more easily, since
+$\Lambda$ is a diagonal matrix.
+
+#### Singular value decomposition {#SVD1}
+
+Singular Value decomposition is also applicable to a non-square
+$m \times n$-matrix (with $m$ rows and $n$ columns). If you have a
+matrix with rank $r$, you can decompose it into
+
+$$
+A = U \Sigma V^T
+$$ where $U$ is an orthogonal $m \times r$ matrix, $\Sigma$ is a
+diagonal $r \times r$ matrix and $V^T$ is an orthogonal $r \times n$
+matrix. $U$ contains the *left singular vectors*, $V$ the *right
+singular vectors* and $\Sigma$ the $Singular Values$.\
+This decomposition technique can be used to approximate the original
+matrix $A$ with only the $k$ largest singular values. This lets you work
+in a space with only $k$ dimensions given by $U_k \Sigma_k$. Thereby you
+can save computation time and memory space without loosing a lot of
+information.
+
+![SVD and truncated SVD. The upper schema shows the decomposition of the
+matrix $M$ with m rows and n columns into $U$, $\Sigma$ and $V$. The
+lower schema shows the truncated SVD for lower dimensional mapping
+$U_t \Sigma_t$ : The first $t$ eigenvalues from $\Sigma$ have been
+chosen to reconstruct a compressed version $\bar{M}$. This figure has
+been adapted from [user Cmglee on
+wikimedia.org.](https://commons.wikimedia.org/wiki/File:Reduced_Singular_Value_Decompositions.svg)](figures/SVD_lower_dims.png){width="50%"}
+
+For more detailed explanation, see this [Stack Exchange
+Thread](https://stats.stackexchange.com/questions/342046/explaining-dimensionality-reduction-using-svd-without-reference-to-pca).\
+For applications, please see [SVD for lower dimensional mapping](#SVD2).

@@ -1,0 +1,145 @@
+---
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+# ML Project Management
+
+<font color="grey">
+
+## Basis for Machine Learning in Companies
+
+```{=html}
+<!-- 
+Cover Topics:
+
+-   Data Strategy
+
+-   Data Management
+
+-   Architecture for carrying machine learning workloads
+-->
+```
+</font>
+
+## How to automate business processes with machine learning
+
+### The stages from ManuaL to ML
+
+A good business process entails a feedback loop from the client
+(receiver of the output) to further optimize the process:
+
+*Input* $\rightarrow$ Process $\rightarrow$ *Output* $\rightarrow$
+*Feedback* $\rightarrow$ Optimization $\rightarrow$ new Process
+$\rightarrow$ ...
+
+Business processes evolve along these phases, whose steps should not be
+skipped:
+
+1.  **Individual employee** works on tasks, commonly informal rules and
+    heuristics are used.
+
+2.  **Team** works on the tasks. The process is formalized and
+    standardized to ensure quality and effective collaboration. Don't
+    stay here for too long, since it is not scaleable.
+
+3.  **Digitization** is used to automate (parts of) the process. This
+    step should be done before ML, since you need the data and
+    architecture for your ML part anyway. Here you are more flexible and
+    can fail and adapt quicker. Don't stay here to long, since you
+    cannot assess quaility of your process well.
+
+4.  **Analytics** are used to measure the performance of the process and
+    if its optimizations are successful. Don't skip this since you need
+    these indicators for your ML optimizationa and monitoring anyway.
+    Don't stay here too long to miss out on automation and scalability.
+
+5.  **Machine Learning** is used to automate and optimize analysis,
+    insights and decision making on the data. You still need some people
+    from step 2 to analyse outcomes, failures and react to it
+    (monitoring).
+
+More info: [Google Cloud: How Google Does Machine
+Learning](https://www.cloudskillsboost.google/course_templates/10)
+
+### Phases of the ML project
+
+1.  Framing the problem
+
+2.  Data collection & management
+
+3.  Building infrastructure (data pipeline, databases, training &
+    deployment pipelines should at least work the same way as the
+    designated product unless its a quick'n'dirty PoC)
+
+4.  Data ingestion, transformation & feature engineering
+
+5.  Model selection, training, testing & evaluation
+
+6.  Deployment & integration
+
+7.  Monitoring
+
+More info: [Google Cloud: How Google Does Machine
+Learning](https://www.cloudskillsboost.google/course_templates/10)
+
+### How to frame ML problems
+
+-   **The ML-view:**
+
+    -   What is being predicted?
+
+    -   What data do we need as target and input?
+
+-   **Software development view:**
+
+    -   What info do we need from users to make a decision? (This
+        defines the API)
+
+    -   Who will use the service? How many people will that be?
+
+    -   How is the process conducted today?
+
+-   **Data view:**
+
+    -   What data needs to be collected? From where?
+
+    -   How do we need to transform the data to analyze it & make
+        decisions on it? (Feature engineering)
+
+    -   How do we react to the outputs of the algorithm? (e.g. kick off
+        automatic process, inform stakeholders...)
+
+More info: [Google Cloud: How Google Does Machine
+Learning](https://www.cloudskillsboost.google/course_templates/10)
+
+## Common pitfalls in machine learning
+
+-   Underestimate the effort for data collection, engineering,
+    transformation & ingestion
+
+-   Focus too much effort in optimizing the machine learning algorithm
+    instead of getting more data
+
+-   Having too few samples and diversity (independent attributes) or
+    outdated/unrepresentative data
+
+-   Data is not properly maintained or not available as needed for the
+    project
+
+-   Assume that no oversight will be necessary in data-,
+    target-selection, feature engineering and monitoring from subject
+    matter experts
+
+-   Optimize for a skewed indicator that causes unwanted side-effects in
+    model decisions
+
+-   Building models from scratch, where pre-trained / off-the-shelf
+    models do the job (especially text, image, audio and video tasks
+    employing neural networks)
+
+-   Having no process for monitoring and retraining
+
+More info: [Google Cloud: How Google Does Machine
+Learning](https://www.cloudskillsboost.google/course_templates/10)
