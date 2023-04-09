@@ -41,7 +41,7 @@ You found errors or unclear explanations? You have a good idea? Please file an i
 
 ## Related work
 
--   [Machine Learning Glossary](https://ml-cheatsheet.readthedocs.io/en/latest/index.html): An online book with more details on underlying mechanisms and a large chapter on fundamentals in maths and neural networks.\
--   [R Cookbook](https://rc2e.com/): A comprehensive online book on R and specific problems.\
--   [Google Machine Learning Glossary](https://developers.google.com/machine-learning/glossary/): Glossary with brief explanations on fundamental machine learning topics.\
--   [Distill](https://distill.pub/): Beautiful and easy to understand visualizations and articles on machine learning algorithms.
+-   [Machine Learning Glossary](https://ml-cheatsheet.readthedocs.io/en/latest/index.html){target="_blank"}: An online book with more details on underlying mechanisms and a large chapter on fundamentals in maths and neural networks.\
+-   [R Cookbook](https://rc2e.com/){target="_blank"}: A comprehensive online book on R and specific problems.\
+-   [Google Machine Learning Glossary](https://developers.google.com/machine-learning/glossary/){target="_blank"}: Glossary with brief explanations on fundamental machine learning topics.\
+-   [Distill](https://distill.pub/){target="_blank"}: Beautiful and easy to understand visualizations and articles on machine learning algorithms.

@@ -46,13 +46,13 @@ The currently incomplete sections are marked in <b><font color="grey">grey</font
       <a href="data-representation-analysis-processing.html#preprocessing-data"><img src="figures/raw_buttons/data-cleaning.png" width="70" height="70"> <br> Data cleaning
       </td>
     <td align="center" style="border: none;"> 
-      <a href="classification-methods.html#classification-algorithms"><img src="figures/raw_buttons/hierarchical-structure.png" width="70" height="70"> <br> Classification
+      <a href="supervised-learning.html#classification"><img src="figures/raw_buttons/hierarchical-structure.png" width="70" height="70"> <br> Classification
       </td>
       <td align="center" style="border: none;"> <a href="classification-methods.html#regression"><img src="figures/raw_buttons/regression.png" width="70" height="70"> <br> Regression</td>
   </tr>
   <tr style="background-color: transparent; border: none;">
     <td align="center" style="border: none;"> 
-      <a href="unsupervised-learning.html#custering-methods"><img src="figures/raw_buttons/cluster.png" width="70" height="70"> <br> Clustering
+      <a href="supervised-learning.html#regression"><img src="figures/raw_buttons/cluster.png" width="70" height="70"> <br> Clustering
       </td>
     <td align="center" style="border: none;"> 
       <a href="neural-networks.html"><img src="figures/raw_buttons/deep-learning.png" width="70" height="70"> <br> Neural Networks
@@ -81,14 +81,14 @@ Please write an email to ml_reference[ät]icloud.com
 ## I want to report something {.unlisted .unnumbered}
 
 You found errors or unclear explanations? You have a good idea? Please file an issue under:
-[github.com/MoritzGuck/Machine-Learning-Reference](https://github.com/MoritzGuck/Machine-Learning-Reference) or write an email to ml_reference[ät]icloud.com.
+[github.com/MoritzGuck/Machine-Learning-Reference](https://github.com/MoritzGuck/Machine-Learning-Reference){target="_blank"} or write an email to ml_reference[ät]icloud.com.
 
 ## Related work {.unlisted .unnumbered}
 
-- [Machine Learning Glossary](https://ml-cheatsheet.readthedocs.io/en/latest/index.html): An online book with more details on underlying mechanisms and a large chapter on fundamentals in maths and neural networks. \
-- [R Cookbook](https://rc2e.com/): A comprehensive online book on R and specific problems. \
-- [Google Machine Learning Glossary](https://developers.google.com/machine-learning/glossary/): Glossary with brief explanations on fundamental machine learning topics. \
-- [Distill](https://distill.pub/): Beautiful and easy to understand visualizations and articles on machine learning algorithms. 
+- [Machine Learning Glossary](https://ml-cheatsheet.readthedocs.io/en/latest/index.html){target="_blank"}: An online book with more details on underlying mechanisms and a large chapter on fundamentals in maths and neural networks. \
+- [R Cookbook](https://rc2e.com/){target="_blank"}: A comprehensive online book on R and specific problems. \
+- [Google Machine Learning Glossary](https://developers.google.com/machine-learning/glossary/){target="_blank"}: Glossary with brief explanations on fundamental machine learning topics. \
+- [Distill](https://distill.pub/){target="_blank"}: Beautiful and easy to understand visualizations and articles on machine learning algorithms. 
 
 \ 
 \ 
