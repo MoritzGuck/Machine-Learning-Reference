@@ -277,8 +277,6 @@ wikimedia.org](https://commons.wikimedia.org/wiki/File:Multivariate_Gaussian_ine
 In many cases the sum of random variables will follow a normal
 distribution as n goes to infinity.
 
-<font color="grey">
-
 ### Bayesian probability
 
 Baeysian probability represents the plausibility of a proposition based
@@ -386,13 +384,34 @@ RVs. $\Rightarrow$ With enough samples, the sample mean will approach
 the true mean. The **strong law of large numbers** states that
 $|\frac{\sum_{i=1}^n X_i}{n} - \mu| < \epsilon$ for any $\epsilon > 0$.
 
-### Statistical Significance Tests
+<font color="grey">
 
-#### p-values
+### Statistical hypothesis tests
 
+#### Terminology
+
+- [Null-hypothesis](https://en.wikipedia.org/wiki/Null_hypothesis) (over-simplified): "The differences between these two sets of samples are due to chance." Or "There is no (positive/negative) effect of the independent variables on the dependent variable."
+
+- [Alternative hypothesis](https://en.wikipedia.org/wiki/Alternative_hypothesis) (over-simplified): "The differences between the two sets of samples cannot be due to chance." Or "There is a (positive/negative) effect ..." ([More examples](https://www.scribbr.com/statistics/null-and-alternative-hypotheses/){target="_blank"})
+
+- [P-value](https://en.wikipedia.org/wiki/P-value): The probability to observe an at least as extreme value (e.g. sample mean of a distribution) as the measured one, if the null-hypothesis was true. 
+
+- [$\alpha$-Value / Significance level](https://en.wikipedia.org/wiki/Statistical_significance): Probability of falsely rejecting the null-hypothesis, given the null-hypothesis is true. 
 <!-- Tests how extreme your values are and if they are over the significance threshold -->
 
+- Statistically significant: The result is significant if p < $\alpha$. 
+
+#### t-test
+
+Tests for significant difference between two independent sets of samples.
+
+<!--
+$$ t-statistic = \frac{\hat{X}- \mu}{\frac{sd}{\sqrt{n}}}$$
+--> 
+
 #### z-test
+
+Same as t-test, but requires that the standard distribution of the population is known.
 
 <!-- not recommended due to assumptions 
 
@@ -400,21 +419,14 @@ $$ z-statistic = \frac{X - \mu}{\sigma} $$
 
 -->
 
-#### t-test
-
-<!--
-$$ t-statistic = \frac{\hat{X}- \mu}{\frac{sd}{\sqrt{n}}}$$
---> 
-
-#### f-test
-
-
 #### Chi-squared test
 
-<!-- tests for significant relationships between categorical features -->
+Tests for significant relationships between categorical features.
 
 
 #### Statistical Tests in bayesian statistics
+
+
 </font>
 
 ## Linear Algebra
