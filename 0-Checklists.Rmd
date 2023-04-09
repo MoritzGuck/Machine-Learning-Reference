@@ -113,3 +113,27 @@ Be aware: This list will never capture everything that can go wrong. ;-)
     -   Is the data biased towards certain values?
 
 -   How many empty values are there?
+
+## Feature selection & engineering checklist {.unlisted}
+
+Selected advice from paper from [Guyon and
+Elisseeff](https://jmlr.csail.mit.edu/papers/volume3/guyon03a/guyon03a.pdf):
+
+-   If you have domain knowledge: Use it.
+
+-   Are your features commensurate (same proportion): Normalize them.
+
+-   Do you suspect interdependent features: Construct conjunctive
+    features or products of features.
+
+Other advice:
+
+-   Features that are useless on their own, can be useful in combination
+    with other features.
+
+-   Using multiple redundant variables can be useful to reduce noise.
+
+-   There are also models (e.g. lasso regression, decision trees) that
+    have feature selection built into the model (i.e. by only allowing
+    for a certain number of features to be used or penalizing the use of
+    additional features).

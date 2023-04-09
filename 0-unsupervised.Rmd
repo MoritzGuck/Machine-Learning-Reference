@@ -4,14 +4,14 @@ editor_options:
     wrap: 72
 ---
 
-# Unsupervised Learning
+# Unsupervised learning
 
-## Custering Methods
+## Custering methods
 
 Clustering methods are used to group data when no class labels are
 present. You thereby want to learn an intrinsic structure of the data.
 
-### metrics for Clustering algorithms
+### Evaluation of clustering algorithms {#eval-clus}
 
 #### Silhouette coefficient
 

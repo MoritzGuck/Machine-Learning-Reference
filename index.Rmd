@@ -67,13 +67,21 @@ The currently incomplete sections are marked in <b><font color="grey">grey</font
 </table>
 
 
-## I want to get involved / report {.unlisted .unnumbered}
+## I want to get involved {.unlisted .unnumbered}
 
 That's awesome! `r emo::ji("smiley")`
+Do you want to: 
 
-- You found errors or unclear explanations? You have a good idea? Please file an issue under:
-[github.com/MoritzGuck/Machine-Learning-Reference](https://github.com/MoritzGuck/Machine-Learning-Reference).
-- I want to write/adapt a chapter, create figures, etc.? Please write an email to ml_reference[ät]icloud.com
+- Write/adapt a chapter, section, paragraph?
+- Create figures?
+- Or proofread new chapters?
+
+Please write an email to ml_reference[ät]icloud.com
+
+## I want to report something {.unlisted .unnumbered}
+
+You found errors or unclear explanations? You have a good idea? Please file an issue under:
+[github.com/MoritzGuck/Machine-Learning-Reference](https://github.com/MoritzGuck/Machine-Learning-Reference) or write an email to ml_reference[ät]icloud.com.
 
 ## Related work {.unlisted .unnumbered}
 

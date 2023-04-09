@@ -29,20 +29,24 @@ from [user LearnDataSci on
 wikimedia.org](https://commons.wikimedia.org/wiki/File:Artificial_Neural_Network.jpg).*](./figures/Artificial_Neural_Network.jpg){#CDF
 width="70%"}
 
+Explanation on the idea and mechanisms of neural networks: [Stanford Computer Vision Class](https://cs231n.github.io/neural-networks-1/)
+
 ### Non-Linearities
 
 Different non-linear functions can be used to generate the output of the
 neurons.
 
-<font color="grey">
-
 #### Sigmoid/Logistic Functions
+
+$$f(x) = \frac{1}{1+e^{-x}}$$
 
 #### Tanh Functions
 
+$$ f(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}} $$
+
 #### Rectifiers/ReLU
 
-</font>
+$$f(x) = \max(0,x)$$
 
 ### Terminology
 
@@ -157,22 +161,20 @@ You can look at layers of a NN as ways to represent data in different
 form of complexity and compactness. The code layers of autoencoders are
 a very compact way to represent the data. You can then use the
 compressed representation of the code layer and do clustering on that
-data. Because the code layer is however not optimized for that task XXXX
+data. Because the code layer is however not optimized for that task. [Song et al.](https://www.semanticscholar.org/paper/Auto-encoder-Based-Data-Clustering-Song-Liu/27a2c94a310d20ccae9c98e0f38d7684a16f9e61)
 combined the cost function of the **autoencoder and k-means
 clustering**:
 $$\min_{W,b} \frac{1}{N}*\sum_{i=1}^N ||x_i - \hat{x}_i||^2 - \lambda \sum_{i=1}^N ||f(x_i) - c_i||^2$$
 with $f(x_i)$ being the non-linearity of the code layer and $\lambda$ is
 a weight constant.\
 XXXX adapted spectral clustering (section
-[3.3](#Spectral%20Clustering){reference-type="ref"
-reference="Spectral Clustering"}) using autoencoders by replacing the
+[3.3](#Spectral%20Clustering)) using autoencoders by replacing the
 (linear) eigen-decomposition with the (non-linear) decomposition by the
 encoder. As in spectral clustering the Laplacian matrix is used as the
 the input to the decomposition step (encoder) and the compressed
 representation (code-layer) is fed into k-means clustering.\
-**Deep subspace clustering** by XXXX employs autoencoders combined with
-sparse subspace clustering [3.3.1](#SSP){reference-type="ref"
-reference="SSP"}. They used autoencoders and optimized for a compact
+**Deep subspace clustering** by [Pan et al.](https://arxiv.org/abs/1709.02508) employs autoencoders combined with
+sparse subspace clustering. They used autoencoders and optimized for a compact
 representation of the code layer: $$\begin{split}
                 \min_{W,b} \frac{1}{N}*\sum_{i=1}^N ||x_i - \hat{x}_i||^2 - \lambda ||V||_1 \\
                 \text{s.t.} F(X) = F(X)*V \text{ and diag}(V)=0
