@@ -1,0 +1,51 @@
+---
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+
+## Mapping to lower dimensions
+
+<font color="grey">
+
+### Manifold learning
+
+#### Isomap
+
+#### Local linear embedding
+
+#### Multi dimensional scaling
+
+</font>
+
+### Decomposition techniques
+
+#### Singular value decomposition {#SVD2}
+
+Singular value decomposition is used to compress large matrices of your
+data into smaller ones, with much less data, but without loosing a lot
+of information. Please visit the [mathematical explanation](#SVD1) for
+the underlying mechanisms.\
+
+```python
+from sklearn.decomposition import TruncatedSVD
+svd = TruncatedSVD(n_components=10)
+svd.fit_transform(X_train)
+svd.transform(X_test)
+```
+
+<font color="grey">
+
+#### Principle Component analysis (PCA)
+
+<!-- use this for the explanation https://stats.stackexchange.com/questions/134282/relationship-between-svd-and-pca-how-to-use-svd-to-perform-pca?rq=1 -->
+<!--# TODO: Make subchapter: Kernel PCA -->
+
+## Outlier detection
+
+### Local outlier factor
+
+### Isolation forest
+
+<font color="grey">

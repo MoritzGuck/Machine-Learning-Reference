@@ -1,0 +1,16 @@
+---
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+# Supervised learning
+
+Classification is the assignment of objects (data points) to categories
+(classes). Regression allows you to assign a continuous output to your
+data by estimating the relationship between your features and the
+output.\
+Both require a training data-set of points with known class labels and a
+test data-set for evaluation.
+
+

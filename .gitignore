@@ -31,6 +31,7 @@ bookdown_files
 book
 packages.bib
 images/dedication.lyx
+_book
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -446,3 +447,5 @@ Network Trash Folder
 Temporary Items
 .apdisk
 .Rproj.user
+
+/.quarto/

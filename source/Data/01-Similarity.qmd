@@ -1,0 +1,171 @@
+## Similarity and Distance Measures
+
+Choosing the right distance measures is important for achieving good
+results in statistics, predictions and clusterings.
+
+### Metrics
+
+For a distance measure to be called a metric $d$, the following criteria
+need to be fulfilled:
+
+-   Positivity: $d(x_1,x_2)≥0$
+
+-   $d(x_1,x_2)=0 \text{ if and only if } x_1 = x_2$
+
+-   Symmetry: $d(x_1, x_2) = d(x_2, x_1)$
+
+-   Triangle inequality: $d(x_1, x_3) ≤ d(x_1, x_2) + d(x_2, x_3)$
+
+There may be distance measures that do not fulfill these criteria, but
+those are not metrics.
+
+### Similarity measures on vectors
+
+These measures are used in many objective functions to compare data
+points.
+
+``` python
+from sklearn.metrics import pairwise_distances
+X1 = np.array([[2,3]])
+X2 = np.array([[2,4]])
+pairwise_distances(X1,X2, metric="manhattan")
+```
+
+The available metrics in sklearn are: 'cityblock', 'cosine',
+'euclidean', 'l1', 'l2', 'manhattan', and from scipy: 'braycurtis',
+'canberra', 'chebyshev', 'correlation', 'dice', 'hamming', 'jaccard',
+'kulsinski', 'mahalanobis', 'minkowski', 'rogerstanimoto', 'russellrao',
+'seuclidean', 'sokalmichener', 'sokalsneath', 'sqeuclidean', 'yule'\
+More info:
+[scikit-learn.org](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.pairwise_distances.html)
+
+#### Manhattan distance
+
+The distance is the sum of the absolute differences of the components
+(single coordinates) of the two points:
+$$d(A, B) = \sum_{i=1}^d | A_i - B_i |$$
+
+More info at
+[wikipedia.org](https://en.wikipedia.org/wiki/Taxicab_geometry).
+
+#### Hamming distance
+
+This metric is used for pairs of strings and works equivalently to the
+Manhattan distance. It is the number of positions that are different
+between the strings.\
+More info at
+[wikipedia.org](https://en.wikipedia.org/wiki/Hamming_distance).
+
+#### Euclidian distance
+
+$$d(A, B) = | A - B | = \sqrt{\sum_{i=1}^d (A_i-B_i)^2} $$
+
+More info on the euclidian distance on
+[wikipedia.org](https://en.wikipedia.org/wiki/Euclidean_distance).\
+The usefulness of this metric can deteriorate in high dimensional
+spaces. See [curse of
+dimensionality](https://en.wikipedia.org/wiki/Curse_of_dimensionality#Distance_function)
+
+#### Chebyshev distance
+
+The Chebyshev distance is the largest difference along any of the
+components of the two vectors.
+
+$$d(A, B) = \max_i(|A_i-B_i|) $$
+
+More info at
+[wikipedia.org](https://en.wikipedia.org/wiki/Chebyshev_distance).
+
+#### Minkowski Distance
+
+$$d(A, B) = (\sum_{i=1}^d |A_i-B_i|^p)^\frac{1}{p} $$
+
+For $p=2$ the Minkowski distance is equal to the Euclidian distance, for
+$p=1$ it corresponds to the Manhattan distance and it converges to the
+Chebyshev distance for $p \to \infty$.   More info at
+[wikipedia.org](https://en.wikipedia.org/wiki/Minkowski_distance).
+
+```{=html}
+<!--# ### Similarity measures on sets of objects
+
+#### Jaccard coefficient
+
+#### Jaccard distance
+
+#### Overlap coefficient
+
+#### Sorensen-Dice coefficient
+
+### Similarity measures on sets of vectors
+
+#### Single link distance function
+
+#### Complete link distance function
+
+#### Average link distance function
+
+### Similarity measures on sets of strings
+
+#### k-mer based similarity measures
+
+### Similartiy measures for nodes in a Graph
+
+#### Shortest path distance
+
+### Similarity measures on Graphs
+
+#### Wiener index
+
+#### Weisfeiler Lehmann Kernel
+
+### Similarty measures for time series
+
+#### Dynamic Time Warping (DTW) distance -->
+```
+### Kernels
+
+Kernels are functions that output the relationship between points in
+your data. They correspond to mapping the data into high-dimensional
+space and allow to implicitly draw nonlinear decision boundaries with
+linear models. The *kernel trick* denotes, that you don't have to map the points into high dimensional space explicitly.
+
+#### Closure properties of kernels
+
+-   If $k_1$ and $k_2$ are kernels, then $k_1 + k_2$ is a kernel as
+    well.
+
+-   If $k_1$ and $k_2$ are kernels, then their product is a kernel as
+    well.
+
+-   If $k$ is a kernel and $\alpha$ is a kernel, then $\alpha k$ is a
+    kernel as well.
+
+-   If you define $k$ only on a set $D$, then points that are not in $D$
+    will have a value of $k_0=0$ which is still a valid kernel.
+
+<font color="grey">
+
+#### Polynomial kernel
+
+$$K(x_1, x_2) = \left< x_1, x_2 + c \right>^d  $$
+$\left< \right>$ is the dot-product. The *linear kernel* is a polynomial kernel with $d = 1$. 
+
+#### Gaussian Radial Basis Function (RBF) kernel
+
+This is the most widely used non-linear kernel. 
+
+$$K(x_1, x_2) = exp \left(- \frac{ || x_1 - x_2||^2}{2 \sigma^2}  \right)$$
+
+#### constant kernel
+
+#### delta dirac kernel
+
+#### R convolution kernels
+
+
+
+#### String kernels
+
+<!-- spectrum kernel,  -->
+
+</font>

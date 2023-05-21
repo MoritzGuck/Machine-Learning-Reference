@@ -1,0 +1,81 @@
+project:
+  type: book
+  output-dir: "../ML_reference_site"
+
+book:
+  title: "Machine Learning Reference"
+  author: "Moritz Gück"
+  date: today
+  chapters:
+    - part: "index.qmd"
+      chapters:
+        - "source/Intro/02-Setup-env.qmd"
+    - part: "Math fundamentals"
+      chapters:
+        - "source/Maths/00-Statistics.qmd"
+        - "source/Maths/01-Linear-Algebra.qmd"
+    - part: "Data"
+      chapters:
+        - "source/Data/01-Similarity.qmd"
+        - "source/Data/02-Data-Analysis.qmd"
+        - "source/Data/03-Preprocessing.qmd"
+    - part: "source/Supervised/00-Supervised.qmd"
+      chapters:
+        - "source/Supervised/01-General-methods.qmd"
+        - "source/Supervised/02-Classification.qmd"
+        - "source/Supervised/03-Regression.qmd"
+    - part: "Unsupervised learning"
+      chapters:
+        - "source/Unsupervised/01-Clustering.qmd"
+        - "source/Unsupervised/02-lower-dim-mapping.qmd"
+    - part: "Neural Networks"
+      chapters:
+        - "source/Neural-Networks/0-Neural.qmd"
+    - part: "Other"
+      chapters:
+        - "source/Other/0-ML_PM.qmd"
+        - "source/Other/0-Checklists.qmd"
+
+  sidebar:
+    search: true
+    collapse-level: 3
+    background: light
+    style: floating
+    border: false
+    tools:
+      - icon: github
+        href: https://github.com/MoritzGuck/Machine-Learning-Reference
+        aria-label: GitHub
+  page-navigation: true
+  url: https://ml-reference.net/
+
+
+
+
+bibliography: references.bib
+
+format:
+  html:
+    theme:
+      # light: cosmo
+      # dark: slate
+      - cosmo
+      - custom.scss
+    toc: true
+    toc-location: left
+    toc-depth: 4
+    toc-expand: true
+    toc-title: "On this page"
+    number-depth: 2
+    shift-heading-level-by: -1
+    html-math-method: katex
+    output_dir: "../ML_reference_site"
+    fontsize: 1.02em
+    monofont: Courier
+    link-external-icon: true
+    link-external-newwindow: true
+
+  pdf:
+    documentclass: scrreprt
+
+editor: source
