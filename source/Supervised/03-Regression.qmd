@@ -73,7 +73,7 @@ More info: [scikit-learn.org]()
 -   Sensitive to outliers (-\> possibly overfitting)
 
 ::: {.callout-tip collapse="true"}
-## Tips for interpreting linear models
+#### Tips for interpreting linear models
 
 -   When comparing the strength of different coefficients: Take the scale of the feature into consideration (e.g. don't compare "m/s" and "km/h").
 
