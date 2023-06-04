@@ -4,6 +4,9 @@ __pycache__/
 *$py.class
 # C extensions
 *.so
+.quarto/
+_book/
+
 # Distribution / packaging
 .Python
 build/
