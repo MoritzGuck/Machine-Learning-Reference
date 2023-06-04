@@ -1,0 +1,792 @@
+## Preprocessing data
+
+### Joining / merging separate tables
+
+```python
+import pandas as pd
+merged_df = pd.merge(df1, df2, how = "inner", on = "reference_column")
+```
+
+More info:
+[pandas.pydata.org](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.merge.html)\
+
+
+### Missing & wrong data
+
+Some algorithms assume that all features of all samples have numerical
+values. In these cases missing values have to be imputed (i.e. inferred)
+or (if affordable) the samples with missing feature values can be
+deleted from the data set.
+
+#### Iterative imputor by sklearn
+
+For features with missing values, this imputor imputes the missing
+values by modelling each feature using the existing values from the
+other features. It uses several iterations until the results converge.\
+**!** This method scales with $O(nd^3)$, where $n$ is the number of
+samples and $d$ is the number of features.
+
+```python
+from sklearn.experimental import enable_iterative_imputer # necessary since the imputor is still experimental
+from sklearn.impute import IterativeImputer
+from sklearn.ensemble import RandomForestRegressor 
+rf_estimator = RamdomForestRegressor(n_estimators = 8, max_depth = 6, bootstrap = True)
+imputor = IterativeImputer(random_state=0, estimator = rf_estimator, max_iter = 25)
+imputor.fit_transform(X)
+```
+
+More info:
+[scikit-learn.org](https://scikit-learn.org/stable/modules/generated/sklearn.impute.IterativeImputer.html)\
+
+#### Median / average imputation
+
+Simply replace missing values with the median or average of the feature:
+
+```python
+import pandas as pd
+df["feature"] = df["feature"].fillna(df["feature"].median())
+```
+
+#### Deleting missing values
+
+```python
+import pandas as pd
+df.dropna(how="any") # how="all" would delete a sample if all values were missing
+```
+
+More info:
+[pandas.pydata.org](https://pandas.pydata.org/pandas-docs/version/0.18.1/generated/pandas.DataFrame.dropna.html)\
+
+#### Deleting duplicate entries
+
+Duplicate entries need to be removed (exception: time series), to avoid
+over representation and leakage into test set.
+
+```python
+import pandas as pd
+df.drop_duplicates(keep=False)
+```
+
+#### Replacing data
+
+```python
+import pandas as pd
+df.Col.apply(lambda x: 0 if x=='zero' else 1)
+```
+
+#### Filter out data
+
+```python
+import pandas as pd
+df = df[(df["Feature1"] == 0) & (df["Feature2"] != 0)]
+```
+
+### Continuous data
+
+#### Polynomial transform
+
+You spread out small and large values of a feature to help the algorithm to distinguish cases.
+It can also be used to combine two features to represent mutually supporting effects.
+
+```python
+from sklearn.preprocessing import PolynomialFeatures
+poly = PolynomialFeatures(degree=2, interaction_only=False, include_bias=False)
+poly.fit_transform(df[["feature1", "feature2"]])
+```
+
+#### Reduce skew
+
+Heavy skew in a distribution can be a problem for many models (outlier effects). 
+To reduce it you can use a **power transform** to map the data to a Gaussian distribution...
+
+```python
+from sklearn.preprocessing import PowerTransformer
+pt = PowerTransformer()
+pt.fit_transform(df["skew_feature"])
+```
+
+More info: [scikit-learn.org](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.PowerTransformer.html#sklearn.preprocessing.PowerTransformer)
+
+... or a **quantile transform** to map the data to a uniform (or Gaussian) distribution
+
+```python
+from sklearn.preprocessing import QuantileTransformer
+qt = QuantileTransformer(n_quantiles=100, output_distribution="uniform") # alternvative distribution: "normal"
+qt.fit_transform(df["skew_feature"])
+```
+
+More info: [scikit-learn.org](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.QuantileTransformer.html#sklearn.preprocessing.QuantileTransformer)
+
+### Categorical data
+
+There are multiple ways to encode categorical data, especially non-vectorized data,
+to make it suitable for machine learning algorithms. The string values
+(e.g. "male", "female") of categorical features have to be converted
+into integers. This can be done by two methods:
+
+#### Ordinal encoding
+
+An integer is assigned to each category (e.g. "male"=0, "female"=1)
+
+```python
+from sklearn.preprocessing import OrdinalEncoder
+ord_enc = preprocessing.OrdinalEncoder()
+ord_enc.fit(X)
+ord_enc.transform(X)
+```
+
+More info:
+[scikit-learn.org](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OrdinalEncoder.html#sklearn.preprocessing.OrdinalEncoder)\
+This method is useful when the categories have an ordered relationship
+(e.g. "bad", "medium", "good"). If this is not the case (e.g. "dog",
+"cat", "bunny") this is to be avoided since the algorithm might deduct
+an ordered relationship where there is none. For these cases
+one-hot-encoding is to be used.
+
+For **encoding the label** for classification tasks, you can also use the scikit-learn's `LabelEncoder`. More info here: [scikit-learn.org](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html)
+
+#### One-hot encoding
+
+One-hot encoding assigns a separate feature-column for each category and
+encodes it binarily (e.g. if the sample is a dog, it has 1 in the
+dog-column and 0 in the cat and bunny column).
+
+::: {.panel-tabset}
+
+###### sklearn
+
+```python
+from sklearn.preprocessing import OneHotEncoder
+onehot_enc = OneHotEncoder(handle_unknown='ignore')
+onehot_enc.fit(X)
+onehot_enc.transform(X)
+```
+
+More info:
+[scikit-learn.org](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html)\
+
+###### Pandas
+
+```python
+import pandas as pd
+pd.get_dummies(X, columns = ["Sex", "Type"], drop_first=True)
+```
+
+More info:
+[pandas.pydata.org](https://pandas.pydata.org/docs/reference/api/pandas.get_dummies.html)
+
+:::
+
+#### Discretizing / binning data
+
+You can discretize features and targets from continuous to
+discrete/categorical (e.g. age in years to child, teenager, adult,
+elderly).
+
+```python
+pd.cut(df["Age"], bins=[0,12, 20, 65, 150], labels =["child", "teenager", "adult", "elderly"])
+```
+
+More info:
+[pandas.pydata.org](https://pandas.pydata.org/docs/reference/api/pandas.cut.html)\
+
+Pros:
+
+-   It makes sense for the specific problem (e.g. targeting groups for
+    marketing).
+
+-   Improved signal-to-noise ratio (bins work like regularization).
+
+-   possibly highly non-linear relationship of continuous feature to
+    target is hard to learn for model.
+
+-   Better interpretability of features, results and model.
+
+-   Can be used to incorporate domain knowledge and make learning
+    easier.
+
+Cons:
+
+-   Your model and results lose information
+
+-   Senseless cut-offs between bins can create "artificial noise" and
+    make learning harder.
+
+More info:
+[stackexchange.com](https://datascience.stackexchange.com/q/19782/148392)\
+See also: [wikipedia: Sampling (signal
+processing)](https://en.wikipedia.org/wiki/Sampling_(signal_processing)).
+
+#### Combining rare categories
+
+Rare categories can lead to noise in the data and blow up the amount of features when using one-hot encoding. 
+These categories should be combined, when there are only few occurrences (e.g. When analysing page visits, combine the categories "blackberry", "jolla", "windows phone" into the category "other").
+
+::: {.panel-tabset}
+
+##### Pandas
+
+```python
+import pandas as pd
+import numpy as np
+counts_ser = pd.value_counts(df["feature"])
+categories_to_mask = counts_ser[(counts_ser/counts_ser.sum()).lt(0.05)].index # using 5% cut-off
+df["feature"] = np.where(df["feature"].isin(categories_to_mask),'other',df["feature"])
+```
+
+More info: [stackoverflow](https://stackoverflow.com/questions/47418299/python-combining-low-frequency-factors-category-counts)
+
+##### sklearn
+
+In sklearn, rare categories can be filtered out when one-hot encoding the feature using the parameter `min_frequency`.
+
+```python
+from sklearn.preprocessing import OneHotEncoder
+enc = OneHotEncoder(handle_unknown='ignore', min_frequency=0.05)
+enc.fit_transform(df["feature"])
+```
+
+More info:[scikit-learn.org](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html#sklearn.preprocessing.OneHotEncoder)
+
+##### PyCaret
+
+Use the parameter `rare_to_value` of the `setup` function.
+
+```python
+from pycaret.time_series import ClassificationExperiment # or use other Experiment type
+exp = ClassificationExperiment()
+exp.setup(train_df, target="Sales", rare_to_value = 0.05)
+```
+
+More info: [PyCaret Docs](https://pycaret.readthedocs.io/en/latest/api/classification.html#pycaret.classification.ClassificationExperiment)
+
+:::
+
+### Date- and time-data
+
+You can convert to the **datetime format** as follows:
+
+```python
+import pandas as pd
+pd.to_datetime(df.date_col, infer_datetime_format=True)
+```
+
+You create columns for **year**, **month**, **day** like this:
+
+```python
+import pandas as pd
+df['year'] = df.Date.dt.year
+df['month'] = df.Date.dt.month
+df['day'] = df.Date.dt.day
+```
+
+### Graph representation of data
+
+The similarity/distance between points can be represented in graphs. The
+data points are represented as nodes, the distances/similarities as
+edges.
+
+<!-- include schema of a graph, explain pros and cons, include link to libraries and wikipedia -->
+
+### Text data
+
+These are the common steps of pre-processing text data:
+
+```{mermaid}
+
+flowchart TD
+  A(Data Cleaning) --> B(Tokenization) --> C(Vectorization) --> G(Model)
+  C --> D(Padding) --> E(Embedding) --> G
+```
+
+#### Cleaning text data
+
+The aim is to remove errors, parts that are irrelevant for the task and to standardize.
+
+::: {.panel-tabset}
+
+##### clean-text
+
+The Clean-text only requires one command for several cleaning tasks:
+
+Install the packge: 
+
+```bash 
+pip install clean-text
+```
+
+Usage (see steps in parameters):
+
+```python
+from cleantext import clean
+
+clean("some input",
+    fix_unicode=True,               # fix various unicode errors
+    to_ascii=True,                  # transliterate to closest ASCII representation
+    lower=True,                     # lowercase text
+    no_line_breaks=False,           # fully strip line breaks as opposed to only normalizing them
+    no_urls=False,                  # replace all URLs with a special token
+    no_emails=False,                # replace all email addresses with a special token
+    no_phone_numbers=False,         # replace all phone numbers with a special token
+    no_numbers=False,               # replace all numbers with a special token
+    no_digits=False,                # replace all digits with a special token
+    no_currency_symbols=False,      # replace all currency symbols with a special token
+    no_punct=False,                 # remove punctuations
+    replace_with_punct="",          # instead of removing punctuations you may replace them
+    replace_with_url="<URL>",
+    replace_with_email="<EMAIL>",
+    replace_with_phone_number="<PHONE>",
+    replace_with_number="<NUMBER>",
+    replace_with_digit="0",
+    replace_with_currency_symbol="<CUR>",
+    lang="en"                       # set to 'de' for German special handling
+)
+
+# or simply:
+clean("some input", all= True)
+
+# use within pandas:
+df["text"] = df["text"].apply(lambda txt : cleantext.clean_words(txt))
+```
+
+The command `clean_words` additionally returns the words as a list.
+
+More info: \
+[aim - Guide to CleanText](https://analyticsindiamag.com/guide-to-cleantext-a-python-package-to-clean-raw-text-data/) \
+[Gitub - clean-text repo](https://github.com/jfilter/clean-text)
+
+##### Pandas
+
+```python
+import pandas as pd
+import re
+
+df["text"] = df["text"].str.lower()               # make all words lowercase
+df["text"] = df["text"].str.replace('ü', 'u')     # replace characters
+df["text"] = df["text"].str.replace(r"https?:\/\/.\S+","", regex = True) # remove URLs
+df["text"] = df["text"].str.replace(r"<.*?>","", regex = True) # remove html-tags
+
+# Reference : https://gist.github.com/slowkow/7a7f61f495e3dbb7e3d767f97bd7304b
+def remove_emoji(text):
+    emoji_pattern = re.compile("["
+                           u"\U0001F600-\U0001F64F"  # emoticons
+                           u"\U0001F300-\U0001F5FF"  # symbols & pictographs
+                           u"\U0001F680-\U0001F6FF"  # transport & map symbols
+                           u"\U0001F1E0-\U0001F1FF"  # flags (iOS)
+                           u"\U00002702-\U000027B0"
+                           u"\U000024C2-\U0001F251"
+                           "]+", flags=re.UNICODE)
+    return emoji_pattern.sub(r'', text)
+df["text"] = df["text"].apply(lambda text : remove_emoji(text))
+
+df["text"] = df["text"].str.strip()               # strip away leading and trailing spaces
+df["text"] = df["text"].str.replace(r"[^\w\s]", "", regex = True) # remove punctuation
+
+# Rarely used
+df["text"] = df["text"].str.lstrip("123456789")   # strip away leading numbers rstrip for trailing numbers (all combinations of characters will be stripped)
+df["text"] = df["text"].str.replace(r"\(.*?\)","", regex = True) # remove everything between brackets
+df["year"] = df["year"].str.extract(r'^(\d{4})', expand=False) # extracts year numbers
+```
+
+::: 
+
+#### Tokenization
+
+Tokenization is the act of splitting a text into sentences or words (i.e. tokens).
+
+##### Word-Tokenization
+
+::: {.panel-tabset}
+
+###### NLTK
+
+Split the text into words:
+```python
+import nltk
+nltk.download('punkt')
+from nltk.tokenize import word_tokenize
+words = word_tokenize(cleaned_text) 
+```
+
+
+###### SpaCy
+
+SpaCy uses a sophisticated text annotation method.
+
+1. Download trained English [linguistic annotation model](https://spacy.io/usage/models):
+```bash
+!python -m spacy download en_core_web_sm
+```
+
+2. Tokenize text:
+```python
+import spacy
+nlp = spacy.load("en_core_web_sm")
+doc = nlp(text_doc)
+tokens = [(token.text, token.pos_, token.dep_) for token in doc]
+```
+
+[Attributes:](https://spacy.io/api/token#attributes)\
+`pos_`: Part-of-speech (e.g. noun, adjective, punctuation), \
+`dep_`: Syntactic dependency relation (e.g. "Does ... have" $\rightarrow$ Does (auxiliary verb), have (root verb))
+
+More info: \
+[SpaCy - Features](https://spacy.io/usage/spacy-101#features)
+
+:::
+
+##### Sentence Tokenization
+
+::: {.panel-tabset}
+
+Split the text into sentences:
+
+###### NLTK
+
+```python
+from nltk.tokenize import sent_tokenize
+sentences = sent_tokenize(sentences_text)
+```
+
+###### SpaCy
+
+```python
+import spacy
+nlp = spacy.load("en_core_web_sm")
+doc = nlp(text_doc)
+sentences = [sent for sent in doc.sents]
+```
+
+More info: [Tutorial on SpaCy Sentencer](https://ashutoshtripathi.com/2020/05/04/how-to-perform-sentence-segmentation-or-sentence-tokenization-using-spacy-nlp-series-part-5/)
+
+:::
+
+#### Vectorization 
+
+Transform sequence of tokens into numerical vector that can be processed by models.
+
+##### Word count encoding
+
+This is part of the bag-of-words method. It works as follows:
+
+1. Create a vocabulary / corpus of all words in the training data.
+
+2. Each word in the vocabulary becomes its own feature
+
+3. For each document, count how many times the word occurs.
+
+```python
+from sklearn.feature_extraction.text import CountVectorizer
+count_vect = CountVectorizer()
+word_counts = count_vect.fit_transform(doc_array)
+```
+
+More info: [sklearn - extract features from text](https://scikit-learn.org/stable/tutorial/text_analytics/working_with_text_data.html#extracting-features-from-text-files)
+
+**Pros:**
+
+- Simple and easily interpretable.
+
+**Cons:**
+
+- Order and relation between words is lost
+
+- Sparse representation is not easily usable for many models. (Large vocabularies make it worse $\rightarrow$ Use [stemming](https://www.geeksforgeeks.org/python-stemming-words-with-nltk/))
+
+##### Term frequency-inverse document frequency (tf-idf)
+
+This measure reflects the importance of a word to a document: \
+**Term frequency**: What is the frequency of this word in this document.\
+**Inverse document frequency**: How rare is this word among all documents.\
+Thus, terms that occur a lot in one document but rarely in others get a higher value.
+
+```python
+from sklearn.feature_extraction.text import TfidfTransformer
+tf_transformer = TfidfTransformer() 
+word_tf_idfs = tf_transformer.fit_transform(word_counts) # uses wordcounts from count-vectorizer
+```
+
+More info: [sklearn - extract features from text](https://scikit-learn.org/stable/tutorial/text_analytics/working_with_text_data.html#extracting-features-from-text-files)
+
+#### Padding
+
+Since some sequences are shorter than others, we need to fill up the remaining parts of them ones with zeros. Thus we achieve sequences of the same length. First we need to make an ordinal encoding and create word-sequences.
+
+```python
+from keras.preprocessing.text import Tokenizer
+from keras.utils import pad_sequences
+# Convert text to sequence
+tokenizer = Tokenizer(num_words = vocab_size)
+tokenizer.fit_on_texts(train_texts)
+X_train_sequences = tokenizer.texts_to_sequences(train_texts)
+# Padd the sequences
+train_texts_padded = pad_sequences(train_texts, padding='post', maxlen=max_sequence_length*1.5)
+```
+
+#### Embedding
+
+Embedding is the mapping of words from the sparse one-hot-encoded space into a dense space, that should reflect the meaning of the words (i.e. similar words are close together).
+
+This is done in neural networks via an embedding layer:
+
+```python
+model = Sequential()
+model.add(layers.Embedding(input_dim=vocab_size, 
+                           output_dim=embedding_dim, 
+                           input_length=sequence_length))
+# ... add further layers ...
+model.compile()
+```
+
+You can reuse trained embeddings for other tasks. See [transfer-learning](#transfer-learning)
+More info: [Google Machine Learning - Prepare Your Data](https://developers.google.com/machine-learning/guides/text-classification/step-3#sequence_vectors_option_b)
+
+
+### Image data
+
+```{mermaid}
+
+flowchart LR
+  A(Resize) --> B(Split channels) --> C(Scale) --> E(Augment) --> G(Model)
+  A --> D(gray scale) --> C
+```
+
+::: {.panel-tabset} 
+
+#### Keras ImageDataGenerator 
+
+```python
+from tf.keras.preprocessing.image import ImageDataGenerator
+datagen = ImageDataGenerator(samplewise_std_normalization=True, 
+                            rotation_range=180, 
+                            shear_range=20, 
+                            zoom_range=0.1, 
+                            horizontal_flip=True, 
+                            vertical_flip=True, 
+                            validation_split=0.7)
+imgs_train = datagen.flow_from_directory(directory = "data/dir", 
+                                         target_size=(256, 256), 
+                                         batch_size=32, 
+                                         class_mode="categorical", # classes will be determined from subdirectory names
+                                         subset="training")
+imgs_test = datagen.flow_from_directory(directory = "data/dir", 
+                                         target_size=(256, 256), 
+                                         batch_size=32, 
+                                         class_mode="categorical", # classes will be determined from subdirectory names
+                                         subset="validation")
+```
+
+More info: [keras.io](https://www.tensorflow.org/api_docs/python/tf/keras/preprocessing/image/ImageDataGenerator)
+
+#### Keras image-loader
+
+**Load image dataset**
+
+```python
+from tf.keras.utils import image_dataset_from_directory
+imgs_train, imgs_test = image_dataset_from_directory(directory="path/tofolder", labels="inferred",color_mode="rgb", image_size=(256, 256), validation_split=0.7, subset="both"
+    label_mode="int")
+```
+
+**load single image** 
+
+```python
+from tf.keras.utils import load_img
+from tf.keras.utils.image import img_to_array
+img = load_img(path="path/toimg.png", grayscale=False, color_mode="rgb", target_size=(256, 256))
+img = img_to_array(img)
+```
+
+More info: [keras.io](https://keras.io/api/data_loading/image/)
+
+**Augmentation**
+
+```python
+from tf.keras import layers, Sequential
+import numpy as np
+
+resize_and_rescale = Sequential([
+  layers.Rescaling(1./255),
+  layers.RandomFlip("horizontal_and_vertical"),
+  layers.RandomRotation(0.2),
+])
+
+images = []
+for idx in range(10):
+  augmented_image = data_augmentation(img)
+  images.append(augmented_image)
+  
+img_ar = np.array(images)
+```
+
+More info: [keras.io](https://www.tensorflow.org/tutorials/images/data_augmentation)
+
+#### OpenCV
+
+```python
+# Adapted from https://github.com/bnsreenu
+import os
+import numpy as np 
+import glob # To go through folders
+import cv2
+
+train_split = 0.7
+img_size = 256
+
+images_train = []
+images_test = []
+labels_train = [] 
+labels_test = [] 
+
+for dir_path in img_dir:
+    label = dir_path.split("/")[-1]
+    print(label)
+    img_paths = glob.glob(os.path.join(dir_path, "*.jpeg"))
+    for img_idx, img_path in enumerate(img_paths):
+        img = cv2.imread(img_path, cv2.IMREAD_COLOR)
+        img = cv2.resize(img, (img_size, img_size))
+        img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
+        img = img/(255/2)-1 # scales 0 to 255 range to -1 to 1 (more or less zero-centered)
+        if img_idx < train_split * len(img_paths):
+            images_train.append(img)
+            labels_train.append(label)
+            # flip image horizontally: 
+            images_train.append(cv2.flip(img, 1))
+            labels_train.append(label)
+            # flip image vertically: 
+            images_train.append(cv2.flip(img, 0))
+            labels_train.append(label)
+        else: 
+            images_test.append(img)
+            labels_test.append(label)
+            
+images_train = np.array(images_train)
+labels_train = np.array(labels_train)
+images_test = np.array(images_test)
+labels_test = np.array(labels_test)
+  ```
+:::
+
+[scikit-image - userguide](https://scikit-image.org/docs/stable/user_guide.html)
+
+[Neptune.ai - Image processing methods you should know](https://neptune.ai/blog/image-processing-python)
+
+<!-- Include Patches --> 
+
+
+## Standardization
+
+Many machine learning models assume that the features are centered
+around 0 and that all have a similar variance. Therefore the data has to
+be centered and scaled to unit variance before training and prediction.
+
+```python
+from sklearn.preprocessing import StandardScaler
+scaler = StandardScaler()
+scaler.fit_transform(input_df)
+```
+
+More info:
+[scikit-learn.org](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html)
+
+Another option for scaling is normalization. This is used, when the
+values have to fall strictly between a max and min value.\
+More info:
+[scikit-learn.org](https://scikit-learn.org/stable/modules/preprocessing.html#normalization)
+
+## Splitting in training- and test-data
+
+You need to split your training set into test- and training-samples. The
+algorithm uses the training samples with the known label/target value
+for fitting the parameters. The test-set is used to determine if the
+trained algorithm performs well on new samples as well. You need to give
+special considerations to the following points:
+
+-   Avoiding data or other information to leak from the training set to
+    the test-set
+
+-   Validating if the predictive performance deteriorates over time
+    (i.e. the algorithm will perform worse on new samples). This is
+    especially important for models that make predictions for future
+    events.
+
+-   Conversely, sampling the test- and training-sets randomly to avoid
+    introducing bias in the two sets.
+
+```python
+# assuming you already imported the data and separated the label column:
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=42)
+```
+
+More info:
+[scikit-learn.org](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html)
+
+## Feature selection
+
+Usually the label does not depend on all available features. To detect
+causal features, remove noisy ones and reduce the running and training
+costs of the algorithm, we reduce the amount of features to the relevant
+ones. This can be done a priori (before training) or using wrapper
+methods (integrated with the prediction algorithm to be used).\
+**!** There are methods that have feature selection already built-in,
+such as decision trees.
+
+### A priori feature selection
+
+A cheap method is to remove all features with **variance** below a
+certain threshold.
+
+```python
+from sklearn.feature_selection import VarianceThreshold
+selector = VarianceThreshold(threshold=0.1)
+selector.fit_transform(X)
+```
+
+More info:
+[scikit-learn.org](https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.VarianceThreshold.html#sklearn.feature_selection.VarianceThreshold)
+
+The **Mutual information score** works by choosing the
+features that have the highest dependency between the features and the
+label. {#mutual_info}
+
+$$ I(X, Y) 
+\\ = D_{KL} \left( P(X=x, Y=y),
+P(X=x) \otimes P(Y=y) \right) \\ = \sum_{y \in Y} \sum_{x \in X}
+    { P(X=x, Y=y) \log\left(\frac{P(X=x, Y=y)}{P(X=x)P(Y=y)}\right) }$$
+
+where, $D_{KL}$ is the [Kullback--Leibler
+divergence](https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence)
+(A measure of similarity between distributions). The $\log$-Term is for
+quantifying how different the joint distribution is from the product of
+the marginal distributions.
+
+```python
+from sklearn.feature_selection import SelectKBest
+from sklearn.feature_selection import mutual_info_classif # for regression use mutual_info_regression
+X_new = SelectKBest(mutual_info_classif, k=8).fit_transform(X, y)
+```
+
+More info:
+[scikit-learn.org](https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.SelectKBest.html)\
+[wikipedia.org/wiki/Mutual_information](https://en.wikipedia.org/wiki/Mutual_information)
+
+### wrapper methods
+
+Using **greedy feature selection** as a wrapper method, one commonly
+starts with 0 features and adds the feature that returns the highest
+score with the used classifier.
+
+```python
+from sklearn.feature_selection import SequentialFeatureSelector
+from sklearn.tree import DecisionTreeClassifier
+classifier = DecisionTreeClassifier()
+selector = SequentialFeatureSelector(classifier, n_features_to_select=8)
+selector.fit_transform(X, y)
+```
+
+More info:
+[scikit-learn.org](https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.SequentialFeatureSelector.html)
+
+
+

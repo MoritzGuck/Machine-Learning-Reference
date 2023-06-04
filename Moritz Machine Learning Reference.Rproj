@@ -17,3 +17,5 @@ StripTrailingWhitespace: Yes
 
 BuildType: Website
 WebsitePath: /Users/Moritz-Work/Documents/Programming/ML_reference_site
+
+SpellingDictionary: en_US

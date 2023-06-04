@@ -1,7 +1,7 @@
 ---
-editor_options: 
-  markdown: 
-    wrap: 72
+image: "figures/raw_buttons/graphs.png"
+image-height: 30px
+image-width: 30px
 ---
 
 # Checklists
@@ -137,3 +137,4 @@ Other advice:
     have feature selection built into the model (i.e. by only allowing
     for a certain number of features to be used or penalizing the use of
     additional features).
+

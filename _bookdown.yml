@@ -1,7 +1,0 @@
-delete_merged_file: true
-edit: false
-rmd_files: ["index.Rmd", "0-Probability-Theory.Rmd", "0-Data.Rmd", "0-Supervised.Rmd", "0-unsupervised.Rmd", "0-Neural.rmd", "0-ML_PM.Rmd", "0-Checklists.Rmd"]
-language:
-  ui:
-    chapter_name: "Chapter "
-output_dir: "../ML_reference_site"

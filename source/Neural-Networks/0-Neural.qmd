@@ -1,0 +1,362 @@
+---
+title: "Neural Networks"
+format:
+  html:
+    code-fold: true
+jupyter: python3
+---
+
+# Neural Networks
+
+## Fundamentals
+
+On the most basic level, neural networks consist of many simple models (e.g. linear and logistic models) that are chained together in a directed network. The models sit on the neurons (nodes) of the network. The most important components of neurons are:
+
+1.  **Activation**: $a = Wx+b$ ($W$ = weights and $b$ = bias)
+
+2.  **Non-linearity**: $f(x, \theta)=\sigma(a)$ (e.g. a sigmoid function for logistic regression, giving you a probability output. $\theta$ is a threshold)
+
+The neurons (nodes) in the first layer uses as its input the sample values and feeds its output into the activation function of the next nodes in the next layer, a.s.o. The later layers should thereby learn more and more complicated concepts or structures.
+
+![Model of an artificial neural network with one hidden layer. *Figure from [user LearnDataSci on wikimedia.org](https://commons.wikimedia.org/wiki/File:Artificial_Neural_Network.jpg).*](/figures/Artificial_Neural_Network.jpg){#CDF width="70%"}
+
+Explanation on the idea and mechanisms of neural networks: [Stanford Computer Vision Class](https://cs231n.github.io/neural-networks-1/)
+
+### Non-Linearities
+
+Different non-linear functions can be used to generate the output of the neurons.
+
+#### Sigmoid/Logistic Functions
+
+This activation function is often used in the last layer of NNs for classification (since it scales the output between 0 and 1).
+
+$$f(x) = \frac{1}{1+e^{-x}}$$
+
+```{python}
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+import math
+
+x = np.arange(-6, 6, 0.1)
+f = 1 / (1+math.e**(-x))
+
+sns.set(rc={'figure.figsize':(3,2)}, style="whitegrid")
+sns.lineplot(x=x, y=f, )
+plt.xlabel('x')
+plt.ylabel('f(x)')
+```
+
+**Pros:**
+
+-   Scales output between 0 and 1 (good for output layer in classification tasks)
+
+-   Outputs are bound between 0 and 1 $\rightarrow$ No explosion of activations
+
+**Cons:**
+
+-   No saturation / dying neuron / vanishing gradient: When f(x) = 0 or 1, the gradient of f(x) is 0. This blocks back-propagation (see [here](https://medium.com/analytics-vidhya/comprehensive-synthesis-of-the-main-activation-functions-pros-and-cons-dab105fe4b3b))
+
+-   Output not centered around 0: All weight-updates during backpropagation are either positive or negative, leading to zig-zag SGD instead of direct descent to optimum (see [here](https://rohanvarma.me/inputnormalization/) or [here](https://stats.stackexchange.com/questions/237169/why-are-non-zero-centered-activation-functions-a-problem-in-backpropagation))
+
+-   computationally more expensive than ReLu
+
+#### Tanh Functions
+
+$$ f(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}} $$
+
+```{python}
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+import math
+
+x = np.arange(-6, 6, 0.1)
+f = (math.e**x - math.e**(-x) ) / (math.e**(x)+math.e**(-x))
+
+sns.set(rc={'figure.figsize':(3,2)}, style="whitegrid")
+sns.lineplot(x=x, y=f, )
+plt.xlabel('x')
+plt.ylabel('f(x)')
+```
+
+**Pros:**
+
+-   Centered around zero
+
+**Cons:**
+
+-   saturation / dying neuron / vanishing gradient problem
+
+-   computationally more expensive than ReLu
+
+#### Rectifiers/ReLU
+
+$$f(x) = \max(0,x)$$
+
+```{python}
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+import math
+
+x = np.arange(-6, 6, 0.1)
+f = [max(0,x_i) for x_i in x] 
+
+sns.set(rc={'figure.figsize':(3,2)}, style="whitegrid")
+sns.lineplot(x=x, y=f, )
+plt.xlabel('x')
+plt.ylabel('f(x)')
+```
+
+**Pros:**
+
+-   Computationally cheap
+
+-   No saturation for positive values
+
+**Cons:**
+
+-   Not zero centered
+
+-   Saturation for negative values
+
+#### Leaky ReLU
+
+$$f(x) = \begin{cases}
+        \alpha x \text{ if } x < 0 \\
+        x \text{ if } x \ge 0
+        \end{cases}
+$$
+
+```{python}
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+import math
+
+a = 0.1
+x = np.arange(-6, 6, 0.1)
+f = [(a*x_i if x_i < 0 else x_i) for x_i in x] 
+
+sns.set(rc={'figure.figsize':(3,2)}, style="whitegrid")
+sns.lineplot(x=x, y=f, )
+plt.xlabel('x')
+plt.ylabel('f(x)')
+```
+
+**Pros:**
+
+-   No saturation problem
+
+-   fast to compute
+
+-   more zero-centered than e.g. sigmoid-activation
+
+### Terminology
+
+-   **Input layer/visible layer:** Input variables
+
+-   **Hidden layer:** Layers of nodes between input and output layer
+
+-   **Output layer:** Layer of nodes that produce output variables
+
+-   **Size:** Number of nodes in the network
+
+-   **Width:** Number of nodes in a layer
+
+-   **Depth:** Number of layers
+
+-   **Capacity:** The type of functions that can be learned by the network
+
+-   **Architecture:** The arrangement of layers and nodes in the network
+
+### Feedforward Neural Network / Multi-Layer Perceptron
+
+This is the simplest type of proper neural networks. Each neuron of a layer is connected to each neuron of the next layer and there are no cycles. The outputs of the previous layer corresponds to the $x$ in the activation function. Each output ($x_i$) of the previous layer gets it's own weight ($w_i$) in each node and a bias ($b$) is added to each node. Neurons with a very high output are "active" neurons, those with negative outputs are "inactive". The result is mapped to the probability range by (commonly) a sigmoid function. The output is then again given to the next layer.\
+If your input layer has 6400 features (80\*80 image), a network with 2 hidden layers of 16 nodes will have $6400*16+16*16+16*10+16+16+10 = 102'858$ parameters. This is a very high number of degrees of freedom and requires a lot of training samples.
+
+::: panel-tabset
+### PyTorch
+
+``` python
+from torch import nn
+
+    class CustomNet(nn.Module):
+        def __init__(self):
+            super(CustomNet, self).__init__()
+            self.lin_layer_1 = nn.Linear(in_features=10, out_features=10)
+            self.relu = nn.ReLU()
+            self.lin_layer_2 = nn.Linear(in_features=10, out_features=10)
+
+        def forward(self, x):
+            x = self.lin_layer_1(x)
+            x = self.relu
+            x = self.lin_layer_2(x)
+            return x
+
+        def num_flat_features(self, x):
+            size = x.size()[1:] # Use all but the batch dimension
+            num = 1
+            for i in size:
+                num *= i
+            return num
+
+    new_net = CustomNet()
+```
+
+### Keras
+
+Example of a small Keras model for text-classification.
+
+``` python
+from keras.models import Sequential
+from keras import layers
+
+embedding_dim = 20 
+sequence_length = 50
+vocab_size = 5000 # length of word index / corpus
+
+# Specify model:
+model = Sequential()
+model.add(layers.Embedding(input_dim=vocab_size, 
+                           output_dim=embedding_dim, 
+                           input_length=sequence_length))
+model.add(layers.SpatialDropout1D(0.1)) # Against overfitting
+model.add(layers.GlobalMaxPool1D())
+model.add(layers.Dense(10, activation='relu'))
+model.add(layers.Dense(1, activation='sigmoid'))
+model.compile(optimizer='adam',
+              loss='binary_crossentropy',
+              metrics=['accuracy'])
+model.summary()
+
+# Train model:
+history = model.fit(train_texts_padded, 
+                    y_train,
+                    epochs=5,
+                    verbose=True,
+                    validation_data=(test_texts_padded, y_test),
+                    batch_size=100)
+loss, accuracy = model.evaluate(train_texts_padded, y_train)
+print("Accuracy training: {:.3f}".format(accuracy))
+loss, accuracy = model.evaluate(test_texts_padded, y_test)
+print("Accuracy test:  {:.3f}".format(accuracy))
+```
+:::
+
+### Backpropagation
+
+This is the method by which neural networks learn the optimal weights and biases of the nodes. The components are a cost function and a gradient descent method.\
+The cost function analyses the difference between the designated activation in the output layer (according to the label of the data) and the actual activation of that layer. Commonly a residual sum of squares is used.\
+You get the direction of the next best parameter-combination by using a *stochastic gradient descent* algorithm using the gradient for your cost function:
+
+1.  We use a "mini-batch" of samples for each round/step of the gradient descent.
+
+2.  We calculate squared residual of each feature of the output layer for each sample.
+
+3.  From that we calculate what the bias or weights from the output layer and the activation from the last hidden layer must have been to get this result. We average that out for all images in our mini-batch.
+
+4.  From that we calculate the weights, biases and activations of the upstream layers $\rightarrow$ we *backpropagate*.
+
+### Initialization
+
+The weights of the nodes are commonly initialized randomly with a certain distribution. The biases are commonly initialized as zero, thus 0-centering of the input data is recommended.
+
+## Types of NNs
+
+### Convolutional Neural Networks
+
+### Encoder-Decoder Models
+
+#### Autoencoder models
+
+Contrary to the other architectures, autoencoders are used for unsupervised learning. Their goal is to compress and decompress data to learn the most important structures of the data. The layers therefore become smaller for the encoding step and the later layers get bigger again, up to the original representation of the data. The optimization problem is now: $$\min_{W,b} \frac{1}{N}*\sum_{i=1}^N ||x_i - \hat{x}_i||^2$$ with $x_i$ being the original datapoint and $\hat{x}_i$ the reconstructed datapoint.
+
+![Model of an autoencoder. The encoder layers compress the data towards the code layer, the decoder layers decompress the data again. *Figure from [Michela Massi on wikimedia.org](https://commons.wikimedia.org/wiki/File:Autoencoder_schema.png).*](/figures/Autoencoder_schema.png){width="50%"}
+
+#### Autoencoders for clustering
+
+You can look at layers of a NN as ways to represent data in different form of complexity and compactness. The code layers of autoencoders are a very compact way to represent the data. You can then use the compressed representation of the code layer and do clustering on that data. Because the code layer is however not optimized for that task. [Song et al.](https://www.semanticscholar.org/paper/Auto-encoder-Based-Data-Clustering-Song-Liu/27a2c94a310d20ccae9c98e0f38d7684a16f9e61) combined the cost function of the **autoencoder and k-means clustering**: $$\min_{W,b} \frac{1}{N}*\sum_{i=1}^N ||x_i - \hat{x}_i||^2 - \lambda \sum_{i=1}^N ||f(x_i) - c_i||^2$$ with $f(x_i)$ being the non-linearity of the code layer and $\lambda$ is a weight constant.\
+XXXX adapted spectral clustering (section [3.3](#Spectral%20Clustering)) using autoencoders by replacing the (linear) eigen-decomposition with the (non-linear) decomposition by the encoder. As in spectral clustering the Laplacian matrix is used as the the input to the decomposition step (encoder) and the compressed representation (code-layer) is fed into k-means clustering.\
+**Deep subspace clustering** by [Pan et al.](https://arxiv.org/abs/1709.02508) employs autoencoders combined with sparse subspace clustering. They used autoencoders and optimized for a compact representation of the code layer: $$\begin{split}
+                \min_{W,b} \frac{1}{N}*\sum_{i=1}^N ||x_i - \hat{x}_i||^2 - \lambda ||V||_1 \\
+                \text{s.t.} F(X) = F(X)*V \text{ and diag}(V)=0
+            \end{split}$$ with V being the sparse representation of the code layer ($F(X)$) .
+
+<font color="grey">
+
+### Generative adversarial networks
+
+### Recurrent neural networks (RNN)
+
+Compared to the fully connected or convolutional neural networks, RNNs can work on variable length inputs without padding the sequences.
+
+![A unit of an RNN. The left side shows a static view of a unit $h$. The right side shows how the activations of past inputs ($x_{t-1}$) influence the output ($o_t$) of the current input ($x_t$). $U$, $V$ and $W$ are weights (Beware: They stay the same for different inputs). *Figure from [fdeloche on wikimedia.org](https://commons.wikimedia.org/wiki/File:Recurrent_neural_network_unfold.svg).*](/figures/rnn.png){width="70%"}
+
+Problem: The influence of previous inputs vanishes (or potentially explodes) with the sequence length (unfolding). This makes the network hard to train. This is mitigated by LSTMs (below).
+
+more explanation: [youtube: StatQuest](https://www.youtube.com/watch?v=AsNTP8Kwu80)
+
+#### Long short-term memory (LSTM) networks
+
+Instead of just using the influence of previous inputs ("short-term memory"), LSTMs incorporate influence of more distance inputs ("long-term memory"). $\rightarrow$ There are two paths to influence the current state.
+
+![A unfolded view of a unit of an LSTM. $c_{t}$ (top horizontal path) is the *cell state* and represents the long-term memory. $h_t$ ( bottom horizontal line) is the *hidden* *state* and represents the short-term memory. The weights are not shown in this diagram. $F_t$ is the *forget gate* and determines the percentage of the long-term memory that is remembered based on the short-term memory and input. $I_t$ is the *input gate* and determines how/whether to update/create the long-term memory using the input and short-term memory. $O_t$ is the *output gate* and determines the short-term memory to be passed on to the next time-step. Thus the output of the cell is the modified long- and short-term memory. *Figure from [fdeloche on wikimedia.org](https://commons.wikimedia.org/wiki/File:Long_Short-Term_Memory.svg).*](/figures/LSTM.png){width="70%"}
+
+more explanation: [youtube: StatQuest](https://www.youtube.com/watch?v=YCzL96nL7j0)
+
+### Transformer models
+
+Transformers are encoder-decoder models with the following setup:
+
+-   **Encoder:** Containts one attention unit, the *multi-head attention*. It learns the relationships between elements in the input sequence.
+
+-   **Decoder:** Contains two attention units:
+
+    -   The *masked multi-head attention*: It learns relationship of the current element and previous words in the output sequence.
+
+    -   The *multi-head attention*: It learns the relationship of the (current and previous) elements in the output sequence and the learned representation of the input from the encoder.
+
+Like LSTMs, transformers use attention mechanisms to learn relationships between input elements. There are key differences, however:
+
+-   The sequences are passed in simultaneously (not sequentially as in RNNs). Many computations can be done in parallel.
+-   *Positional encoding*: Since the elements are fed-in in parallel, the position of the elements within the sequence is encoded.
+-   Masking: Since elements are fed-in in parallel, the elements that the model shall predict, are masked (overwritten with zeros) from the output-sequence during training.
+-   Self-attention: The significance of an element (e.g. word) is learned by specific elements around it. Contrary to RNNs, the dependencies don't grow/shrink linearly with $t$, but are independent of the distance.
+
+![Architecture of transformer models. The encoder is on the left. The decoder is on the right. The encoder-outputs are passed to it in sequence. Output-sequence elements that come after the current input element are masked. The decoder generates the next element of the output. There are commonly multiple encoder and decoder units in sequence and multiple attention units in parallel. *Figure from [Yuening Jia on wikimedia.org](https://commons.wikimedia.org/wiki/File:The-Transformer-model-architecture.png).*](/figures/transfomer-architecture.png){width="70%"}
+
+Detailed explanation: [Youtube - CodeEmporium](https://www.youtube.com/watch?v=QCJQG4DuHT0&list=PLTl9hO2Oobd97qfWC40gOSU8C0iu0m2l4)
+
+#### Large Language Models (LLMs)
+
+LLMs are transformer models, that have been trained on a huge amount of unlabeled data.
+
+Pros:
+
+-   They are very performant
+-   They are easily adaptable for other use cases.
+
+Cons:
+
+-   The training data of the models is often unknown or insufficiently sanitized (containing false information, hate speech, outdated info, etc. )
+-   The models are so huge, that it takes a lot of compute power just to use it for predictions.
+
+To deal with these problems, You can tune late layers in pre-trained LLMs to increase their accuracy for your field of application without having to train a huge model. 
+
+
+
+## Learnig methods
+
+There are specific methods for learning in neural networks.
+
+### Transfer learning {#transfer-learning}
+
+You train a model on one (usually large) dataset and adapt it for a related learning task. The feature space and distribution of the input and target data of the new task can be different from the old task.
+
+#### Domain adaptation
+
+In domain adaptation the feature space is similar to the original dataset.
+
+</font>

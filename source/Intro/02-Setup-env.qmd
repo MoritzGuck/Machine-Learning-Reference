@@ -1,0 +1,99 @@
+## Setup Environment
+
+How to setup your packages and virtual environment. 
+
+### Conda
+
+Conda is a package and virtual environment manager. It resolves dependencies of your python and non-python packages.
+
+**Install:** 
+
+[conda docs - Installation](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html)
+
+::: {.callout-note collapse=true appearance="simple"}  
+
+#### Installation via UNIX CLI
+
+```bash
+mkdir -p ~/miniconda3
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh
+bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
+rm -rf ~/miniconda3/miniconda.sh
+~/miniconda3/bin/conda init bash
+~/miniconda3/bin/conda init zsh
+```
+
+:::
+
+**List your existing environments:** 
+
+```bash
+conda env list
+```
+
+**Create new environment:**
+
+Create a yaml file with required packages like this one: [github - ml-reference-env.yml](https://gist.github.com/MoritzGuck/ee0f9b9b511a25dbff8e98925596492e)
+
+Create a conda env from that file:
+
+```bash
+conda env create -f environment.yml
+```
+
+**Change to an existing environment:**
+
+```bash
+conda activate test
+conda env list
+```
+
+**Check and update package versions:**
+
+After activating an env:
+
+```bash
+python --version
+```
+
+```bash
+conda update python
+```
+
+**Install packages:**
+
+Latest version:
+```bash
+conda install pandas 
+```
+
+Specific version:
+```bash
+conda install pandas==2.0.0
+```
+
+From different channel:
+```bash
+conda install pandas -c conda-forge -y
+```
+
+**switch back to base environment:**
+
+```bash
+conda deactivate env-name
+```
+
+**Removing environment:**
+
+```bash
+conda env remove -n env-name
+```
+
+More info:
+[Intro to Conda virtual environments](https://towardsdatascience.com/introduction-to-conda-virtual-environments-eaea4ac84e28)
+
+**Export environment to conda:**
+
+```bash
+conda env export > environment.yml
+```
