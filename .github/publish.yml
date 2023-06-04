@@ -1,7 +1,9 @@
 on:
   workflow_dispatch:
   push:
-    branches: master
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
 
 name: Quarto Publish to SSH-Server
 
