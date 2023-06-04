@@ -1,0 +1,38 @@
+on:
+  workflow_dispatch:
+  push:
+    branches: main
+
+name: Quarto Publish to SSH-Server
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      deployments: write # needed for Cloudflare
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          tinytex: true
+          
+      - name: Render Quarto Project
+        uses: quarto-dev/quarto-actions/render@v2
+        with:
+          to: html
+          path: '.'
+    
+      - name: 📂 Sync files
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ml-reference.bplaced.net
+          username: ${{ secrets.FTP_UID }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: 21
+          protocol: ftps
+          local-dir: './_site/'
+          server-dir: 'www/'
