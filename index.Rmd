@@ -4,23 +4,16 @@ author: "Moritz Gück"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 documentclass: book
-url: http://ml-reference.bplaced.net/
+url: https://ml-reference.net/
 # cover-image: path to the social sharing image like images/cover.jpg
 link-citations: yes
 github-repo: MoritzGuck/Machine-Learning-Reference
 editor_options: 
   markdown: 
     wrap: 72
-output:
-  bookdown::html_document2:
-    theme: darkly
-    toc: true
-    toc_depth: 2
 ---
 
-# Introduction {.unnumbered}
-
-## What is this? {.unlisted .unnumbered}
+# What is this? {.unlisted .unnumbered}
 
 This is a reference on applied machine learning for daily use. The
 topics range from math fundamentals to complex machine learning models
@@ -76,7 +69,8 @@ Do you want to:
 - Create figures?
 - Or proofread new chapters?
 
-Please write an email to ml_reference[ät]icloud.com
+Please write an email to ml_reference[ät]icloud.com \
+Your benefits: Good karma, "[While we teach, we learn](https://ideas.time.com/2011/11/30/the-protege-effect/)", Being listed as an author on this page.
 
 ## I want to report something {.unlisted .unnumbered}
 
@@ -93,7 +87,7 @@ You found errors or unclear explanations? You have a good idea? Please file an i
 \ 
 \ 
 
-<p style="font-size: 12px;">
+<p style="font-size: 14px;">
   <a href="https://www.flaticon.com/free-icons/graph" title="graph icons">Icons
 created by Freepik - Flaticon</a>
 </p>

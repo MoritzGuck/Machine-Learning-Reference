@@ -15,7 +15,8 @@ bookdown::gitbook:
     toolbar:
       position: fixed
     info: false
-    fontsettings: null
+    fontsettings:
+      theme: white
 
 bookdown::pdf_book:
   includes:

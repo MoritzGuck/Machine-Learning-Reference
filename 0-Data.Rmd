@@ -12,7 +12,7 @@ knitr::opts_chunk$set(
 
 ------------------------------------------------------------------------
 
-# Data: Representation, Analysis & Processing
+# Data
 
 ## Similarity and Distance Measures
 
