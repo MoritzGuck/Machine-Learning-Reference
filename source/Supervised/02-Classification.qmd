@@ -19,7 +19,7 @@ negatives.
 from sklearn.metrics import confusion_matrix
 import seaborn as sns
 confusion = confusion_matrix(y_true=y_test, y_pred=y_pred, labels=categories_list)
-sns.heatmap(confusion, annot=True, xticklabels=categories_list, yticklabels=categories_list)
+sns.heatmap(confusion, annot=True, xticklabels=categories_list, yticklabels=categories_list, fmt='.0f')
 ```
 
 
