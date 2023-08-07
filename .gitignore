@@ -355,3 +355,4 @@ Temporary Items
 .Rproj.user
 /.quarto/
 .Rhistory
+.RData
