@@ -130,9 +130,9 @@ An integer is assigned to each category (e.g. "male"=0, "female"=1)
 
 ```python
 from sklearn.preprocessing import OrdinalEncoder
-ord_enc = OrdinalEncoder()
-ord_enc.fit(X)
-ord_enc.transform(X)
+ord_enc = OrdinalEncoder(min_frequency=0.05)
+ord_enc.fit(X) # multiple columns can be transformed at once
+X_transf = ord_enc.transform(X)
 ```
 
 More info:
