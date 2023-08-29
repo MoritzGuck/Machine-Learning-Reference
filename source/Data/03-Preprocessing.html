@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Machine Learning Reference - 6&nbsp; Preprocessing data</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../source/Supervised/00-Supervised.html" rel="next">
+<link href="../../source/Data/02-Data-Analysis.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="../../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../source/Data/01-Similarity.html">Data</a></li><li class="breadcrumb-item"><a href="../../source/Data/03-Preprocessing.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Preprocessing data</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../../">Machine Learning Reference</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/MoritzGuck/Machine-Learning-Reference" rel="" title="" class="quarto-navigation-tool px-1" aria-label="GitHub"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../source/Intro/02-Setup-env.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Setup Environment</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Math fundamentals</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../source/Maths/00-Statistics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Statistics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../source/Maths/01-Linear-Algebra.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Linear Algebra</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">Data</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../source/Data/01-Similarity.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Similarity and Distance Measures</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../source/Data/02-Data-Analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data Analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../source/Data/03-Preprocessing.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Preprocessing data</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../source/Supervised/00-Supervised.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Supervised learning</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../source/Supervised/01-General-methods.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">General methods and concepts</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../source/Supervised/02-Classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Classification</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../source/Supervised/03-Regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Regression</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+ <span class="menu-text">Unsupervised learning</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../source/Unsupervised/01-Clustering.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Custering methods</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../source/Unsupervised/02-lower-dim-mapping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Mapping to lower dimensions</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+ <span class="menu-text">Neural Networks</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../source/Neural-Networks/0-Neural.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Neural Networks</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true">
+ <span class="menu-text">Other</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../source/Other/0-ML_PM.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">ML Project Management</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../source/Other/0-Checklists.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Checklists</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+    <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#joining-merging-separate-tables" id="toc-joining-merging-separate-tables" class="nav-link active" data-scroll-target="#joining-merging-separate-tables"><span class="header-section-number">6.1</span> Joining / merging separate tables</a></li>
+  <li><a href="#missing-wrong-data" id="toc-missing-wrong-data" class="nav-link" data-scroll-target="#missing-wrong-data"><span class="header-section-number">6.2</span> Missing &amp; wrong data</a>
+  <ul>
+  <li><a href="#iterative-imputor-by-sklearn" id="toc-iterative-imputor-by-sklearn" class="nav-link" data-scroll-target="#iterative-imputor-by-sklearn">Iterative imputor by sklearn</a></li>
+  <li><a href="#median-average-imputation" id="toc-median-average-imputation" class="nav-link" data-scroll-target="#median-average-imputation">Median / average imputation</a></li>
+  <li><a href="#deleting-missing-values" id="toc-deleting-missing-values" class="nav-link" data-scroll-target="#deleting-missing-values">Deleting missing values</a></li>
+  <li><a href="#deleting-duplicate-entries" id="toc-deleting-duplicate-entries" class="nav-link" data-scroll-target="#deleting-duplicate-entries">Deleting duplicate entries</a></li>
+  <li><a href="#replacing-data" id="toc-replacing-data" class="nav-link" data-scroll-target="#replacing-data">Replacing data</a></li>
+  <li><a href="#filter-out-data" id="toc-filter-out-data" class="nav-link" data-scroll-target="#filter-out-data">Filter out data</a></li>
+  </ul></li>
+  <li><a href="#continuous-data" id="toc-continuous-data" class="nav-link" data-scroll-target="#continuous-data"><span class="header-section-number">6.3</span> Continuous data</a>
+  <ul>
+  <li><a href="#polynomial-transform" id="toc-polynomial-transform" class="nav-link" data-scroll-target="#polynomial-transform">Polynomial transform</a></li>
+  <li><a href="#reduce-skew" id="toc-reduce-skew" class="nav-link" data-scroll-target="#reduce-skew">Reduce skew</a></li>
+  </ul></li>
+  <li><a href="#categorical-data" id="toc-categorical-data" class="nav-link" data-scroll-target="#categorical-data"><span class="header-section-number">6.4</span> Categorical data</a>
+  <ul>
+  <li><a href="#ordinal-encoding" id="toc-ordinal-encoding" class="nav-link" data-scroll-target="#ordinal-encoding">Ordinal encoding</a></li>
+  <li><a href="#one-hot-encoding" id="toc-one-hot-encoding" class="nav-link" data-scroll-target="#one-hot-encoding">One-hot encoding</a></li>
+  <li><a href="#discretizing-binning-data" id="toc-discretizing-binning-data" class="nav-link" data-scroll-target="#discretizing-binning-data">Discretizing / binning data</a></li>
+  <li><a href="#combining-rare-categories" id="toc-combining-rare-categories" class="nav-link" data-scroll-target="#combining-rare-categories">Combining rare categories</a></li>
+  </ul></li>
+  <li><a href="#date--and-time-data" id="toc-date--and-time-data" class="nav-link" data-scroll-target="#date--and-time-data"><span class="header-section-number">6.5</span> Date- and time-data</a></li>
+  <li><a href="#graph-representation-of-data" id="toc-graph-representation-of-data" class="nav-link" data-scroll-target="#graph-representation-of-data"><span class="header-section-number">6.6</span> Graph representation of data</a></li>
+  <li><a href="#text-data" id="toc-text-data" class="nav-link" data-scroll-target="#text-data"><span class="header-section-number">6.7</span> Text data</a>
+  <ul>
+  <li><a href="#cleaning-text-data" id="toc-cleaning-text-data" class="nav-link" data-scroll-target="#cleaning-text-data">Cleaning text data</a></li>
+  <li><a href="#tokenization" id="toc-tokenization" class="nav-link" data-scroll-target="#tokenization">Tokenization</a>
+  <ul class="collapse">
+  <li><a href="#word-tokenization" id="toc-word-tokenization" class="nav-link" data-scroll-target="#word-tokenization">Word-Tokenization</a></li>
+  <li><a href="#sentence-tokenization" id="toc-sentence-tokenization" class="nav-link" data-scroll-target="#sentence-tokenization">Sentence Tokenization</a></li>
+  </ul></li>
+  <li><a href="#vectorization" id="toc-vectorization" class="nav-link" data-scroll-target="#vectorization">Vectorization</a>
+  <ul class="collapse">
+  <li><a href="#word-count-encoding" id="toc-word-count-encoding" class="nav-link" data-scroll-target="#word-count-encoding">Word count encoding</a></li>
+  <li><a href="#term-frequency-inverse-document-frequency-tf-idf" id="toc-term-frequency-inverse-document-frequency-tf-idf" class="nav-link" data-scroll-target="#term-frequency-inverse-document-frequency-tf-idf">Term frequency-inverse document frequency (tf-idf)</a></li>
+  </ul></li>
+  <li><a href="#padding" id="toc-padding" class="nav-link" data-scroll-target="#padding">Padding</a></li>
+  <li><a href="#embedding" id="toc-embedding" class="nav-link" data-scroll-target="#embedding">Embedding</a></li>
+  </ul></li>
+  <li><a href="#image-data" id="toc-image-data" class="nav-link" data-scroll-target="#image-data"><span class="header-section-number">6.8</span> Image data</a></li>
+  <li><a href="#standardization" id="toc-standardization" class="nav-link" data-scroll-target="#standardization"><span class="header-section-number">7</span> Standardization</a></li>
+  <li><a href="#splitting-in-training--and-test-data" id="toc-splitting-in-training--and-test-data" class="nav-link" data-scroll-target="#splitting-in-training--and-test-data"><span class="header-section-number">8</span> Splitting in training- and test-data</a></li>
+  <li><a href="#feature-selection" id="toc-feature-selection" class="nav-link" data-scroll-target="#feature-selection"><span class="header-section-number">9</span> Feature selection</a>
+  <ul>
+  <li><a href="#a-priori-feature-selection" id="toc-a-priori-feature-selection" class="nav-link" data-scroll-target="#a-priori-feature-selection"><span class="header-section-number">9.1</span> A priori feature selection</a></li>
+  <li><a href="#wrapper-methods" id="toc-wrapper-methods" class="nav-link" data-scroll-target="#wrapper-methods"><span class="header-section-number">9.2</span> wrapper methods</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Preprocessing data</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="joining-merging-separate-tables" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="joining-merging-separate-tables"><span class="header-section-number">6.1</span> Joining / merging separate tables</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>merged_df <span class="op">=</span> pd.merge(df1, df2, how <span class="op">=</span> <span class="st">"inner"</span>, on <span class="op">=</span> <span class="st">"reference_column"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>More info: <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.merge.html">pandas.pydata.org</a><br>
+</p>
+</section>
+<section id="missing-wrong-data" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="missing-wrong-data"><span class="header-section-number">6.2</span> Missing &amp; wrong data</h2>
+<p>Some algorithms assume that all features of all samples have numerical values. In these cases missing values have to be imputed (i.e.&nbsp;inferred) or (if affordable) the samples with missing feature values can be deleted from the data set.</p>
+<section id="iterative-imputor-by-sklearn" class="level3">
+<h3 class="anchored" data-anchor-id="iterative-imputor-by-sklearn">Iterative imputor by sklearn</h3>
+<p>For features with missing values, this imputor imputes the missing values by modelling each feature using the existing values from the other features. It uses several iterations until the results converge.<br>
+<strong>!</strong> This method scales with <span class="math inline">O(nd^3)</span>, where <span class="math inline">n</span> is the number of samples and <span class="math inline">d</span> is the number of features.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.experimental <span class="im">import</span> enable_iterative_imputer <span class="co"># necessary since the imputor is still experimental</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.impute <span class="im">import</span> IterativeImputer</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestRegressor </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>rf_estimator <span class="op">=</span> RamdomForestRegressor(n_estimators <span class="op">=</span> <span class="dv">8</span>, max_depth <span class="op">=</span> <span class="dv">6</span>, bootstrap <span class="op">=</span> <span class="va">True</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>imputor <span class="op">=</span> IterativeImputer(random_state<span class="op">=</span><span class="dv">0</span>, estimator <span class="op">=</span> rf_estimator, max_iter <span class="op">=</span> <span class="dv">25</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>imputor.fit_transform(X)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>More info: <a href="https://scikit-learn.org/stable/modules/generated/sklearn.impute.IterativeImputer.html">scikit-learn.org</a><br>
+</p>
+</section>
+<section id="median-average-imputation" class="level3">
+<h3 class="anchored" data-anchor-id="median-average-imputation">Median / average imputation</h3>
+<p>Simply replace missing values with the median or average of the feature:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"feature"</span>] <span class="op">=</span> df[<span class="st">"feature"</span>].fillna(df[<span class="st">"feature"</span>].median())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="deleting-missing-values" class="level3">
+<h3 class="anchored" data-anchor-id="deleting-missing-values">Deleting missing values</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>df.dropna(how<span class="op">=</span><span class="st">"any"</span>) <span class="co"># how="all" would delete a sample if all values were missing</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>More info: <a href="https://pandas.pydata.org/pandas-docs/version/0.18.1/generated/pandas.DataFrame.dropna.html">pandas.pydata.org</a><br>
+</p>
+</section>
+<section id="deleting-duplicate-entries" class="level3">
+<h3 class="anchored" data-anchor-id="deleting-duplicate-entries">Deleting duplicate entries</h3>
+<p>Duplicate entries need to be removed (exception: time series), to avoid over representation and leakage into test set.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df.drop_duplicates(keep<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="replacing-data" class="level3">
+<h3 class="anchored" data-anchor-id="replacing-data">Replacing data</h3>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>df.Col.<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="dv">0</span> <span class="cf">if</span> x<span class="op">==</span><span class="st">'zero'</span> <span class="cf">else</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="filter-out-data" class="level3">
+<h3 class="anchored" data-anchor-id="filter-out-data">Filter out data</h3>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df[(df[<span class="st">"Feature1"</span>] <span class="op">==</span> <span class="dv">0</span>) <span class="op">&amp;</span> (df[<span class="st">"Feature2"</span>] <span class="op">!=</span> <span class="dv">0</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="continuous-data" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="continuous-data"><span class="header-section-number">6.3</span> Continuous data</h2>
+<section id="polynomial-transform" class="level3">
+<h3 class="anchored" data-anchor-id="polynomial-transform">Polynomial transform</h3>
+<p>You spread out small and large values of a feature to help the algorithm to distinguish cases. It can also be used to combine two features to represent mutually supporting effects.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> PolynomialFeatures</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>poly <span class="op">=</span> PolynomialFeatures(degree<span class="op">=</span><span class="dv">2</span>, interaction_only<span class="op">=</span><span class="va">False</span>, include_bias<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>poly.fit_transform(df[[<span class="st">"feature1"</span>, <span class="st">"feature2"</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="reduce-skew" class="level3">
+<h3 class="anchored" data-anchor-id="reduce-skew">Reduce skew</h3>
+<p>Heavy skew in a distribution can be a problem for many models (outlier effects). To reduce it you can use a <strong>power transform</strong> to map the data to a Gaussian distribution…</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> PowerTransformer</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>pt <span class="op">=</span> PowerTransformer()</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>pt.fit_transform(df[<span class="st">"skew_feature"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>More info: <a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.PowerTransformer.html#sklearn.preprocessing.PowerTransformer">scikit-learn.org</a></p>
+<p>… or a <strong>quantile transform</strong> to map the data to a uniform (or Gaussian) distribution</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> QuantileTransformer</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>qt <span class="op">=</span> QuantileTransformer(n_quantiles<span class="op">=</span><span class="dv">100</span>, output_distribution<span class="op">=</span><span class="st">"uniform"</span>) <span class="co"># alternvative distribution: "normal"</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>qt.fit_transform(df[<span class="st">"skew_feature"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>More info: <a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.QuantileTransformer.html#sklearn.preprocessing.QuantileTransformer">scikit-learn.org</a></p>
+</section>
+</section>
+<section id="categorical-data" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="categorical-data"><span class="header-section-number">6.4</span> Categorical data</h2>
+<p>There are multiple ways to encode categorical data, especially non-vectorized data, to make it suitable for machine learning algorithms. The string values (e.g.&nbsp;“male”, “female”) of categorical features have to be converted into integers. This can be done by two methods:</p>
+<section id="ordinal-encoding" class="level3">
+<h3 class="anchored" data-anchor-id="ordinal-encoding">Ordinal encoding</h3>
+<p>An integer is assigned to each category (e.g.&nbsp;“male”=0, “female”=1)</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> OrdinalEncoder</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>ord_enc <span class="op">=</span> OrdinalEncoder(min_frequency<span class="op">=</span><span class="fl">0.05</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>ord_enc.fit(X) <span class="co"># multiple columns can be transformed at once</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>X_transf <span class="op">=</span> ord_enc.transform(X)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>More info: <a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OrdinalEncoder.html#sklearn.preprocessing.OrdinalEncoder">scikit-learn.org</a><br>
+This method is useful when the categories have an ordered relationship (e.g.&nbsp;“bad”, “medium”, “good”). If this is not the case (e.g.&nbsp;“dog”, “cat”, “bunny”) this is to be avoided since the algorithm might deduct an ordered relationship where there is none. For these cases one-hot-encoding is to be used.</p>
+<p>For <strong>encoding the label</strong> for classification tasks, you can also use the scikit-learn’s <code>LabelEncoder</code>. More info here: <a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html">scikit-learn.org</a></p>
+</section>
+<section id="one-hot-encoding" class="level3">
+<h3 class="anchored" data-anchor-id="one-hot-encoding">One-hot encoding</h3>
+<p>One-hot encoding assigns a separate feature-column for each category and encodes it binarily (e.g.&nbsp;if the sample is a dog, it has 1 in the dog-column and 0 in the cat and bunny column).</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">sklearn</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Pandas</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> OneHotEncoder</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>onehot_enc <span class="op">=</span> OneHotEncoder(handle_unknown<span class="op">=</span><span class="st">'ignore'</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>onehot_enc.fit(X)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>onehot_enc.transform(X)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>More info: <a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html">scikit-learn.org</a><br>
+</p>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>pd.get_dummies(X, columns <span class="op">=</span> [<span class="st">"Sex"</span>, <span class="st">"Type"</span>], drop_first<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>More info: <a href="https://pandas.pydata.org/docs/reference/api/pandas.get_dummies.html">pandas.pydata.org</a></p>
+</div>
+</div>
+</div>
+</section>
+<section id="discretizing-binning-data" class="level3">
+<h3 class="anchored" data-anchor-id="discretizing-binning-data">Discretizing / binning data</h3>
+<p>You can discretize features and targets from continuous to discrete/categorical (e.g.&nbsp;age in years to child, teenager, adult, elderly).</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>pd.cut(df[<span class="st">"Age"</span>], bins<span class="op">=</span>[<span class="dv">0</span>,<span class="dv">12</span>, <span class="dv">20</span>, <span class="dv">65</span>, <span class="dv">150</span>], labels <span class="op">=</span>[<span class="st">"child"</span>, <span class="st">"teenager"</span>, <span class="st">"adult"</span>, <span class="st">"elderly"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>More info: <a href="https://pandas.pydata.org/docs/reference/api/pandas.cut.html">pandas.pydata.org</a><br>
+</p>
+<p>Pros:</p>
+<ul>
+<li><p>It makes sense for the specific problem (e.g.&nbsp;targeting groups for marketing).</p></li>
+<li><p>Improved signal-to-noise ratio (bins work like regularization).</p></li>
+<li><p>possibly highly non-linear relationship of continuous feature to target is hard to learn for model.</p></li>
+<li><p>Better interpretability of features, results and model.</p></li>
+<li><p>Can be used to incorporate domain knowledge and make learning easier.</p></li>
+</ul>
+<p>Cons:</p>
+<ul>
+<li><p>Your model and results lose information</p></li>
+<li><p>Senseless cut-offs between bins can create “artificial noise” and make learning harder.</p></li>
+</ul>
+<p>More info: <a href="https://datascience.stackexchange.com/q/19782/148392">stackexchange.com</a><br>
+See also: <a href="https://en.wikipedia.org/wiki/Sampling_(signal_processing)">wikipedia: Sampling (signal processing)</a>.</p>
+</section>
+<section id="combining-rare-categories" class="level3">
+<h3 class="anchored" data-anchor-id="combining-rare-categories">Combining rare categories</h3>
+<p>Rare categories can lead to noise in the data and blow up the amount of features when using one-hot encoding. These categories should be combined, when there are only few occurrences (e.g.&nbsp;When analysing page visits, combine the categories “blackberry”, “jolla”, “windows phone” into the category “other”).</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Pandas</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">sklearn</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false">PyCaret</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>counts_ser <span class="op">=</span> pd.value_counts(df[<span class="st">"feature"</span>])</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>categories_to_mask <span class="op">=</span> counts_ser[(counts_ser<span class="op">/</span>counts_ser.<span class="bu">sum</span>()).lt(<span class="fl">0.05</span>)].index <span class="co"># using 5% cut-off</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"feature"</span>] <span class="op">=</span> np.where(df[<span class="st">"feature"</span>].isin(categories_to_mask),<span class="st">'other'</span>,df[<span class="st">"feature"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>More info: <a href="https://stackoverflow.com/questions/47418299/python-combining-low-frequency-factors-category-counts">stackoverflow</a></p>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<p>In sklearn, rare categories can be filtered out when one-hot encoding the feature using the parameter <code>min_frequency</code>.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> OneHotEncoder</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>enc <span class="op">=</span> OneHotEncoder(handle_unknown<span class="op">=</span><span class="st">'ignore'</span>, min_frequency<span class="op">=</span><span class="fl">0.05</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>enc.fit_transform(df[<span class="st">"feature"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>More info:<a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html#sklearn.preprocessing.OneHotEncoder">scikit-learn.org</a></p>
+</div>
+<div id="tabset-2-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-3-tab">
+<p>Use the parameter <code>rare_to_value</code> of the <code>setup</code> function.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pycaret.time_series <span class="im">import</span> ClassificationExperiment <span class="co"># or use other Experiment type</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>exp <span class="op">=</span> ClassificationExperiment()</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>exp.setup(train_df, target<span class="op">=</span><span class="st">"Sales"</span>, rare_to_value <span class="op">=</span> <span class="fl">0.05</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>More info: <a href="https://pycaret.readthedocs.io/en/latest/api/classification.html#pycaret.classification.ClassificationExperiment">PyCaret Docs</a></p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="date--and-time-data" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="date--and-time-data"><span class="header-section-number">6.5</span> Date- and time-data</h2>
+<p>You can convert to the <strong>datetime format</strong> as follows:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>pd.to_datetime(df.date_col, infer_datetime_format<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You create columns for <strong>year</strong>, <strong>month</strong>, <strong>day</strong> like this:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'year'</span>] <span class="op">=</span> df.Date.dt.year</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'month'</span>] <span class="op">=</span> df.Date.dt.month</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'day'</span>] <span class="op">=</span> df.Date.dt.day</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="graph-representation-of-data" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="graph-representation-of-data"><span class="header-section-number">6.6</span> Graph representation of data</h2>
+<p>The similarity/distance between points can be represented in graphs. The data points are represented as nodes, the distances/similarities as edges.</p>
+<!-- include schema of a graph, explain pros and cons, include link to libraries and wikipedia -->
+</section>
+<section id="text-data" class="level2" data-number="6.7">
+<h2 data-number="6.7" class="anchored" data-anchor-id="text-data"><span class="header-section-number">6.7</span> Text data</h2>
+<p>These are the common steps of pre-processing text data:</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+  A(Data Cleaning) --&gt; B(Tokenization) --&gt; C(Vectorization) --&gt; G(Model)
+  C --&gt; D(Padding) --&gt; E(Embedding) --&gt; G
+</pre>
+</div>
+</div>
+</div>
+</div>
+<section id="cleaning-text-data" class="level3">
+<h3 class="anchored" data-anchor-id="cleaning-text-data">Cleaning text data</h3>
+<p>The aim is to remove errors, parts that are irrelevant for the task and to standardize.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">clean-text</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">Pandas</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<p>The Clean-text only requires one command for several cleaning tasks:</p>
+<p>Install the packge:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install clean-text</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Usage (see steps in parameters):</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> cleantext <span class="im">import</span> clean</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>clean(<span class="st">"some input"</span>,</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    fix_unicode<span class="op">=</span><span class="va">True</span>,               <span class="co"># fix various unicode errors</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    to_ascii<span class="op">=</span><span class="va">True</span>,                  <span class="co"># transliterate to closest ASCII representation</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    lower<span class="op">=</span><span class="va">True</span>,                     <span class="co"># lowercase text</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    no_line_breaks<span class="op">=</span><span class="va">False</span>,           <span class="co"># fully strip line breaks as opposed to only normalizing them</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    no_urls<span class="op">=</span><span class="va">False</span>,                  <span class="co"># replace all URLs with a special token</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>    no_emails<span class="op">=</span><span class="va">False</span>,                <span class="co"># replace all email addresses with a special token</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>    no_phone_numbers<span class="op">=</span><span class="va">False</span>,         <span class="co"># replace all phone numbers with a special token</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>    no_numbers<span class="op">=</span><span class="va">False</span>,               <span class="co"># replace all numbers with a special token</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>    no_digits<span class="op">=</span><span class="va">False</span>,                <span class="co"># replace all digits with a special token</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>    no_currency_symbols<span class="op">=</span><span class="va">False</span>,      <span class="co"># replace all currency symbols with a special token</span></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>    no_punct<span class="op">=</span><span class="va">False</span>,                 <span class="co"># remove punctuations</span></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>    replace_with_punct<span class="op">=</span><span class="st">""</span>,          <span class="co"># instead of removing punctuations you may replace them</span></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>    replace_with_url<span class="op">=</span><span class="st">"&lt;URL&gt;"</span>,</span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>    replace_with_email<span class="op">=</span><span class="st">"&lt;EMAIL&gt;"</span>,</span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>    replace_with_phone_number<span class="op">=</span><span class="st">"&lt;PHONE&gt;"</span>,</span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>    replace_with_number<span class="op">=</span><span class="st">"&lt;NUMBER&gt;"</span>,</span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>    replace_with_digit<span class="op">=</span><span class="st">"0"</span>,</span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>    replace_with_currency_symbol<span class="op">=</span><span class="st">"&lt;CUR&gt;"</span>,</span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>    lang<span class="op">=</span><span class="st">"en"</span>                       <span class="co"># set to 'de' for German special handling</span></span>
+<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a><span class="co"># or simply:</span></span>
+<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a>clean(<span class="st">"some input"</span>, <span class="bu">all</span><span class="op">=</span> <span class="va">True</span>)</span>
+<span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-28"><a href="#cb21-28" aria-hidden="true" tabindex="-1"></a><span class="co"># use within pandas:</span></span>
+<span id="cb21-29"><a href="#cb21-29" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"text"</span>] <span class="op">=</span> df[<span class="st">"text"</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> txt : cleantext.clean_words(txt))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The command <code>clean_words</code> additionally returns the words as a list.</p>
+<p>More info:<br>
+<a href="https://analyticsindiamag.com/guide-to-cleantext-a-python-package-to-clean-raw-text-data/">aim - Guide to CleanText</a><br>
+<a href="https://github.com/jfilter/clean-text">Gitub - clean-text repo</a></p>
+</div>
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<div class="sourceCode" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"text"</span>] <span class="op">=</span> df[<span class="st">"text"</span>].<span class="bu">str</span>.lower()               <span class="co"># make all words lowercase</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"text"</span>] <span class="op">=</span> df[<span class="st">"text"</span>].<span class="bu">str</span>.replace(<span class="st">'ü'</span>, <span class="st">'u'</span>)     <span class="co"># replace characters</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"text"</span>] <span class="op">=</span> df[<span class="st">"text"</span>].<span class="bu">str</span>.replace(<span class="vs">r"https?:\/\/.\S+"</span>,<span class="st">""</span>, regex <span class="op">=</span> <span class="va">True</span>) <span class="co"># remove URLs</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"text"</span>] <span class="op">=</span> df[<span class="st">"text"</span>].<span class="bu">str</span>.replace(<span class="vs">r"&lt;.*?&gt;"</span>,<span class="st">""</span>, regex <span class="op">=</span> <span class="va">True</span>) <span class="co"># remove html-tags</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Reference : https://gist.github.com/slowkow/7a7f61f495e3dbb7e3d767f97bd7304b</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> remove_emoji(text):</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>    emoji_pattern <span class="op">=</span> re.<span class="bu">compile</span>(<span class="st">"["</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>                           <span class="st">u"</span><span class="ch">\U0001F600</span><span class="st">-</span><span class="ch">\U0001F64F</span><span class="st">"</span>  <span class="co"># emoticons</span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>                           <span class="st">u"</span><span class="ch">\U0001F300</span><span class="st">-</span><span class="ch">\U0001F5FF</span><span class="st">"</span>  <span class="co"># symbols &amp; pictographs</span></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>                           <span class="st">u"</span><span class="ch">\U0001F680</span><span class="st">-</span><span class="ch">\U0001F6FF</span><span class="st">"</span>  <span class="co"># transport &amp; map symbols</span></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>                           <span class="st">u"</span><span class="ch">\U0001F1E0</span><span class="st">-</span><span class="ch">\U0001F1FF</span><span class="st">"</span>  <span class="co"># flags (iOS)</span></span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>                           <span class="st">u"</span><span class="ch">\U00002702</span><span class="st">-</span><span class="ch">\U000027B0</span><span class="st">"</span></span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>                           <span class="st">u"</span><span class="ch">\U000024C2</span><span class="st">-</span><span class="ch">\U0001F251</span><span class="st">"</span></span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>                           <span class="st">"]+"</span>, flags<span class="op">=</span>re.UNICODE)</span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> emoji_pattern.sub(<span class="vs">r''</span>, text)</span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"text"</span>] <span class="op">=</span> df[<span class="st">"text"</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> text : remove_emoji(text))</span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"text"</span>] <span class="op">=</span> df[<span class="st">"text"</span>].<span class="bu">str</span>.strip()               <span class="co"># strip away leading and trailing spaces</span></span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"text"</span>] <span class="op">=</span> df[<span class="st">"text"</span>].<span class="bu">str</span>.replace(<span class="vs">r"[^\w\s]"</span>, <span class="st">""</span>, regex <span class="op">=</span> <span class="va">True</span>) <span class="co"># remove punctuation</span></span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Rarely used</span></span>
+<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"text"</span>] <span class="op">=</span> df[<span class="st">"text"</span>].<span class="bu">str</span>.lstrip(<span class="st">"123456789"</span>)   <span class="co"># strip away leading numbers rstrip for trailing numbers (all combinations of characters will be stripped)</span></span>
+<span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"text"</span>] <span class="op">=</span> df[<span class="st">"text"</span>].<span class="bu">str</span>.replace(<span class="vs">r"\(.*?\)"</span>,<span class="st">""</span>, regex <span class="op">=</span> <span class="va">True</span>) <span class="co"># remove everything between brackets</span></span>
+<span id="cb22-28"><a href="#cb22-28" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"year"</span>] <span class="op">=</span> df[<span class="st">"year"</span>].<span class="bu">str</span>.extract(<span class="vs">r'^(\d</span><span class="sc">{4}</span><span class="vs">)'</span>, expand<span class="op">=</span><span class="va">False</span>) <span class="co"># extracts year numbers</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="tokenization" class="level3">
+<h3 class="anchored" data-anchor-id="tokenization">Tokenization</h3>
+<p>Tokenization is the act of splitting a text into sentences or words (i.e.&nbsp;tokens).</p>
+<section id="word-tokenization" class="level4">
+<h4 class="anchored" data-anchor-id="word-tokenization">Word-Tokenization</h4>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true">NLTK</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false">SpaCy</a></li></ul>
+<div class="tab-content">
+<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
+<p>Split the text into words:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nltk</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>nltk.download(<span class="st">'punkt'</span>)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nltk.tokenize <span class="im">import</span> word_tokenize</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>words <span class="op">=</span> word_tokenize(cleaned_text) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
+<p>SpaCy uses a sophisticated text annotation method.</p>
+<ol type="1">
+<li>Download trained English <a href="https://spacy.io/usage/models">linguistic annotation model</a>:</li>
+</ol>
+<div class="sourceCode" id="cb24"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ex">!python</span> <span class="at">-m</span> spacy download en_core_web_sm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="1">
+<li>Tokenize text:</li>
+</ol>
+<div class="sourceCode" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> spacy</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>nlp <span class="op">=</span> spacy.load(<span class="st">"en_core_web_sm"</span>)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>doc <span class="op">=</span> nlp(text_doc)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>tokens <span class="op">=</span> [(token.text, token.pos_, token.dep_) <span class="cf">for</span> token <span class="kw">in</span> doc]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><a href="https://spacy.io/api/token#attributes">Attributes:</a><br>
+<code>pos_</code>: Part-of-speech (e.g.&nbsp;noun, adjective, punctuation),<br>
+<code>dep_</code>: Syntactic dependency relation (e.g.&nbsp;“Does … have” <span class="math inline">\rightarrow</span> Does (auxiliary verb), have (root verb))</p>
+<p>More info:<br>
+<a href="https://spacy.io/usage/spacy-101#features">SpaCy - Features</a></p>
+</div>
+</div>
+</div>
+</section>
+<section id="sentence-tokenization" class="level4">
+<h4 class="anchored" data-anchor-id="sentence-tokenization">Sentence Tokenization</h4>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true">NLTK</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false">SpaCy</a></li></ul>
+<div class="tab-content">
+<div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
+<div class="sourceCode" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nltk.tokenize <span class="im">import</span> sent_tokenize</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>sentences <span class="op">=</span> sent_tokenize(sentences_text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
+<div class="sourceCode" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> spacy</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>nlp <span class="op">=</span> spacy.load(<span class="st">"en_core_web_sm"</span>)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>doc <span class="op">=</span> nlp(text_doc)</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>sentences <span class="op">=</span> [sent <span class="cf">for</span> sent <span class="kw">in</span> doc.sents]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>More info: <a href="https://ashutoshtripathi.com/2020/05/04/how-to-perform-sentence-segmentation-or-sentence-tokenization-using-spacy-nlp-series-part-5/">Tutorial on SpaCy Sentencer</a></p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="vectorization" class="level3">
+<h3 class="anchored" data-anchor-id="vectorization">Vectorization</h3>
+<p>Transform sequence of tokens into numerical vector that can be processed by models.</p>
+<section id="word-count-encoding" class="level4">
+<h4 class="anchored" data-anchor-id="word-count-encoding">Word count encoding</h4>
+<p>This is part of the bag-of-words method. It works as follows:</p>
+<ol type="1">
+<li><p>Create a vocabulary / corpus of all words in the training data.</p></li>
+<li><p>Each word in the vocabulary becomes its own feature</p></li>
+<li><p>For each document, count how many times the word occurs.</p></li>
+</ol>
+<div class="sourceCode" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_extraction.text <span class="im">import</span> CountVectorizer</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>count_vect <span class="op">=</span> CountVectorizer()</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>word_counts <span class="op">=</span> count_vect.fit_transform(doc_array)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>More info: <a href="https://scikit-learn.org/stable/tutorial/text_analytics/working_with_text_data.html#extracting-features-from-text-files">sklearn - extract features from text</a></p>
+<p><strong>Pros:</strong></p>
+<ul>
+<li>Simple and easily interpretable.</li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul>
+<li><p>Order and relation between words is lost</p></li>
+<li><p>Sparse representation is not easily usable for many models. (Large vocabularies make it worse <span class="math inline">\rightarrow</span> Use <a href="https://www.geeksforgeeks.org/python-stemming-words-with-nltk/">stemming</a>)</p></li>
+</ul>
+</section>
+<section id="term-frequency-inverse-document-frequency-tf-idf" class="level4">
+<h4 class="anchored" data-anchor-id="term-frequency-inverse-document-frequency-tf-idf">Term frequency-inverse document frequency (tf-idf)</h4>
+<p>This measure reflects the importance of a word to a document:<br>
+<strong>Term frequency</strong>: What is the frequency of this word in this document.<br>
+<strong>Inverse document frequency</strong>: How rare is this word among all documents.<br>
+Thus, terms that occur a lot in one document but rarely in others get a higher value.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_extraction.text <span class="im">import</span> TfidfTransformer</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>tf_transformer <span class="op">=</span> TfidfTransformer() </span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>word_tf_idfs <span class="op">=</span> tf_transformer.fit_transform(word_counts) <span class="co"># uses wordcounts from count-vectorizer</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>More info: <a href="https://scikit-learn.org/stable/tutorial/text_analytics/working_with_text_data.html#extracting-features-from-text-files">sklearn - extract features from text</a></p>
+</section>
+</section>
+<section id="padding" class="level3">
+<h3 class="anchored" data-anchor-id="padding">Padding</h3>
+<p>Since some sequences are shorter than others, we need to fill up the remaining parts of them ones with zeros. Thus we achieve sequences of the same length. First we need to make an ordinal encoding and create word-sequences.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> keras.preprocessing.text <span class="im">import</span> Tokenizer</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> keras.utils <span class="im">import</span> pad_sequences</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert text to sequence</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>tokenizer <span class="op">=</span> Tokenizer(num_words <span class="op">=</span> vocab_size)</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>tokenizer.fit_on_texts(train_texts)</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>X_train_sequences <span class="op">=</span> tokenizer.texts_to_sequences(train_texts)</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Padd the sequences</span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>train_texts_padded <span class="op">=</span> pad_sequences(train_texts, padding<span class="op">=</span><span class="st">'post'</span>, maxlen<span class="op">=</span>max_sequence_length<span class="op">*</span><span class="fl">1.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="embedding" class="level3">
+<h3 class="anchored" data-anchor-id="embedding">Embedding</h3>
+<p>Embedding is the mapping of words from the sparse one-hot-encoded space into a dense space, that should reflect the meaning of the words (i.e.&nbsp;similar words are close together).</p>
+<p>This is done in neural networks via an embedding layer:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> Sequential()</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>model.add(layers.Embedding(input_dim<span class="op">=</span>vocab_size, </span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>                           output_dim<span class="op">=</span>embedding_dim, </span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>                           input_length<span class="op">=</span>sequence_length))</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="co"># ... add further layers ...</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>model.<span class="bu">compile</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You can reuse trained embeddings for other tasks. See <a href="../Neural-Networks/0-Neural.html#transfer-learning">transfer-learning</a> More info: <a href="https://developers.google.com/machine-learning/guides/text-classification/step-3#sequence_vectors_option_b">Google Machine Learning - Prepare Your Data</a></p>
+</section>
+</section>
+<section id="image-data" class="level2" data-number="6.8">
+<h2 data-number="6.8" class="anchored" data-anchor-id="image-data"><span class="header-section-number">6.8</span> Image data</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+  A(Resize) --&gt; B(Split channels) --&gt; C(Scale) --&gt; E(Augment) --&gt; G(Model)
+  A --&gt; D(gray scale) --&gt; C
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true">Keras ImageDataGenerator</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false">Keras image-loader</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-3" role="tab" aria-controls="tabset-6-3" aria-selected="false">OpenCV</a></li></ul>
+<div class="tab-content">
+<div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
+<div class="sourceCode" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tf.keras.preprocessing.image <span class="im">import</span> ImageDataGenerator</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>datagen <span class="op">=</span> ImageDataGenerator(samplewise_std_normalization<span class="op">=</span><span class="va">True</span>, </span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>                            rotation_range<span class="op">=</span><span class="dv">180</span>, </span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>                            shear_range<span class="op">=</span><span class="dv">20</span>, </span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>                            zoom_range<span class="op">=</span><span class="fl">0.1</span>, </span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>                            horizontal_flip<span class="op">=</span><span class="va">True</span>, </span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>                            vertical_flip<span class="op">=</span><span class="va">True</span>, </span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>                            validation_split<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>imgs_train <span class="op">=</span> datagen.flow_from_directory(directory <span class="op">=</span> <span class="st">"data/dir"</span>, </span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>                                         target_size<span class="op">=</span>(<span class="dv">256</span>, <span class="dv">256</span>), </span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>                                         batch_size<span class="op">=</span><span class="dv">32</span>, </span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>                                         class_mode<span class="op">=</span><span class="st">"categorical"</span>, <span class="co"># classes will be determined from subdirectory names</span></span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>                                         subset<span class="op">=</span><span class="st">"training"</span>)</span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>imgs_test <span class="op">=</span> datagen.flow_from_directory(directory <span class="op">=</span> <span class="st">"data/dir"</span>, </span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>                                         target_size<span class="op">=</span>(<span class="dv">256</span>, <span class="dv">256</span>), </span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>                                         batch_size<span class="op">=</span><span class="dv">32</span>, </span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>                                         class_mode<span class="op">=</span><span class="st">"categorical"</span>, <span class="co"># classes will be determined from subdirectory names</span></span>
+<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>                                         subset<span class="op">=</span><span class="st">"validation"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>More info: <a href="https://www.tensorflow.org/api_docs/python/tf/keras/preprocessing/image/ImageDataGenerator">keras.io</a></p>
+</div>
+<div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
+<p><strong>Load image dataset</strong></p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tf.keras.utils <span class="im">import</span> image_dataset_from_directory</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>imgs_train, imgs_test <span class="op">=</span> image_dataset_from_directory(directory<span class="op">=</span><span class="st">"path/tofolder"</span>, labels<span class="op">=</span><span class="st">"inferred"</span>,color_mode<span class="op">=</span><span class="st">"rgb"</span>, image_size<span class="op">=</span>(<span class="dv">256</span>, <span class="dv">256</span>), validation_split<span class="op">=</span><span class="fl">0.7</span>, subset<span class="op">=</span><span class="st">"both"</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    label_mode<span class="op">=</span><span class="st">"int"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>load single image</strong></p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tf.keras.utils <span class="im">import</span> load_img</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tf.keras.utils.image <span class="im">import</span> img_to_array</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>img <span class="op">=</span> load_img(path<span class="op">=</span><span class="st">"path/toimg.png"</span>, grayscale<span class="op">=</span><span class="va">False</span>, color_mode<span class="op">=</span><span class="st">"rgb"</span>, target_size<span class="op">=</span>(<span class="dv">256</span>, <span class="dv">256</span>))</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>img <span class="op">=</span> img_to_array(img)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>More info: <a href="https://keras.io/api/data_loading/image/">keras.io</a></p>
+<p><strong>Augmentation</strong></p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tf.keras <span class="im">import</span> layers, Sequential</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>resize_and_rescale <span class="op">=</span> Sequential([</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>  layers.Rescaling(<span class="fl">1.</span><span class="op">/</span><span class="dv">255</span>),</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>  layers.RandomFlip(<span class="st">"horizontal_and_vertical"</span>),</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>  layers.RandomRotation(<span class="fl">0.2</span>),</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>images <span class="op">=</span> []</span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> idx <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>):</span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>  augmented_image <span class="op">=</span> data_augmentation(img)</span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>  images.append(augmented_image)</span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a>img_ar <span class="op">=</span> np.array(images)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>More info: <a href="https://www.tensorflow.org/tutorials/images/data_augmentation">keras.io</a></p>
+</div>
+<div id="tabset-6-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-3-tab">
+<div class="sourceCode" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Adapted from https://github.com/bnsreenu</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np </span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> glob <span class="co"># To go through folders</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> cv2</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>train_split <span class="op">=</span> <span class="fl">0.7</span></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>img_size <span class="op">=</span> <span class="dv">256</span></span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>images_train <span class="op">=</span> []</span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>images_test <span class="op">=</span> []</span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>labels_train <span class="op">=</span> [] </span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>labels_test <span class="op">=</span> [] </span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> dir_path <span class="kw">in</span> img_dir:</span>
+<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a>    label <span class="op">=</span> dir_path.split(<span class="st">"/"</span>)[<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(label)</span>
+<span id="cb36-18"><a href="#cb36-18" aria-hidden="true" tabindex="-1"></a>    img_paths <span class="op">=</span> glob.glob(os.path.join(dir_path, <span class="st">"*.jpeg"</span>))</span>
+<span id="cb36-19"><a href="#cb36-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> img_idx, img_path <span class="kw">in</span> <span class="bu">enumerate</span>(img_paths):</span>
+<span id="cb36-20"><a href="#cb36-20" aria-hidden="true" tabindex="-1"></a>        img <span class="op">=</span> cv2.imread(img_path, cv2.IMREAD_COLOR)</span>
+<span id="cb36-21"><a href="#cb36-21" aria-hidden="true" tabindex="-1"></a>        img <span class="op">=</span> cv2.resize(img, (img_size, img_size))</span>
+<span id="cb36-22"><a href="#cb36-22" aria-hidden="true" tabindex="-1"></a>        img <span class="op">=</span> cv2.cvtColor(img, cv2.COLOR_RGB2BGR)</span>
+<span id="cb36-23"><a href="#cb36-23" aria-hidden="true" tabindex="-1"></a>        img <span class="op">=</span> img<span class="op">/</span>(<span class="dv">255</span><span class="op">/</span><span class="dv">2</span>)<span class="op">-</span><span class="dv">1</span> <span class="co"># scales 0 to 255 range to -1 to 1 (more or less zero-centered)</span></span>
+<span id="cb36-24"><a href="#cb36-24" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> img_idx <span class="op">&lt;</span> train_split <span class="op">*</span> <span class="bu">len</span>(img_paths):</span>
+<span id="cb36-25"><a href="#cb36-25" aria-hidden="true" tabindex="-1"></a>            images_train.append(img)</span>
+<span id="cb36-26"><a href="#cb36-26" aria-hidden="true" tabindex="-1"></a>            labels_train.append(label)</span>
+<span id="cb36-27"><a href="#cb36-27" aria-hidden="true" tabindex="-1"></a>            <span class="co"># flip image horizontally: </span></span>
+<span id="cb36-28"><a href="#cb36-28" aria-hidden="true" tabindex="-1"></a>            images_train.append(cv2.flip(img, <span class="dv">1</span>))</span>
+<span id="cb36-29"><a href="#cb36-29" aria-hidden="true" tabindex="-1"></a>            labels_train.append(label)</span>
+<span id="cb36-30"><a href="#cb36-30" aria-hidden="true" tabindex="-1"></a>            <span class="co"># flip image vertically: </span></span>
+<span id="cb36-31"><a href="#cb36-31" aria-hidden="true" tabindex="-1"></a>            images_train.append(cv2.flip(img, <span class="dv">0</span>))</span>
+<span id="cb36-32"><a href="#cb36-32" aria-hidden="true" tabindex="-1"></a>            labels_train.append(label)</span>
+<span id="cb36-33"><a href="#cb36-33" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>: </span>
+<span id="cb36-34"><a href="#cb36-34" aria-hidden="true" tabindex="-1"></a>            images_test.append(img)</span>
+<span id="cb36-35"><a href="#cb36-35" aria-hidden="true" tabindex="-1"></a>            labels_test.append(label)</span>
+<span id="cb36-36"><a href="#cb36-36" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb36-37"><a href="#cb36-37" aria-hidden="true" tabindex="-1"></a>images_train <span class="op">=</span> np.array(images_train)</span>
+<span id="cb36-38"><a href="#cb36-38" aria-hidden="true" tabindex="-1"></a>labels_train <span class="op">=</span> np.array(labels_train)</span>
+<span id="cb36-39"><a href="#cb36-39" aria-hidden="true" tabindex="-1"></a>images_test <span class="op">=</span> np.array(images_test)</span>
+<span id="cb36-40"><a href="#cb36-40" aria-hidden="true" tabindex="-1"></a>labels_test <span class="op">=</span> np.array(labels_test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+<p><a href="https://scikit-image.org/docs/stable/user_guide.html">scikit-image - userguide</a></p>
+<p><a href="https://neptune.ai/blog/image-processing-python">Neptune.ai - Image processing methods you should know</a></p>
+<!-- Include Patches -->
+</section>
+<section id="standardization" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Standardization</h1>
+<p>Many machine learning models assume that the features are centered around 0 and that all have a similar variance. Therefore the data has to be centered and scaled to unit variance before training and prediction.</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> StandardScaler()</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>scaler.fit_transform(input_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>More info: <a href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html">scikit-learn.org</a></p>
+<p>Another option for scaling is normalization. This is used, when the values have to fall strictly between a max and min value.<br>
+More info: <a href="https://scikit-learn.org/stable/modules/preprocessing.html#normalization">scikit-learn.org</a></p>
+</section>
+<section id="splitting-in-training--and-test-data" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> Splitting in training- and test-data</h1>
+<p>You need to split your training set into test- and training-samples. The algorithm uses the training samples with the known label/target value for fitting the parameters. The test-set is used to determine if the trained algorithm performs well on new samples as well. You need to give special considerations to the following points:</p>
+<ul>
+<li><p>Avoiding data or other information to leak from the training set to the test-set</p></li>
+<li><p>Validating if the predictive performance deteriorates over time (i.e.&nbsp;the algorithm will perform worse on new samples). This is especially important for models that make predictions for future events.</p></li>
+<li><p>Conversely, sampling the test- and training-sets randomly to avoid introducing bias in the two sets.</p></li>
+</ul>
+<div class="sourceCode" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># assuming you already imported the data and separated the label column:</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.33</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>More info: <a href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html">scikit-learn.org</a></p>
+</section>
+<section id="feature-selection" class="level1" data-number="9">
+<h1 data-number="9"><span class="header-section-number">9</span> Feature selection</h1>
+<p>Usually the label does not depend on all available features. To detect causal features, remove noisy ones and reduce the running and training costs of the algorithm, we reduce the amount of features to the relevant ones. This can be done a priori (before training) or using wrapper methods (integrated with the prediction algorithm to be used).<br>
+<strong>!</strong> There are methods that have feature selection already built-in, such as decision trees.</p>
+<section id="a-priori-feature-selection" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="a-priori-feature-selection"><span class="header-section-number">9.1</span> A priori feature selection</h2>
+<p>A cheap method is to remove all features with <strong>variance</strong> below a certain threshold.</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_selection <span class="im">import</span> VarianceThreshold</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>selector <span class="op">=</span> VarianceThreshold(threshold<span class="op">=</span><span class="fl">0.1</span>)</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>selector.fit_transform(X)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>More info: <a href="https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.VarianceThreshold.html#sklearn.feature_selection.VarianceThreshold">scikit-learn.org</a></p>
+<p>The <strong>Mutual information score</strong> works by choosing the features that have the highest dependency between the features and the label. {#mutual_info}</p>
+<p><span class="math display"> I(X, Y)
+\\ = D_{KL} \left( P(X=x, Y=y),
+P(X=x) \otimes P(Y=y) \right) \\ = \sum_{y \in Y} \sum_{x \in X}
+    { P(X=x, Y=y) \log\left(\frac{P(X=x, Y=y)}{P(X=x)P(Y=y)}\right) }</span></p>
+<p>where, <span class="math inline">D_{KL}</span> is the <a href="https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence">Kullback–Leibler divergence</a> (A measure of similarity between distributions). The <span class="math inline">\log</span>-Term is for quantifying how different the joint distribution is from the product of the marginal distributions.</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_selection <span class="im">import</span> SelectKBest</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_selection <span class="im">import</span> mutual_info_classif <span class="co"># for regression use mutual_info_regression</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>X_new <span class="op">=</span> SelectKBest(mutual_info_classif, k<span class="op">=</span><span class="dv">8</span>).fit_transform(X, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>More info: <a href="https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.SelectKBest.html">scikit-learn.org</a><br>
+<a href="https://en.wikipedia.org/wiki/Mutual_information">wikipedia.org/wiki/Mutual_information</a></p>
+</section>
+<section id="wrapper-methods" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="wrapper-methods"><span class="header-section-number">9.2</span> wrapper methods</h2>
+<p>Using <strong>greedy feature selection</strong> as a wrapper method, one commonly starts with 0 features and adds the feature that returns the highest score with the used classifier.</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_selection <span class="im">import</span> SequentialFeatureSelector</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.tree <span class="im">import</span> DecisionTreeClassifier</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>classifier <span class="op">=</span> DecisionTreeClassifier()</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>selector <span class="op">=</span> SequentialFeatureSelector(classifier, n_features_to_select<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>selector.fit_transform(X, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>More info: <a href="https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.SequentialFeatureSelector.html">scikit-learn.org</a></p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          // default icon
+          link.classList.add("external");
+      }
+    }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../source/Data/02-Data-Analysis.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data Analysis</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../source/Supervised/00-Supervised.html" class="pagination-link">
+        <span class="nav-page-text">Supervised learning</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

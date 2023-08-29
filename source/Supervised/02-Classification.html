@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Machine Learning Reference - 8&nbsp; Classification</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../source/Supervised/03-Regression.html" rel="next">
+<link href="../../source/Supervised/01-General-methods.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../source/Supervised/00-Supervised.html">Supervised learning</a></li><li class="breadcrumb-item"><a href="../../source/Supervised/02-Classification.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Classification</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../../">Machine Learning Reference</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/MoritzGuck/Machine-Learning-Reference" rel="" title="" class="quarto-navigation-tool px-1" aria-label="GitHub"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../source/Intro/02-Setup-env.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Setup Environment</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Math fundamentals</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../source/Maths/00-Statistics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Statistics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../source/Maths/01-Linear-Algebra.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Linear Algebra</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">Data</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../source/Data/01-Similarity.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Similarity and Distance Measures</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../source/Data/02-Data-Analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data Analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../source/Data/03-Preprocessing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Preprocessing data</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../source/Supervised/00-Supervised.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Supervised learning</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../source/Supervised/01-General-methods.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">General methods and concepts</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../source/Supervised/02-Classification.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Classification</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../source/Supervised/03-Regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Regression</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+ <span class="menu-text">Unsupervised learning</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../source/Unsupervised/01-Clustering.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Custering methods</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../source/Unsupervised/02-lower-dim-mapping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Mapping to lower dimensions</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+ <span class="menu-text">Neural Networks</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../source/Neural-Networks/0-Neural.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Neural Networks</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true">
+ <span class="menu-text">Other</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../source/Other/0-ML_PM.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">ML Project Management</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../source/Other/0-Checklists.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Checklists</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+    <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#eval-clas" id="toc-eval-clas" class="nav-link active" data-scroll-target="#eval-clas"><span class="header-section-number">9</span> Evaluation of Classifiers</a>
+  <ul>
+  <li><a href="#confusion-matrix" id="toc-confusion-matrix" class="nav-link" data-scroll-target="#confusion-matrix"><span class="header-section-number">9.1</span> Confusion matrix</a></li>
+  <li><a href="#basic-quality-measures" id="toc-basic-quality-measures" class="nav-link" data-scroll-target="#basic-quality-measures"><span class="header-section-number">9.2</span> Basic Quality Measures</a></li>
+  <li><a href="#area-under-the-curve" id="toc-area-under-the-curve" class="nav-link" data-scroll-target="#area-under-the-curve"><span class="header-section-number">9.3</span> Area under the Curve</a>
+  <ul class="collapse">
+  <li><a href="#area-under-the-receiver-operating-characteristics-curve-auroc-or-auc" id="toc-area-under-the-receiver-operating-characteristics-curve-auroc-or-auc" class="nav-link" data-scroll-target="#area-under-the-receiver-operating-characteristics-curve-auroc-or-auc">Area under the Receiver Operating Characteristics Curve (AUROC or AUC)</a></li>
+  <li><a href="#area-under-the-precision-recall-curve-auprc-average-precision-avep" id="toc-area-under-the-precision-recall-curve-auprc-average-precision-avep" class="nav-link" data-scroll-target="#area-under-the-precision-recall-curve-auprc-average-precision-avep">Area under the Precision-Recall Curve (AUPRC) / Average Precision (AveP)</a></li>
+  </ul></li>
+  <li><a href="#handling-unbalanced-data" id="toc-handling-unbalanced-data" class="nav-link" data-scroll-target="#handling-unbalanced-data"><span class="header-section-number">9.4</span> Handling Unbalanced Data</a></li>
+  <li><a href="#nearest-neighbors-classifier" id="toc-nearest-neighbors-classifier" class="nav-link" data-scroll-target="#nearest-neighbors-classifier"><span class="header-section-number">9.5</span> Nearest Neighbors Classifier</a></li>
+  </ul></li>
+  <li><a href="#naive-bayes-classifier" id="toc-naive-bayes-classifier" class="nav-link" data-scroll-target="#naive-bayes-classifier"><span class="header-section-number">10</span> Naive Bayes Classifier</a></li>
+  <li><a href="#linear-discriminant-analysis-lda" id="toc-linear-discriminant-analysis-lda" class="nav-link" data-scroll-target="#linear-discriminant-analysis-lda"><span class="header-section-number">11</span> Linear discriminant analysis (LDA)</a></li>
+  <li><a href="#support-vector-classifier-svc" id="toc-support-vector-classifier-svc" class="nav-link" data-scroll-target="#support-vector-classifier-svc"><span class="header-section-number">12</span> Support Vector Classifier (SVC)</a></li>
+  <li><a href="#decision-trees" id="toc-decision-trees" class="nav-link" data-scroll-target="#decision-trees"><span class="header-section-number">13</span> Decision Trees</a>
+  <ul>
+  <li><a href="#random-forests" id="toc-random-forests" class="nav-link" data-scroll-target="#random-forests"><span class="header-section-number">13.1</span> Random forests</a></li>
+  <li><a href="#gradient-boosted-decision-trees-gbdts" id="toc-gradient-boosted-decision-trees-gbdts" class="nav-link" data-scroll-target="#gradient-boosted-decision-trees-gbdts"><span class="header-section-number">13.2</span> Gradient boosted decision trees (GBDTs)</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Classification</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="eval-clas" class="level1" data-number="9">
+<h1 data-number="9"><span class="header-section-number">9</span> Evaluation of Classifiers</h1>
+<section id="confusion-matrix" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="confusion-matrix"><span class="header-section-number">9.1</span> Confusion matrix</h2>
+<p>This gives a quick overview on the distribution of true positives (<span class="math inline">TP</span>), false positives (<span class="math inline">FP</span>) , <span class="math inline">TN</span> true negatives, <span class="math inline">FN</span> false negatives.</p>
+<table class="table">
+<tbody>
+<tr class="odd">
+<td></td>
+<td><em>predicted positive</em></td>
+<td><em>predicted negative</em></td>
+</tr>
+<tr class="even">
+<td><em>actual positive</em></td>
+<td>TP</td>
+<td>FN</td>
+</tr>
+<tr class="odd">
+<td><em>actual negative</em></td>
+<td>FP</td>
+<td>TN</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> confusion_matrix</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>confusion <span class="op">=</span> confusion_matrix(y_true<span class="op">=</span>y_test, y_pred<span class="op">=</span>y_pred, labels<span class="op">=</span>categories_list)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>sns.heatmap(confusion, annot<span class="op">=</span><span class="va">True</span>, xticklabels<span class="op">=</span>categories_list, yticklabels<span class="op">=</span>categories_list, fmt<span class="op">=</span><span class="st">'.0f'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="basic-quality-measures" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="basic-quality-measures"><span class="header-section-number">9.2</span> Basic Quality Measures</h2>
+<ul>
+<li><p><span class="math inline">\text{Accuracy / Success Rate} = \frac{ \text{correct predictions}}{\text{total predictions}} = \frac{ \text{TP}+\text{TN}}{\text{TP} + \text{TN}+\text{FP}+\text{FN}}</span><br>
+This metric should only be used in this pure form, when the number of positive and negative samples are balanced.</p></li>
+<li><p><span class="math inline">\text{Precision} = \frac{\text{TP}}{\text{TP}+\text{FP}}</span><br>
+i.e.&nbsp;How many of your positive predictions are actually positive?</p></li>
+<li><p><span class="math inline">\text{True positive rate / Recall / Sensitivity} = \frac{\text{TP}}{\text{TP}+\text{FN}}</span><br>
+i.e.&nbsp;How many of the positive samples did you catch?</p></li>
+<li><p><span class="math inline">\text{True negative rate / Specificity / Selectivity} = \frac{\text{TN}}{\text{TN}+\text{FP}}</span><br>
+i.e.&nbsp;How many of the negative samples did you catch as negative (i.e.&nbsp;are truly negative)?</p></li>
+<li><p><span class="math inline">\text{F-score} = 2 \frac{\text{precision} * \text{recall}}{\text{precision}+\text{recall}}</span><br>
+This is useful in cases of unbalanced classes to balance the trade-off between precision and recall.</p></li>
+</ul>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> classification_report</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>classification_report(y_true, y_pred)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>more info: <a href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.classification_report.html">scikit-learn.org</a></p>
+</section>
+<section id="area-under-the-curve" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="area-under-the-curve"><span class="header-section-number">9.3</span> Area under the Curve</h2>
+<p>This class of measures represents the quality of the classifier for different threshold values <span class="math inline">\theta</span> by calculating the area under the curve spanned by different quality measures.</p>
+<section id="area-under-the-receiver-operating-characteristics-curve-auroc-or-auc" class="level3">
+<h3 class="anchored" data-anchor-id="area-under-the-receiver-operating-characteristics-curve-auroc-or-auc">Area under the Receiver Operating Characteristics Curve (AUROC or AUC)</h3>
+<p>The AUC can be interpreted as follows: When the classifier gets a positive and a negative point, the AUC shows the probability that the classifier will give a higher score to the positive point. A perfect classifier has an AUC of 1, and AUC of 0.5 represents random guessing.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> roc_auc_score</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>roc_auc_score(y, clf.decision_function(X)) <span class="co"># instead of dec. func. you can use clf.predict_proba(X)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>More info: <a href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.roc_auc_score.html">scikit-learn.org</a></p>
+<p><strong>!</strong> This measure is not sensitive to class imbalance!</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../figures/Roc_curve.png" class="img-fluid figure-img" style="width:44.0%"></p>
+<figcaption class="figure-caption">Area under the precision recall curve. Source: <a href="https://commons.wikimedia.org/wiki/File:Roc_curve.svg">user cmglee on wikipedia.org</a></figcaption>
+</figure>
+</div>
+</section>
+<section id="area-under-the-precision-recall-curve-auprc-average-precision-avep" class="level3">
+<h3 class="anchored" data-anchor-id="area-under-the-precision-recall-curve-auprc-average-precision-avep">Area under the Precision-Recall Curve (AUPRC) / Average Precision (AveP)</h3>
+<p>This measure can be used for unbalanced data sets. It represents the average precision as a function of the recall. The value of 1 represents a perfect classifier.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> average_precision_score</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>average_precision_score(y_true, y_pred)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>More info: <a href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.average_precision_score.html#sklearn.metrics.average_precision_score">scikit-learn.org</a></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../figures/pr_curve.png" class="img-fluid figure-img" style="width:65.0%"></p>
+<figcaption class="figure-caption">The precision-recall curve. Source: <a href="https://scikit-learn.org/stable/auto_examples/model_selection/plot_precision_recall.html#:~:text=The%20precision%2Drecall%20curve%20shows,a%20low%20false%20negative%20rate.">scikit-learn.org</a></figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="handling-unbalanced-data" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="handling-unbalanced-data"><span class="header-section-number">9.4</span> Handling Unbalanced Data</h2>
+<p>Having many more samples in one class than the others during training can lead to high accuracy values event though the classifier performs poorly on the smaller classes. You can handle the unbalance by:</p>
+<ul>
+<li><p>up-sampling the smaller data set (creating more artificial samples for that class)</p></li>
+<li><p>giving more weight to the samples in the smaller data set</p></li>
+<li><p>using a quality measure that is sensitive to class imbalance</p></li>
+</ul>
+<p>Oversampling using imbalanced-learn (see: )</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imblearn.over_sampling <span class="im">import</span> RandomOverSampler</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>ros <span class="op">=</span> RandomOverSampler(random_state<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>features_resampled, labels_resampled <span class="op">=</span> ros.fit_resample(df[feature_cols], df[label_col])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Unbalance-sensitive quality measures: Sensitivity, specificity, precision, recall, support and F-score</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>y_true <span class="op">=</span> df[label_col]</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> classifier.predict(df[feature_cols])</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imblearn.metrics <span class="im">import</span> sensitivity_specificity_support</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>sensitivity, specificity, support <span class="op">=</span> sensitivity_specificity_support(y_true, y_pred) </span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> precision_recall_fscore_support</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>precision, recall, fscore, support <span class="op">=</span> precision_recall_fscore_support(y_true, y_pred) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="nearest-neighbors-classifier" class="level2" data-number="9.5">
+<h2 data-number="9.5" class="anchored" data-anchor-id="nearest-neighbors-classifier"><span class="header-section-number">9.5</span> Nearest Neighbors Classifier</h2>
+<p>This classifier predicts the class label using the most common class label of its <span class="math inline">k</span> nearest neighbors in the training data set.</p>
+<p><strong>Pros:</strong></p>
+<ul>
+<li>Classifier does not take time for training.</li>
+<li>Can learn complex decision boundaries.</li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul>
+<li>The prediction is time consuming and scales with n.</li>
+</ul>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.neighbors <span class="im">import</span> KNeighborsClassifier</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>kn_model <span class="op">=</span> KNeighborsClassifier(n_neighbors<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>kn_model.fit(X, y)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>kn_model.predict([[<span class="dv">5</span>,<span class="dv">1</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><a href="https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html">scikit-learn.org</a><br>
+</p>
+</section>
+</section>
+<section id="naive-bayes-classifier" class="level1" data-number="10">
+<h1 data-number="10"><span class="header-section-number">10</span> Naive Bayes Classifier</h1>
+<p>Naive Bayes classifies works on the assumption that the features are conditionally independent given the class label. For every point a simplified version of Bayes rule is used:</p>
+<p><span class="math display">P(Y=y_i|X=x) \propto P(X=x|Y=y_i) * P(Y=y_i) </span> where <span class="math inline">Y</span> is the RV for the class label and <span class="math inline">X</span> is the RV that contains the feature values. This holds since <span class="math inline">P(X=x)</span> is the same for all classes. Since the different features <span class="math inline">X_j</span> are assumed to be independent they can be multiplied out. The label <span class="math inline">y_i</span> with the highest probability is the predicted class label: <span class="math display">\arg \max_{y_i} P(Y=y_i|X=x) \propto P(Y=y_i) \prod_{j=1}^{d} P(X_j=x_j|Y=y_i)  </span> One usually estimates the value of <span class="math inline">P(Y)</span> as the ferquency of the different classes in the training data or assumes that all classes are equally likely.<br>
+To estimate the <span class="math inline">P(X_j=x_j|Y=y_i)</span> the following distributions are commonly used:</p>
+<ul>
+<li><p>For binary features: Bernoulli distribution</p></li>
+<li><p>For discrete features: Multinomial distribution</p></li>
+<li><p>For continuous features: Normal / Gaussian distribution</p></li>
+</ul>
+<p>For discrete features, you need to use a <a href="https://scikit-learn.org/stable/modules/naive_bayes.html#multinomial-naive-bayes">smoothing prior</a> (add 1 to every feature count) to avoid 0 probabilities for samples with features being 0 in the training data.</p>
+<p><strong>Pros:</strong></p>
+<ul>
+<li><p>Naive Bayes training is fast.</p></li>
+<li><p>Combine descrete and continuous features since a different distribution can be used for each feature.</p></li>
+<li><p>You can have straight decision boundaries (when classes have same variance), circular decision boundaries (different variance, same mean) and parabolic decision boundaries (different mean, different variance).</p></li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul>
+<li><p>The probability estimates from Naive Bayes are <a href="https://scikit-learn.org/stable/modules/naive_bayes.html#naive-bayes">usually bad</a>.</p></li>
+<li><p>The independence assumption between the features is usually not given in real life.</p></li>
+</ul>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.naive_bayes <span class="im">import</span> GaussianNB</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>clf <span class="op">=</span> GaussianNB()</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>clf.fit(X, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>More info: <a href="https://scikit-learn.org/stable/modules/generated/sklearn.naive_bayes.GaussianNB.html">scikit-learn.org</a><br>
+</p>
+</section>
+<section id="linear-discriminant-analysis-lda" class="level1" data-number="11">
+<h1 data-number="11"><span class="header-section-number">11</span> Linear discriminant analysis (LDA)</h1>
+<p>Contrary to Naive Bayes, the features in LDA are not assumed to be independently distributed. As with Bayes rule a distribution for each class is calculated according to Bayes rule. <span class="math inline">P(X=x|Y=y_i)</span> is modeled as a multivariate Gaussian distribution. The Gaussians for each class are assumed to be the same. The log-posterior can be simplified to:</p>
+<p><span class="math display">log(P(y=y_i|x) = - \frac{1}{2} (x-\mu_i)^t \Sigma^{-1}(x-\mu_i)+\log P(y=y_i)</span> <span class="math inline">\mu_i</span> is the mean of class <span class="math inline">i</span>, <span class="math inline">(x-\mu_i)^t \Sigma^{-1}(x-\mu_i)</span> corresponds to the <a href="https://en.wikipedia.org/wiki/Mahalanobis_distance">Mahalanobis distance</a>. Thus, we assign the point to the class whose distribution it is closest to.<br>
+LDA can also be thought of projecting the data into a space with <span class="math inline">k-1</span> dimensions (<span class="math inline">k</span> being number of classes). More info: <a href="https://en.wikipedia.org/wiki/Linear_discriminant_analysis">wikipedia.org</a>. It can also be used as a dimensionality reduction method.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.discriminant_analysis <span class="im">import</span> LinearDiscriminantAnalysis</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>clf <span class="op">=</span> LinearDiscriminantAnalysis()</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>clf.fit(X, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>More info: <a href="https://scikit-learn.org/stable/modules/generated/sklearn.discriminant_analysis.LinearDiscriminantAnalysis.html">scikit-learn.org</a><br>
+</p>
+</section>
+<section id="support-vector-classifier-svc" class="level1" data-number="12">
+<h1 data-number="12"><span class="header-section-number">12</span> Support Vector Classifier (SVC)</h1>
+<p>SVCs use hyperplanes to separate data points according to their class label with a maximum margin (<span class="math inline">M</span>) between the separating hyperplane (<span class="math inline">x^T\beta + \beta_0=0</span>) and the points. If points cannot be perfectly separated by the decision boundary, a soft margin SVM is used with a slack variable <span class="math inline">\xi</span> that punishes points in the margin or on the wrong side of the hyperplane. The optimization problem is <a href="https://hastie.su.domains/Papers/ESLII.pdf">given by</a>:</p>
+<p><span class="math display">\begin{split}
+            \max_{\beta, \beta_0, \beta=1} M, \\
+            \text{subject to } y_i(x_i^T \beta + \beta_0) \ge 1 - \xi_i, \quad \forall i, \\\xi_i \ge 0, \quad \sum \xi_i \le constant, \quad i= 1, ..., N,
+        \end{split}</span></p>
+<p>where <span class="math inline">\beta</span> are the coefficients and <span class="math inline">x</span> are the <span class="math inline">N</span> data points. The support vectors are the points that determine the orientation of the hyperplane (i.e.&nbsp;the closest points). The classification function is given by:</p>
+<p><span class="math display">G(x) = \text{sign}[x^T\beta + \beta_0]</span></p>
+<p>If you only calculate the inner part of the function you can get the distance of a point to your hyperplane (in SKlearn you need to divide by the norm vector <span class="math inline">w</span> of your hyperplane to get the true distance). To get the probability of a point being in a class, you can use <a href="https://en.wikipedia.org/wiki/Platt_scaling">Platt’s algorithm</a>. SVMs are sensitive to the scaling of the features. Therefore, the data should be normalized before classification.<br>
+</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn <span class="im">import</span> svm</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># train the model</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>svc_model <span class="op">=</span> svm.SVC()</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>svc_model.fit(train_df[feautre_cols], train_df[label_col])</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># test the model</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>y_predict <span class="op">=</span> svc_model.predict(test_df[feature_cols])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<!-- ### Stochastic Gradient Descent -->
+</section>
+<section id="decision-trees" class="level1" data-number="13">
+<h1 data-number="13"><span class="header-section-number">13</span> Decision Trees</h1>
+<p>A decision tree uses binary rules to recursively split the data into regions that contain only a single class.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../figures/Decision_Tree.jpg" class="img-fluid figure-img" style="width:60.0%"></p>
+<figcaption class="figure-caption">Decision trees work like flowcharts and have a root (the top node), branches (possible outcomes of a test), nodes (tests on one attribute), leafs (the class labels). This one shows the decision tree for the classifier predicting if a patient survives the sinking of the Titanic. Source: <a href="https://commons.wikimedia.org/wiki/File:Decision_Tree.jpg">user Gilgoldm on wikipedia.org</a></figcaption>
+</figure>
+</div>
+<p><strong>Pros:</strong></p>
+<ul>
+<li><p>Interpretable results, if trees are not too big.</p></li>
+<li><p>Cheap to train and predict.</p></li>
+<li><p>Can handle categorical and continuous data at the same time.</p></li>
+<li><p>Can be used for <a href="https://scikit-learn.org/stable/modules/tree.html#multi-output-problems">multi-output problems</a> (e.g.&nbsp;color and shape of object).</p></li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul>
+<li>Overfitting risks</li>
+<li>Some concepts are hard to learn (X-OR relationships, Decision boundaries are not smooth)</li>
+<li>Unstable predictions: Small changes in data can lead to vastly different decision trees.</li>
+</ul>
+<p><strong>Tips:</strong></p>
+<ul>
+<li><p>Doing PCA helps the tree find separating features.</p></li>
+<li><p>Visualize the produced tree.</p></li>
+<li><p>Setting a lower boundary on the split-sizes of the data, reduces the chance of overfitting.</p></li>
+<li><p>Balance the dataset or weight the samples according to class sizes to avoid constructing biased trees.</p></li>
+</ul>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.tree <span class="im">import</span> DecisionTreeClassifier</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>clf <span class="op">=</span> DecisionTreeClassifier(max_depth<span class="op">=</span><span class="dv">10</span>, min_samples_split<span class="op">=</span><span class="fl">0.01</span>, class_weight<span class="op">=</span><span class="st">"balanced"</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>clf <span class="op">=</span> clf.fit(X, Y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>More info: <a href="https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html">scikit-learn.org</a><br>
+</p>
+<section id="random-forests" class="level2" data-number="13.1">
+<h2 data-number="13.1" class="anchored" data-anchor-id="random-forests"><span class="header-section-number">13.1</span> Random forests</h2>
+<p>Random forests are a version of a <a href="01-General-methods.html#bagging">bagging</a> classifier employing decision trees. To reduce the variance, the separate trees can be assigned a limited number of features as well.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestClassifier</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>clf <span class="op">=</span> RandomForestClassifier(max_depth<span class="op">=</span><span class="dv">10</span>, max_features<span class="op">=</span><span class="st">"sqrt"</span>, class_weight<span class="op">=</span><span class="st">"balanced"</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>clf.fit(X, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>More info: <a href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html">scikit-learn.org</a><br>
+</p>
+</section>
+<section id="gradient-boosted-decision-trees-gbdts" class="level2" data-number="13.2">
+<h2 data-number="13.2" class="anchored" data-anchor-id="gradient-boosted-decision-trees-gbdts"><span class="header-section-number">13.2</span> Gradient boosted decision trees (GBDTs)</h2>
+<p>Gradient boosted decision tree models are a form of <a href="01-General-methods.html#boosting">boosting</a> employing decision trees.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> lightgbm <span class="im">as</span> lgbm</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>clf <span class="op">=</span> lgbm.LGBMClassifier(class_weight<span class="op">=</span> <span class="st">"balanced"</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>clf.fit(X, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>More info: <a href="https://lightgbm.readthedocs.io/en/latest/pythonapi/lightgbm.LGBMClassifier.html#lightgbm-lgbmclassifier">lightgbm documentation</a>, <a href="https://lightgbm.readthedocs.io/en/latest/Parameters-Tuning.html">Parameter tuning</a>,<br>
+<a href="https://neptune.ai/blog/lightgbm-parameters-guide">Further Parameter tuning</a><br>
+Similar model: <a href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingClassifier.html">scikit-learn.org</a><br>
+</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          // default icon
+          link.classList.add("external");
+      }
+    }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../source/Supervised/01-General-methods.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">General methods and concepts</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../source/Supervised/03-Regression.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Regression</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

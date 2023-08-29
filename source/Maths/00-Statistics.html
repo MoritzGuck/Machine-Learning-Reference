@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Machine Learning Reference - 2&nbsp; Statistics</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../source/Maths/01-Linear-Algebra.html" rel="next">
+<link href="../../source/Intro/02-Setup-env.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../source/Maths/00-Statistics.html">Math fundamentals</a></li><li class="breadcrumb-item"><a href="../../source/Maths/00-Statistics.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Statistics</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../../">Machine Learning Reference</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/MoritzGuck/Machine-Learning-Reference" rel="" title="" class="quarto-navigation-tool px-1" aria-label="GitHub"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../source/Intro/02-Setup-env.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Setup Environment</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Math fundamentals</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../source/Maths/00-Statistics.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Statistics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../source/Maths/01-Linear-Algebra.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Linear Algebra</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">Data</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../source/Data/01-Similarity.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Similarity and Distance Measures</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../source/Data/02-Data-Analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data Analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../source/Data/03-Preprocessing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Preprocessing data</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../source/Supervised/00-Supervised.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Supervised learning</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../source/Supervised/01-General-methods.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">General methods and concepts</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../source/Supervised/02-Classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Classification</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../source/Supervised/03-Regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Regression</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+ <span class="menu-text">Unsupervised learning</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../source/Unsupervised/01-Clustering.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Custering methods</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../source/Unsupervised/02-lower-dim-mapping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Mapping to lower dimensions</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+ <span class="menu-text">Neural Networks</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../source/Neural-Networks/0-Neural.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Neural Networks</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true">
+ <span class="menu-text">Other</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../source/Other/0-ML_PM.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">ML Project Management</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../source/Other/0-Checklists.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Checklists</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+    <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#probability-basics" id="toc-probability-basics" class="nav-link active" data-scroll-target="#probability-basics"><span class="header-section-number">2.1</span> Probability Basics</a>
+  <ul>
+  <li><a href="#probability-interpretations" id="toc-probability-interpretations" class="nav-link" data-scroll-target="#probability-interpretations">Probability interpretations</a></li>
+  <li><a href="#probability-space" id="toc-probability-space" class="nav-link" data-scroll-target="#probability-space">Probability Space</a></li>
+  <li><a href="#axioms-of-probability" id="toc-axioms-of-probability" class="nav-link" data-scroll-target="#axioms-of-probability">Axioms of Probability</a></li>
+  <li><a href="#random-variable-rv" id="toc-random-variable-rv" class="nav-link" data-scroll-target="#random-variable-rv">Random Variable (RV)</a></li>
+  <li><a href="#proposition" id="toc-proposition" class="nav-link" data-scroll-target="#proposition">Proposition</a></li>
+  </ul></li>
+  <li><a href="#probability-distributions" id="toc-probability-distributions" class="nav-link" data-scroll-target="#probability-distributions"><span class="header-section-number">2.2</span> Probability distributions</a>
+  <ul>
+  <li><a href="#cumulative-distribution-function-cdf" id="toc-cumulative-distribution-function-cdf" class="nav-link" data-scroll-target="#cumulative-distribution-function-cdf">Cumulative Distribution Function (CDF)</a></li>
+  <li><a href="#probability-density-function-pdf" id="toc-probability-density-function-pdf" class="nav-link" data-scroll-target="#probability-density-function-pdf">Probability Density Function (PDF)</a></li>
+  <li><a href="#dist_prop" id="toc-dist_prop" class="nav-link" data-scroll-target="#dist_prop">Properties of Distributions</a></li>
+  <li><a href="#diracdelta" id="toc-diracdelta" class="nav-link" data-scroll-target="#diracdelta">Dirac delta function</a></li>
+  <li><a href="#uniform-distribution" id="toc-uniform-distribution" class="nav-link" data-scroll-target="#uniform-distribution">Uniform distribution</a></li>
+  <li><a href="#discrete-distributions" id="toc-discrete-distributions" class="nav-link" data-scroll-target="#discrete-distributions">Discrete distributions</a>
+  <ul class="collapse">
+  <li><a href="#binomial-distribution" id="toc-binomial-distribution" class="nav-link" data-scroll-target="#binomial-distribution">Binomial distribution</a></li>
+  <li><a href="#bernoulli-distribution" id="toc-bernoulli-distribution" class="nav-link" data-scroll-target="#bernoulli-distribution">Bernoulli distribution</a></li>
+  <li><a href="#multinomial-distribution" id="toc-multinomial-distribution" class="nav-link" data-scroll-target="#multinomial-distribution">Multinomial distribution</a></li>
+  <li><a href="#multinoulli-distribution" id="toc-multinoulli-distribution" class="nav-link" data-scroll-target="#multinoulli-distribution">Multinoulli distribution</a></li>
+  <li><a href="#empirical-distribution" id="toc-empirical-distribution" class="nav-link" data-scroll-target="#empirical-distribution">Empirical distribution</a></li>
+  </ul></li>
+  <li><a href="#continuous-distributions" id="toc-continuous-distributions" class="nav-link" data-scroll-target="#continuous-distributions">Continuous distributions</a>
+  <ul class="collapse">
+  <li><a href="#normalgaussian-distribution" id="toc-normalgaussian-distribution" class="nav-link" data-scroll-target="#normalgaussian-distribution">Normal/Gaussian distribution</a></li>
+  <li><a href="#multivariate-normalgaussian-distribution" id="toc-multivariate-normalgaussian-distribution" class="nav-link" data-scroll-target="#multivariate-normalgaussian-distribution">Multivariate normal/Gaussian distribution</a></li>
+  <li><a href="#beta-distribution" id="toc-beta-distribution" class="nav-link" data-scroll-target="#beta-distribution">Beta distribution</a></li>
+  <li><a href="#dirichlet-distribution" id="toc-dirichlet-distribution" class="nav-link" data-scroll-target="#dirichlet-distribution">Dirichlet distribution</a></li>
+  <li><a href="#marginal-distributions" id="toc-marginal-distributions" class="nav-link" data-scroll-target="#marginal-distributions">Marginal distributions</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#CLT" id="toc-CLT" class="nav-link" data-scroll-target="#CLT"><span class="header-section-number">2.3</span> Central limit theorem</a></li>
+  <li><a href="#bayesian-probability" id="toc-bayesian-probability" class="nav-link" data-scroll-target="#bayesian-probability"><span class="header-section-number">2.4</span> Bayesian probability</a>
+  <ul>
+  <li><a href="#conditionalposterior-probability" id="toc-conditionalposterior-probability" class="nav-link" data-scroll-target="#conditionalposterior-probability">Conditional/Posterior Probability</a></li>
+  <li><a href="#independence" id="toc-independence" class="nav-link" data-scroll-target="#independence">Independence</a></li>
+  <li><a href="#conditional-independence" id="toc-conditional-independence" class="nav-link" data-scroll-target="#conditional-independence">Conditional independence</a></li>
+  <li><a href="#bayes-rule" id="toc-bayes-rule" class="nav-link" data-scroll-target="#bayes-rule">Bayes Rule</a>
+  <ul class="collapse">
+  <li><a href="#terminology" id="toc-terminology" class="nav-link" data-scroll-target="#terminology">Terminology:</a></li>
+  <li><a href="#example-for-bayes-rule-using-covid-19-diagnostics" id="toc-example-for-bayes-rule-using-covid-19-diagnostics" class="nav-link" data-scroll-target="#example-for-bayes-rule-using-covid-19-diagnostics">Example for Bayes Rule using COVID-19 Diagnostics</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#further-concepts" id="toc-further-concepts" class="nav-link" data-scroll-target="#further-concepts"><span class="header-section-number">2.5</span> Further Concepts</a>
+  <ul>
+  <li><a href="#convergence-in-probability-of-random-variables" id="toc-convergence-in-probability-of-random-variables" class="nav-link" data-scroll-target="#convergence-in-probability-of-random-variables">Convergence in Probability of Random Variables</a></li>
+  <li><a href="#bernoullis-theorem-weak-law-of-large-numbers" id="toc-bernoullis-theorem-weak-law-of-large-numbers" class="nav-link" data-scroll-target="#bernoullis-theorem-weak-law-of-large-numbers">Bernoulli’s Theorem / Weak Law of Large Numbers</a></li>
+  </ul></li>
+  <li><a href="#statistical-hypothesis-tests" id="toc-statistical-hypothesis-tests" class="nav-link" data-scroll-target="#statistical-hypothesis-tests"><span class="header-section-number">2.6</span> Statistical hypothesis tests</a>
+  <ul>
+  <li><a href="#terminology-1" id="toc-terminology-1" class="nav-link" data-scroll-target="#terminology-1">Terminology</a></li>
+  <li><a href="#t-test" id="toc-t-test" class="nav-link" data-scroll-target="#t-test">t-test</a></li>
+  <li><a href="#z-test" id="toc-z-test" class="nav-link" data-scroll-target="#z-test">z-test</a></li>
+  <li><a href="#pearson-chi-squared-chi2-test" id="toc-pearson-chi-squared-chi2-test" class="nav-link" data-scroll-target="#pearson-chi-squared-chi2-test">Pearson Chi-squared (<span class="math inline">\chi^2</span>) test</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Statistics</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p>A probability is a measure of how frequent or likely an event will take place.</p>
+<section id="probability-basics" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="probability-basics"><span class="header-section-number">2.1</span> Probability Basics</h2>
+<section id="probability-interpretations" class="level3">
+<h3 class="anchored" data-anchor-id="probability-interpretations">Probability interpretations</h3>
+<ul>
+<li><p><strong>Frequentist:</strong> Probability is the fraction of positive samples, if we measured infinitely many samples.</p></li>
+<li><p><strong>Objectivist:</strong> Probabilities are due to inherent uncertainty properties. Probabilities are calculated by putting outcomes of interest into relation with all possible outcomes.</p></li>
+<li><p><strong>Subjectivist:</strong> An agent’s <em>rational</em> degree of belief (not external). The belief needs to be coherent (i.e.&nbsp;if you make bets using your probabilities you should not be guaranteed to lose money) and therefore need to follow the rules of probability.</p></li>
+<li><p><strong>Bayesian:</strong> (Building on subjectivism) A reasonable expectation / degree of belief based on the information available to the statistician / system. It allows to give certainties to events, where we don’t have samples on (e.g.&nbsp;disappearance of the south pole until 2030).</p></li>
+</ul>
+<p>Also the frequentist view is not free of subjectivity since you need to compare events on otherwise similar objects. Usually there are no completely similar objects, so you need to define them.</p>
+</section>
+<section id="probability-space" class="level3">
+<h3 class="anchored" data-anchor-id="probability-space">Probability Space</h3>
+<p>The probability space is a triplet space containing a sample/outcome space <span class="math inline">\Omega</span> (containing all possible atomic events), a collection of events <span class="math inline">S</span> (containing a subset of <span class="math inline">\Omega</span> to which we want to assign probabilities) and the mapping <span class="math inline">P</span> between <span class="math inline">\Omega</span> and <span class="math inline">S</span>.</p>
+</section>
+<section id="axioms-of-probability" class="level3">
+<h3 class="anchored" data-anchor-id="axioms-of-probability">Axioms of Probability</h3>
+<p>The mapping <span class="math inline">P</span> must fulfill the axioms of probability:</p>
+<ol type="1">
+<li><p><span class="math inline">P(a) \geq 0</span></p></li>
+<li><p><span class="math inline">P(\Omega) = 1</span></p></li>
+<li><p><span class="math inline">a,b \in S</span> and <span class="math inline">a \cap b = \{\}</span> <span class="math inline">\Rightarrow P(a \cup b) = P(a) + P(b)</span></p></li>
+</ol>
+<p><span class="math inline">a</span>, <span class="math inline">b</span> are events.</p>
+</section>
+<section id="random-variable-rv" class="level3">
+<h3 class="anchored" data-anchor-id="random-variable-rv">Random Variable (RV)</h3>
+<p>A RV is a <strong>function</strong> that maps points from the sample space <span class="math inline">\Omega</span> to some range (e.g.&nbsp;Real numbers or booleans). They are characterized by their distribution function. E.g. for a coin toss: <span class="math display">X(\omega) = \begin{cases}
+                0, \text{ if } \omega = heads\\
+                1, \text{ if } \omega = tails.
+            \end{cases}</span></p>
+</section>
+<section id="proposition" class="level3">
+<h3 class="anchored" data-anchor-id="proposition">Proposition</h3>
+<p>A Proposition is a conclusion of a statistical inference/prediction that can be true or false (e.g.&nbsp;a classification of a datapoint). More formally: A disjunction of events where the logic model holds. An event can be written as a <strong>propositional logic model</strong>:<br>
+<span class="math inline">A = true, B = false \Rightarrow a \land \neg b</span>. Propositions can be continuous, discrete or boolean.</p>
+</section>
+</section>
+<section id="probability-distributions" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="probability-distributions"><span class="header-section-number">2.2</span> Probability distributions</h2>
+<p>Probability distributions assign probabilities to to all possible points in <span class="math inline">\Omega</span> (e.g.&nbsp;<span class="math inline">P(Weather) = \langle 0.3, 0.4, 0.2, 0.1 \rangle</span>, representing Rain, sunshine, clouds and snow). Joint probability distributions give you a probability for each atomic event of the RVs (e.g.&nbsp;<span class="math inline">P(weather, accident)</span> gives you a <span class="math inline">2\times 4</span> matrix.)</p>
+<section id="cumulative-distribution-function-cdf" class="level3">
+<h3 class="anchored" data-anchor-id="cumulative-distribution-function-cdf">Cumulative Distribution Function (CDF)</h3>
+<p>The CDF is defined as <span class="math inline">F_X(x) = P(X \leq x)</span> (See figure <a href="#CDF" data-reference-type="ref" data-reference="CDF"><span class="math inline">CDF</span></a>).</p>
+<div id="CDF" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="../../figures/Normal_Distribution_CDF.png" class="img-fluid figure-img" style="width:60.0%"></p>
+<figcaption class="figure-caption">Cumulative distribution function of a normal distribution for different mean (<span class="math inline">\mu</span>) and variance (<span class="math inline">\sigma</span>). <em>Source: <a href="https://commons.wikimedia.org/wiki/File:Normal_Distribution_CDF.svg">user Inductiveload on wikimedia.org</a>.</em></figcaption>
+</figure>
+</div>
+</section>
+<section id="probability-density-function-pdf" class="level3">
+<h3 class="anchored" data-anchor-id="probability-density-function-pdf">Probability Density Function (PDF)</h3>
+<p>For continuous functions the PDF is defined by <span class="math display">p(x) =  {d \over dx} p(X \leq x).</span> The probability of x being in a finite interval is <span class="math display">P(a &lt; X \leq b) = \int_a^b p(x) dx</span> A PDF is shown in the following figure.</p>
+<div id="Boxplot" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="../../figures/Boxplot_vs_PDF.png" class="img-fluid figure-img" style="width:60.0%"></p>
+<figcaption class="figure-caption">Probability density function of a normal distribution with variance (<span class="math inline">\sigma</span>). In red a range from a Box-plot is shown with <a href="#dist_prop">quartiles</a> (Q1, Q3) and interquartile range (IQR). For the cutoffs (borders to darker blue regions) the IQR (on top) and <span class="math inline">\sigma</span> are chosen. Another common cutoff is the confidence interval with light blue regions having a probability mass of <span class="math inline">2 * \alpha / 2</span>. <em>Source: <a href="https://commons.wikimedia.org/wiki/File:Boxplot_vs_PDF.svg">user Jhguch on wikimedia.org</a>.</em></figcaption>
+</figure>
+</div>
+</section>
+<section id="dist_prop" class="level3">
+<h3 class="anchored" data-anchor-id="dist_prop">Properties of Distributions</h3>
+<ul>
+<li><p>The <strong>expected value</strong> (<span class="math inline">E</span>) or <strong>mean</strong> (<span class="math inline">\mu</span>) is given by <span class="math inline">E[X] = \sum_{x \in X} x*p(x)</span> for discrete RVs and <span class="math inline">E[X] = \int_X x*p(x) dx</span> for continuous RVs.</p></li>
+<li><p>The <strong>variance</strong> measures the spread of a distribution: <span class="math inline">var[X] = \sigma^2 = E[(X-\mu)^2] = E[X]^2 - \mu^2</span>.</p></li>
+<li><p>The <strong>standard deviation</strong> is given by: <span class="math inline">\sqrt{var[X]} = \sigma</span>. It is interpreted as the deviation from the mean that needs to be expected.</p></li>
+<li><p>The <strong>mode</strong> is the value with the highest probability (or the point in the PDF with the highest value):</p></li>
+<li><p>The <strong>median</strong> is the point at which all point less than the median and all points greater than the median have the same probability (<span class="math inline">0.5</span>).</p></li>
+<li><p>The <strong>quantiles</strong> (<span class="math inline">Q</span>) divide the datapoints into sets of equal number. The <span class="math inline">Q_1</span> qua<strong>r</strong>tile has 25% of the values below it. The <strong>interquartile range</strong> (IQR) is a measure to show the variability in the data (how distant the points from the first and last quartile are)</p></li>
+</ul>
+</section>
+<section id="diracdelta" class="level3">
+<h3 class="anchored" data-anchor-id="diracdelta">Dirac delta function</h3>
+<p>The <strong>dirac delta</strong> is simply a function that is infinite at one point and 0 everywhere else: <span class="math display">\delta(x)=\begin{cases} \infty , \; \text{ if } x = 0 \\0, \quad \text{if } x \neq 0 \end{cases} \qquad \text{and } \int_{-\infty}^{\infty} \delta(x) dx = 1</span> (Needed for distributions further on)</p>
+</section>
+<section id="uniform-distribution" class="level3">
+<h3 class="anchored" data-anchor-id="uniform-distribution">Uniform distribution</h3>
+<p>The uniform distribution has the same probability throughout a specific interval: <span class="math display">\text{Unif}(a,b) = \frac{1}{b-a} 1 \mkern-6mu 1 (a &lt; x \leq b) = \begin{cases}
+                \frac{1}{b-a}, \quad \text{if } x \in [ a,b ] \\
+                0, \qquad \text{else}
+            \end{cases}</span> <span class="math inline">1 \mkern-6mu 1</span> is a vector of ones.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../figures/Uniform_Distribution.png" class="img-fluid figure-img" style="width:40.0%"></p>
+<figcaption class="figure-caption">Uniform distribution. <em>Source: <a href="https://commons.wikimedia.org/wiki/File:Uniform_Distribution_PDF_SVG.svg">user IkamusumeFan on wikimedia.org</a>.</em></figcaption>
+</figure>
+</div>
+</section>
+<section id="discrete-distributions" class="level3">
+<h3 class="anchored" data-anchor-id="discrete-distributions">Discrete distributions</h3>
+<p>Used for random variables that have discrete states.</p>
+<section id="binomial-distribution" class="level4">
+<h4 class="anchored" data-anchor-id="binomial-distribution">Binomial distribution</h4>
+<p>Used for series of experiments with two outcomes (success or miss. e.g. a series of coin flips). <span class="math display">X \sim \text{Bin}(n, \theta ), \quad \text{Bin}(k|n,\theta)={n \choose k} \theta^k (1-\theta)^{n-k} , \quad {n \choose k} = \frac{n!}{k!(n-k)!},</span> where <span class="math inline">n</span> is the number of total experiments, <span class="math inline">k</span> is the number of successful experiments and <span class="math inline">\theta</span> is the probability of success of an experiment.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../figures/Pascals_triangle_binomial_distribution.png" class="img-fluid figure-img" style="width:60.0%"></p>
+<figcaption class="figure-caption">Binomial distribution of balls in <a href="https://en.wikipedia.org/wiki/Pascal%27s_triangle">Pascals triangles</a> with different numbers of layers (The top one has 0 layers). Example: For a triangle with <span class="math inline">n=6</span> layers, the probability that a ball lands in the middle box <span class="math inline">k=3</span> is <span class="math inline">20/64</span>. <em>Source: <a href="https://commons.wikimedia.org/wiki/File:Pascal%27s_triangle;_binomial_distribution.svg">user Watchduck on wikimedia.org</a></em></figcaption>
+</figure>
+</div>
+</section>
+<section id="bernoulli-distribution" class="level4">
+<h4 class="anchored" data-anchor-id="bernoulli-distribution">Bernoulli distribution</h4>
+<p>Is a special case of the binomial distribution with <span class="math inline">n=1</span> (e.g.&nbsp;one coin toss). <span class="math display">X \sim \text{Ber}(\theta ), \quad \text{Ber}(x | \theta)=\theta^{1 \mkern-6mu 1 (x=1)} (1-\theta)^{1 \mkern-6mu 1(x=0)}= \begin{cases}
+                    \theta, \qquad \text{if } x=1 \\
+                    1 - \theta, \; \text{if } x=0
+                \end{cases}</span></p>
+</section>
+<section id="multinomial-distribution" class="level4">
+<h4 class="anchored" data-anchor-id="multinomial-distribution">Multinomial distribution</h4>
+<p>Used for experiments with k different outcomes (e.g.&nbsp;dice rolls: Probability of different counts of the different sides). <span class="math display">\text{Mu}(x|n,\theta) =  {n \choose x_1, ..., x_K}\prod_{i=1}^K\theta_j^{x_j} = \frac{n!}{x_1!, ..., x_k!}\prod_{i=1}^K\theta_j^{x_j},</span> where <span class="math inline">k</span> is the number of outcomes, <span class="math inline">x_j</span> is the number times that outcome <span class="math inline">j</span> happens. <span class="math inline">X = (X_1, ..., X_K)</span> is the <em>random vector</em>.</p>
+</section>
+<section id="multinoulli-distribution" class="level4">
+<h4 class="anchored" data-anchor-id="multinoulli-distribution">Multinoulli distribution</h4>
+<p>Is a special case of the multinomial distribution with <span class="math inline">n=1</span>. The random vector is then represented in <em>dummy-</em> or <em>one-hot-encoding</em> (e.g. <span class="math inline">(0,0,1,0,0,0)</span> if outcome 3 takes place). <span class="math display">\text{Mu}(x|1,\theta) = \prod_{j=0}^K \theta_j^{1 \mkern-6mu 1(x_j=1)}</span></p>
+</section>
+<section id="empirical-distribution" class="level4">
+<h4 class="anchored" data-anchor-id="empirical-distribution">Empirical distribution</h4>
+<p>The empirical distribution follows the empirical measurements strictly. The CDF jumps by 1/n every time a sample is “encountered” (see figure).</p>
+<p><span class="math display">\text{p}_{\text{emp}}(A) = \frac{1}{N} \sum_{i=1}^N \delta_{x_i}(A), \quad \delta_{x_i}=\begin{cases}1, \quad \text{if } x \in A \\0, \quad \text{if } x \notin A \end{cases},</span> w where <span class="math inline">x_1, ..., x_N</span> is a data set with N points. The points can also be weighted: <span class="math display">p(x) =  \sum_{i=1}^N w_i \delta_{x_i}(x)</span></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../figures/Empirical_distribution_function.png" class="img-fluid figure-img" style="width:50.0%"></p>
+<figcaption class="figure-caption">Cumulative empirical distribution function (blue line) for samples drawn from a standard normal distribution (green line). The values of the drawn samples is shown as grey lines at the bottom. Source: <a href="https://commons.wikimedia.org/wiki/File:Empirical_distribution_function.png">user nagualdesign on wikimedia.org.</a></figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="continuous-distributions" class="level3">
+<h3 class="anchored" data-anchor-id="continuous-distributions">Continuous distributions</h3>
+<p>Used for random variables that have continuous states.</p>
+<section id="normalgaussian-distribution" class="level4">
+<h4 class="anchored" data-anchor-id="normalgaussian-distribution">Normal/Gaussian distribution</h4>
+<p>Often chosen for random noise because it is simple and needs few assumptions (see sect. <a href="#CLT">CLT</a>). The PDF is given by:</p>
+<p><span class="math display">p(x|\mu\sigma^2)= \frac{1}{\sqrt{2\pi\sigma^2}}\exp\left[-\frac{(x-\mu)^2}{2\sigma^2}\right],</span> where <span class="math inline">\mu</span> is the mean and <span class="math inline">\sigma^2</span> is the variance. The CDF is given by: <span class="math display">\Phi(x) = \frac{1}{\sqrt{2\pi}}\int_{\infty}^xe^{\frac{-t^2}{2}dt}</span></p>
+</section>
+<section id="multivariate-normalgaussian-distribution" class="level4">
+<h4 class="anchored" data-anchor-id="multivariate-normalgaussian-distribution">Multivariate normal/Gaussian distribution</h4>
+<p>For T datapoints with k dimensions (features). The pdf is: <span class="math display">p(x|\mu,\Sigma) = \dfrac{1}{\sqrt{(2\pi)^k|\Sigma|}}\exp\left[-\dfrac{1}{2}(x-\mu)^\top\Sigma^{-1}(x-\mu)\right],</span> where x now has multiple dimension (<span class="math inline">x_1, x_2, ..., x_k</span>) and <span class="math inline">\Sigma</span> is the <span class="math inline">k \times k</span> covariance matrix: <span class="math inline">\Sigma = \text{E}[(X-\mu)(X-\mu)]</span>. The covariance between features is: <span class="math inline">\text{Cov}[X_i, X_j] = \text{E}[(X_i-\mu_i)(X_j-\mu_j)]</span></p>
+</section>
+<section id="beta-distribution" class="level4">
+<h4 class="anchored" data-anchor-id="beta-distribution">Beta distribution</h4>
+<p>defined for <span class="math inline">0 \leq x \leq 1</span> (see figure <a href="#Beta_distr">Beta distribution</a>). The pdf is: <span class="math display">f(x|\alpha, \beta) = \frac{1}{B(\alpha,\beta)}x^{\alpha-1}(1-x)^{\beta-1}</span> The <a href="https://en.wikipedia.org/wiki/Beta_function">beta function</a> <span class="math inline">B</span> is there to normalize and ensure that the total probability is 1 .</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../figures/Beta_distribution_pdf.png" class="img-fluid figure-img" style="width:60.0%" label="Beta_distr"></p>
+<figcaption class="figure-caption">Probability density function of a beta-distribution with different parameter values. <em>Source: <a href="https://commons.wikimedia.org/wiki/File:Beta_distribution_pdf.png">user MarkSweep on wikimedia.org</a>.</em></figcaption>
+</figure>
+</div>
+</section>
+<section id="dirichlet-distribution" class="level4">
+<h4 class="anchored" data-anchor-id="dirichlet-distribution">Dirichlet distribution</h4>
+<p>The multivariate version of the Beta distribution. The PDF is: <span class="math display">\text{Dir}({x}|{\alpha}) \triangleq \dfrac{1}{B({\alpha})}\prod\limits_{i=1}^K x_i^{\alpha_i-1},\quad \sum_{i=1}^K x_i =1, \quad x_i \geq 0 \text{ }\forall i</span></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../figures/Dirichlet_distributions.png" class="img-fluid figure-img" style="width:60.0%" label="#Dirichlet_distr"></p>
+<figcaption class="figure-caption">Probability density function of a Dirichlet-distribution on a 2-simplex (triangle) with different parameter values. Clockwise from top left: <span class="math inline">\alpha</span> = (6,2,2), (3,7,5), (6,2,6), (2,3,4). <em>Source: <a href="https://commons.wikimedia.org/wiki/File:Dirichlet_distributions.png">user ThG on wikimedia.org</a>.</em></figcaption>
+</figure>
+</div>
+</section>
+<section id="marginal-distributions" class="level4">
+<h4 class="anchored" data-anchor-id="marginal-distributions">Marginal distributions</h4>
+<p>Are the probability distributions of subsets of the original distribution. Marginal distributions of normal distributions are also normal distributions.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../figures/Multivariate_gaussian.png" class="img-fluid figure-img" style="width:60.0%"></p>
+<figcaption class="figure-caption">Data following a 2D-Gaussian distribution. Marginal distributions are shown on the sides in blue and orange. <em>Source: <a href="https://commons.wikimedia.org/wiki/File:Multivariate_Gaussian_inequality_demonstration.svg">user Auguel on wikimedia.org</a>.</em></figcaption>
+</figure>
+</div>
+</section>
+</section>
+</section>
+<section id="CLT" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="CLT"><span class="header-section-number">2.3</span> Central limit theorem</h2>
+<p>In many cases the sum of random variables will follow a normal distribution as n goes to infinity.</p>
+</section>
+<section id="bayesian-probability" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="bayesian-probability"><span class="header-section-number">2.4</span> Bayesian probability</h2>
+<p>Baeysian probability represents the plausibility of a proposition based on the available information (i.e.&nbsp;the degree at which the information supports the proposition). The use of this form of statistics is especially useful if random variables cannot be assumed to be i.i.d. (i.e.&nbsp;When an event is not independent of the event before it (e.g. drawing balls without laying them back into the urn)).</p>
+<section id="conditionalposterior-probability" class="level3">
+<h3 class="anchored" data-anchor-id="conditionalposterior-probability">Conditional/Posterior Probability</h3>
+<p>Expresses the probability of one event (<span class="math inline">Y</span>) under the condition that another event (<span class="math inline">E</span>) has occurred. (e.g.&nbsp;<span class="math inline">C</span> = “gets cancer”, <span class="math inline">S</span> = “is a smoker” <span class="math inline">\rightarrow</span> <span class="math inline">p(C|S)=0.2</span>, meaning: “given the <em>sole information</em> that someone is a smoker, their probability of getting cancer is 20%.”)<br>
+<br>
+The conditional probability can be calculated like follows. By defining the joined probability like so: <span class="math display">P(A \cap B) = P(A \mid B) P(B)</span> you solve for <span class="math inline">P(A \mid B)</span>: <span class="math display">P(A \mid B) = \frac{P(A \cap B)}{P(B)}=\frac{P(A, B)}{P(B)}=\alpha{P(A, B)},</span> where <span class="math inline">\alpha</span> is used as a normalization constant. If you have hidden variables (confounding factors) you need to sum them out like so: <span class="math display">P(Y|E=e)=\alpha P(Y,E=e)=\alpha\sum_h P(Y,E=e,H=h)</span> where <span class="math inline">X</span> contains all variables, <span class="math inline">Y</span> is called <em>query variable</em>, <span class="math inline">E</span> is called <em>evidence variable</em>, <span class="math inline">H=X-Y-E</span> is called <em>hidden variable</em> or <em>confounding factor</em>. You get the joint probabilities by summing out the hidden variable. <!--# check if the formula is correct --></p>
+<p><strong>!</strong> Usually <span class="math inline">p(A|B) \neq p(B|A)</span><br>
+<strong>!</strong> Priors are often forgotten: E.g. <span class="math inline">P(\text{"COVID-19"})</span> is confused with <span class="math inline">P(\text{"COVID-19"}|\text{"Person is getting tested"})</span> (because only people with symptoms go to the testing station).<br>
+<strong>!</strong> Base rate neglect: Under-representing the prior probability. E.g. You have a test with a 5% false positive rate and a incidence of disease of 2% in the population. If you are tested positive in a population screening your probability of having the disease is only 29%.<br>
+Conditional distributions of Gaussian distributions are Gaussian distributions themselves.</p>
+</section>
+<section id="independence" class="level3">
+<h3 class="anchored" data-anchor-id="independence">Independence</h3>
+<p>For independent variables it holds: <span class="math inline">P(A|B)=P(A)</span> or <span class="math inline">P(B|A)=P(B)</span></p>
+</section>
+<section id="conditional-independence" class="level3">
+<h3 class="anchored" data-anchor-id="conditional-independence">Conditional independence</h3>
+<p>Two events <span class="math inline">A</span> and <span class="math inline">B</span> are independent, given <span class="math inline">C</span>: <span class="math inline">P(A|B,C)=P(A|C)</span>. <span class="math inline">A</span> and <span class="math inline">B</span> must not have any information on each other, given the information on <span class="math inline">C</span>. E.g. for school children: <span class="math inline">P(\text{"vocabulary"}|\text{"height"}, \text{"age"})= P(\text{"vocabulary"}|\text{"age"})</span>.</p>
+</section>
+<section id="bayes-rule" class="level3">
+<h3 class="anchored" data-anchor-id="bayes-rule">Bayes Rule</h3>
+<p>Bayes rule is a structured approach to update prior beliefs / probabilities with new information (data). With the conditional probability from before (<span class="math inline">P(A,B)=P(A|B)P(B)=P(B|A)P(A)</span>) we get <strong>Bayes rule</strong> by transforming the right-side equation to:<span class="math display">P(\text{hypothesis}|\text{evidence}) =\dfrac{P(\text{evidence}|\text{hypothesis})P(\text{hypothesis})}{P(\text{evidence})}</span> often used as: <span class="math display">P(\text{model}|\text{data}) =\dfrac{P(\text{data}|\text{model})P(\text{model})}{P(\text{data})}</span></p>
+<section id="terminology" class="level4">
+<h4 class="anchored" data-anchor-id="terminology">Terminology:</h4>
+<ul>
+<li><p><span class="math inline">P(\text{hypothesis}|\text{evidence})</span> = Posterior (How probable hypothesis is after incorporating new evidence)</p></li>
+<li><p><span class="math inline">P(\text{evidence}|\text{hypothesis})</span> = Likelihood (How probable the evidence is, if the hypothesis is true)</p></li>
+<li><p><span class="math inline">P(\text{hypothesis})</span> = Prior (How probable hypothesis was before seeing evidence)</p></li>
+<li><p><span class="math inline">P(\text{evidence})</span> = Marginal (How probable evidence is under all possible hypotheses)</p></li>
+<li><p><span class="math inline">\dfrac{P(\text{evidence}|\text{hypothesis})}{P(\text{evidence})}</span> = Support <span class="math inline">B</span> provides for <span class="math inline">A</span></p></li>
+<li><p><span class="math inline">P(\text{data}|\text{model})P(\text{model})</span> = joint probability (<span class="math inline">P(A,B)</span>)</p></li>
+</ul>
+</section>
+<section id="example-for-bayes-rule-using-covid-19-diagnostics" class="level4">
+<h4 class="anchored" data-anchor-id="example-for-bayes-rule-using-covid-19-diagnostics">Example for Bayes Rule using COVID-19 Diagnostics</h4>
+<p><span class="math display">P(\text{COVID-19}|\text{cough}) =\dfrac{P(\text{cough}|\text{COVID-19})P(\text{COVID-19})}{P(\text{cough})} = \frac{0.7*0.01}{0.1}=0.07</span> Estimating <span class="math inline">P(\text{COVID-19}|\text{cough})</span> is difficult, because there can be an outbreak and the number changes. However, <span class="math inline">P(\text{cough}|\text{COVID-19})</span> stays stable, <span class="math inline">P(\text{COVID-19})</span> and <span class="math inline">P(\text{cough})</span> can be easily determined.</p>
+</section>
+</section>
+</section>
+<section id="further-concepts" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="further-concepts"><span class="header-section-number">2.5</span> Further Concepts</h2>
+<section id="convergence-in-probability-of-random-variables" class="level3">
+<h3 class="anchored" data-anchor-id="convergence-in-probability-of-random-variables">Convergence in Probability of Random Variables</h3>
+<p>You expect your random variables (<span class="math inline">X_i</span>) to converge to an expected random variable <span class="math inline">X</span>. I.e. after looking at infinite samples, the probability that your random variable <span class="math inline">X_n</span> differs more than a threshold <span class="math inline">\epsilon</span> from your target <span class="math inline">X</span> should be zero. <span class="math display">\lim_{n \rightarrow \infty} P(|X_n - X| &gt; \epsilon) = 0</span></p>
+</section>
+<section id="bernoullis-theorem-weak-law-of-large-numbers" class="level3">
+<h3 class="anchored" data-anchor-id="bernoullis-theorem-weak-law-of-large-numbers">Bernoulli’s Theorem / Weak Law of Large Numbers</h3>
+<p><span class="math display">\lim_{n \rightarrow \infty} P(|\frac{\sum_{i=1}^n X_i}{n} - \mu| &gt; \epsilon) = 0,</span> where <span class="math inline">X_1,...,X_n</span> are independent &amp; identically distributed (i.i.d.) RVs. <span class="math inline">\Rightarrow</span> With enough samples, the sample mean will approach the true mean. The <strong>strong law of large numbers</strong> states that <span class="math inline">|\frac{\sum_{i=1}^n X_i}{n} - \mu| &lt; \epsilon</span> for any <span class="math inline">\epsilon &gt; 0</span>.</p>
+</section>
+</section>
+<section id="statistical-hypothesis-tests" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="statistical-hypothesis-tests"><span class="header-section-number">2.6</span> Statistical hypothesis tests</h2>
+<section id="terminology-1" class="level3">
+<h3 class="anchored" data-anchor-id="terminology-1">Terminology</h3>
+<ul>
+<li><p><a href="https://en.wikipedia.org/wiki/Null_hypothesis">Null-hypothesis</a> (over-simplified): “The differences between these two sets of samples are due to chance.” Or “There is no (positive/negative) effect of the independent variables on the dependent variable.”</p></li>
+<li><p><a href="https://en.wikipedia.org/wiki/Alternative_hypothesis">Alternative hypothesis</a> (over-simplified): “The differences between the two sets of samples cannot be due to chance.” Or “There is a (positive/negative) effect …” (<a href="https://www.scribbr.com/statistics/null-and-alternative-hypotheses/" target="_blank">More examples</a>)</p></li>
+<li><p><a href="https://en.wikipedia.org/wiki/P-value">P-value</a>: The probability to observe an at least as extreme value (e.g.&nbsp;sample mean of a distribution) as the measured one, if the null-hypothesis was true.</p></li>
+<li><p><a href="https://en.wikipedia.org/wiki/Statistical_significance"><span class="math inline">\alpha</span>-Value / Significance level</a>: Probability of falsely rejecting the null-hypothesis, given the null-hypothesis is true. <!-- Tests how extreme your values are and if they are over the significance threshold --></p></li>
+<li><p>Statistically significant: The result is significant if p &lt; <span class="math inline">\alpha</span>.</p></li>
+</ul>
+</section>
+<section id="t-test" class="level3">
+<h3 class="anchored" data-anchor-id="t-test">t-test</h3>
+<p>Tests for significant difference between two independent sets of samples.</p>
+<p><span class="math display"> \text{t} = \frac{\bar{X}_1 - \bar{X}_2}{\sqrt{\frac{\hat{\sigma}^2_1}{n_1}+\frac{\hat{\sigma}^2_2}{n_2}}}</span> where <span class="math inline">\bar{X}</span> is the sample mean, <span class="math inline">\hat{\sigma}^2</span> is the sample variance, n is the sample size.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>stats.ttest_ind(rvs1, rvs2, equal_var<span class="op">=</span><span class="va">True</span>, alternative <span class="op">=</span> <span class="st">"two-sided"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>More info: <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.ttest_ind.html#scipy.stats.ttest_ind">scipy.org</a></p>
+<p>Using the <strong>one-ample t-test</strong>, you can test if the sample mean (<span class="math inline">\bar{X}</span>) is significantly different to an expected mean (<span class="math inline">\hat{\mu}_0</span>).</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>stats.ttest_1samp(rvs, popmean<span class="op">=</span><span class="fl">0.0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>More info: <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.ttest_1samp.html#scipy.stats.ttest_1samp">scipy.org</a></p>
+<p>The <strong>t-test for paired samples</strong> is used, when the samples have been matched (e.g.&nbsp;subjects are measured before and after treatment).</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>stats.ttest_rel(rvs1, rvs2, alternative <span class="op">=</span> <span class="st">"two-sided"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="z-test" class="level3">
+<h3 class="anchored" data-anchor-id="z-test">z-test</h3>
+<p>Same as t-test, but requires that the standard distribution of the population is known. Therefore it is not used often (except for large sample sizes).</p>
+<p><span class="math display"> z = \frac{\bar{X} - \mu_0}{\sigma} </span></p>
+</section>
+<section id="pearson-chi-squared-chi2-test" class="level3">
+<h3 class="anchored" data-anchor-id="pearson-chi-squared-chi2-test">Pearson Chi-squared (<span class="math inline">\chi^2</span>) test</h3>
+<p>Tests for significant relationships between categorical features. It is used with large sample sizes.</p>
+<p><span class="math display"> \chi^2 = \sum^n_{i=1} \frac{(O_i - E_i)^2}{E_i}  </span> where <span class="math inline">\chi^2</span> is the test-statistic, <span class="math inline">O_i</span> is the number of observations of feature <span class="math inline">i</span>, <span class="math inline">E_i</span> (<span class="math inline">=Np_i</span>) is the expected count of feature <span class="math inline">i</span>.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> chi2_contingency</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>contingency_table <span class="op">=</span> np.array([[<span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">20</span>], [<span class="dv">20</span>, <span class="dv">20</span>, <span class="dv">20</span>]])</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>test_stat, p_val, degOfFreedome, expected_freq <span class="op">=</span> chi2_contingency(contingency_table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>More info: <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.chi2_contingency.html">scipy.org</a></p>
+<p>When the sample sizes are smaller, <strong>Fisher’s exact test</strong> is used. It uses the assumption of fixed marginal distributions.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> fisher_exact</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> fisher_exact(table, alternative<span class="op">=</span><span class="st">'two-sided'</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>res.pvalue</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>More info: <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.fisher_exact.html">scipy.org</a></p>
+<!-- TODO : Statistical Tests in bayesian statistics -->
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          // default icon
+          link.classList.add("external");
+      }
+    }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../source/Intro/02-Setup-env.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Setup Environment</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../source/Maths/01-Linear-Algebra.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Linear Algebra</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>
