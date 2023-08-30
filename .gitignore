@@ -356,3 +356,6 @@ Temporary Items
 /.quarto/
 .Rhistory
 .RData
+.Rhistory
+.Rhistory
+.gitignore

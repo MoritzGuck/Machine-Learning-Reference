@@ -5,14 +5,13 @@ on:
   pull_request:
     branches: [ "master" ]
 
-name: Quarto Publish to SSH-Server
+name: Quarto Publish
 
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      deployments: write # needed for Cloudflare
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
@@ -21,27 +20,21 @@ jobs:
         uses: quarto-dev/quarto-actions/setup@v2
         with:
           tinytex: true
-          
-      - name: Install python
+
+      - name: Install Python and Dependencies
         uses: actions/setup-python@v4
         with:
-          python-version: '3.9'
-          cache: 'pip' # caching pip dependencies
+          python-version: '3.10'
+          cache: 'pip'
+      - run: pip install jupyter
       - run: pip install -r requirements.txt
+
+      - name: Render and Publish
+        uses: quarto-dev/quarto-actions/publish@v2
+        with:
+          target: gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
-      - name: Render Quarto Project
-        uses: quarto-dev/quarto-actions/render@v2
-        with:
-          to: html
-          path: '.'
-    
-      - name: 📂 Sync files
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-        with:
-          server: ml-reference.bplaced.net
-          username: ${{ secrets.FTP_UID }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          port: 21
-          protocol: ftps
-          local-dir: '../ML_reference_site/'
-          server-dir: 'www/'
+
+          

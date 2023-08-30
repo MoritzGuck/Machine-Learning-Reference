@@ -80,7 +80,7 @@ conda install pandas -c conda-forge -y
 **switch back to base environment:**
 
 ```bash
-conda deactivate env-name
+conda deactivate
 ```
 
 **Removing environment:**
