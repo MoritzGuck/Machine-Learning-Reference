@@ -128,6 +128,10 @@ width="60%"}
     in the data (how distant the points from the first and last quartile
     are)
 
+#### Correlation and covariance
+
+<!-- TODO: Include Pearson Correlation coefficient, move covariance and covariance matrix here -->
+
 #### Dirac delta function {#diracdelta}
 
 The **dirac delta** is simply a function that is infinite at one point
@@ -378,6 +382,8 @@ $|\frac{\sum_{i=1}^n X_i}{n} - \mu| < \epsilon$ for any $\epsilon > 0$.
 
 
 
+
+
 ### Statistical hypothesis tests
 
 #### Terminology
@@ -439,15 +445,33 @@ Tests for significant relationships between categorical features. It is used wit
 $$ \chi^2 = \sum^n_{i=1} \frac{(O_i - E_i)^2}{E_i}  $$
 where $\chi^2$ is the test-statistic, $O_i$ is the number of observations of feature $i$, $E_i$ ($=Np_i$) is the expected count of feature $i$. 
 
+To calculate it, you create contingency tables or freqency tables. They contain the frequency of the counts of each combination of variables. 
+
+::: {.panel-tabset}
+### Python
+
 ```python
 from scipy.stats import chi2_contingency
-contingency_table = np.array([[10, 10, 20], [20, 20, 20]])
+contingency_table = np.array([[10, 10, 20], [20, 20, 20]]) 
 test_stat, p_val, degOfFreedome, expected_freq = chi2_contingency(contingency_table)
 ```
+
+### R
+
+```R
+table(mtcars$vs, mtcars$gear)
+chisq.test(contingency_table)
+```
+:::
+
+
 
 More info: [scipy.org](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.chi2_contingency.html)
 
 When the sample sizes are smaller, **Fisher's exact test** is used. It uses the assumption of fixed marginal distributions.
+
+::: {.panel-tabset}
+### Python SciPy
 
 ```python
 from scipy.stats import fisher_exact
@@ -457,7 +481,14 @@ res.pvalue
 
 More info: [scipy.org](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.fisher_exact.html)
 
+### R
 
+```R
+contingency_table = table(mtcars$vs, mtcars$gear)
+fisher.test(contingency_table)
+```
+
+:::
 
 <!-- TODO : Statistical Tests in bayesian statistics -->
 
