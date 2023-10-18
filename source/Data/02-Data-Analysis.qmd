@@ -11,6 +11,10 @@ outputs of your model.
 After getting hold of the data, these are important properties to
 extract:
 
+::: {.panel-tabset}
+
+### Python Pandas
+
 ``` python
 import pandas as pd
 pd.options.display.float_format = '{:,.2f}'.format
@@ -31,6 +35,21 @@ print("empty rows: "+ df_transport.isnull().sum())
 # Rarely used:
 train_df["Day"].unique() # returns unique values in a column
 ```
+
+### R
+
+```R
+Specific summary statistic
+: ```R
+sapply(mtcars, mean, na.rm=TRUE) # statistics: mean, sd, var, min, max, median, range, and quantile
+```
+
+Summary (Min, Max, Quartiles, Mean): 
+: ```R
+summary(mtcars)
+```
+
+::: 
 
 Go through [this check-list](#dataimportcheck) after data import.
 
