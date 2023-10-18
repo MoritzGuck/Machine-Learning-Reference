@@ -332,6 +332,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#cumulative-distribution-function-cdf" id="toc-cumulative-distribution-function-cdf" class="nav-link" data-scroll-target="#cumulative-distribution-function-cdf">Cumulative Distribution Function (CDF)</a></li>
   <li><a href="#probability-density-function-pdf" id="toc-probability-density-function-pdf" class="nav-link" data-scroll-target="#probability-density-function-pdf">Probability Density Function (PDF)</a></li>
   <li><a href="#dist_prop" id="toc-dist_prop" class="nav-link" data-scroll-target="#dist_prop">Properties of Distributions</a></li>
+  <li><a href="#correlation-and-covariance" id="toc-correlation-and-covariance" class="nav-link" data-scroll-target="#correlation-and-covariance">Correlation and covariance</a></li>
   <li><a href="#diracdelta" id="toc-diracdelta" class="nav-link" data-scroll-target="#diracdelta">Dirac delta function</a></li>
   <li><a href="#uniform-distribution" id="toc-uniform-distribution" class="nav-link" data-scroll-target="#uniform-distribution">Uniform distribution</a></li>
   <li><a href="#discrete-distributions" id="toc-discrete-distributions" class="nav-link" data-scroll-target="#discrete-distributions">Discrete distributions</a>
@@ -475,6 +476,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>The <strong>median</strong> is the point at which all point less than the median and all points greater than the median have the same probability (<span class="math inline">0.5</span>).</p></li>
 <li><p>The <strong>quantiles</strong> (<span class="math inline">Q</span>) divide the datapoints into sets of equal number. The <span class="math inline">Q_1</span> qua<strong>r</strong>tile has 25% of the values below it. The <strong>interquartile range</strong> (IQR) is a measure to show the variability in the data (how distant the points from the first and last quartile are)</p></li>
 </ul>
+</section>
+<section id="correlation-and-covariance" class="level3">
+<h3 class="anchored" data-anchor-id="correlation-and-covariance">Correlation and covariance</h3>
+<!-- TODO: Include Pearson Correlation coefficient, move covariance and covariance matrix here -->
 </section>
 <section id="diracdelta" class="level3">
 <h3 class="anchored" data-anchor-id="diracdelta">Dirac delta function</h3>
@@ -669,15 +674,38 @@ Conditional distributions of Gaussian distributions are Gaussian distributions t
 <h3 class="anchored" data-anchor-id="pearson-chi-squared-chi2-test">Pearson Chi-squared (<span class="math inline">\chi^2</span>) test</h3>
 <p>Tests for significant relationships between categorical features. It is used with large sample sizes.</p>
 <p><span class="math display"> \chi^2 = \sum^n_{i=1} \frac{(O_i - E_i)^2}{E_i}  </span> where <span class="math inline">\chi^2</span> is the test-statistic, <span class="math inline">O_i</span> is the number of observations of feature <span class="math inline">i</span>, <span class="math inline">E_i</span> (<span class="math inline">=Np_i</span>) is the expected count of feature <span class="math inline">i</span>.</p>
+<p>To calculate it, you create contingency tables or freqency tables. They contain the frequency of the counts of each combination of variables.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">R</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> chi2_contingency</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>contingency_table <span class="op">=</span> np.array([[<span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">20</span>], [<span class="dv">20</span>, <span class="dv">20</span>, <span class="dv">20</span>]])</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>contingency_table <span class="op">=</span> np.array([[<span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">20</span>], [<span class="dv">20</span>, <span class="dv">20</span>, <span class="dv">20</span>]]) </span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>test_stat, p_val, degOfFreedome, expected_freq <span class="op">=</span> chi2_contingency(contingency_table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(mtcars<span class="sc">$</span>vs, mtcars<span class="sc">$</span>gear)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(contingency_table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
 <p>More info: <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.chi2_contingency.html">scipy.org</a></p>
 <p>When the sample sizes are smaller, <strong>Fisher’s exact test</strong> is used. It uses the assumption of fixed marginal distributions.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> fisher_exact</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> fisher_exact(table, alternative<span class="op">=</span><span class="st">'two-sided'</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>res.pvalue</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Python SciPy</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">R</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> fisher_exact</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> fisher_exact(table, alternative<span class="op">=</span><span class="st">'two-sided'</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>res.pvalue</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>More info: <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.fisher_exact.html">scipy.org</a></p>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>contingency_table <span class="ot">=</span> <span class="fu">table</span>(mtcars<span class="sc">$</span>vs, mtcars<span class="sc">$</span>gear)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">fisher.test</span>(contingency_table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
 <!-- TODO : Statistical Tests in bayesian statistics -->
 
 
