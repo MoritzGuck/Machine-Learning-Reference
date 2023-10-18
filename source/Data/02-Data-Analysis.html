@@ -358,6 +358,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="initial-analysis" class="level2" data-number="6.1">
 <h2 data-number="6.1" class="anchored" data-anchor-id="initial-analysis"><span class="header-section-number">6.1</span> Initial analysis</h2>
 <p>After getting hold of the data, these are important properties to extract:</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">Python Pandas</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">R</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>pd.options.display.float_format <span class="op">=</span> <span class="st">'{:,.2f}'</span>.<span class="bu">format</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"First 5 samples:"</span></span>
@@ -376,6 +380,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Rarely used:</span></span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>train_df[<span class="st">"Day"</span>].unique() <span class="co"># returns unique values in a column</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Specific summary statistic</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="sc">:</span> <span class="st">```</span><span class="at">R</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="at">sapply(mtcars, mean, na.rm=TRUE) # statistics: mean, sd, var, min, max, median, range, and quantile</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<dl>
+<dt>Summary (Min, Max, Quartiles, Mean):</dt>
+<dd>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mtcars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</dd>
+</dl>
+</div>
+</div>
+</div>
 <p>Go through <a href="../Other/0-Checklists.html#dataimportcheck">this check-list</a> after data import.</p>
 </section>
 <section id="after-preprocessing" class="level2" data-number="6.2">
@@ -386,28 +404,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="categorical-discrete-data-bar-chart" class="level4">
 <h4 class="anchored" data-anchor-id="categorical-discrete-data-bar-chart">Categorical / discrete data: Bar chart</h4>
 <p>Plot the number of occurrences of each category / number. This helps you find the distribution of your data.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>sns.countplot(df[<span class="st">"sex"</span>])</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"number of participants"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>sns.countplot(df[<span class="st">"sex"</span>])</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"number of participants"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><img src="../../figures/countplot.png" class="img-fluid"></p>
 </section>
 <section id="continuous-data" class="level4">
 <h4 class="anchored" data-anchor-id="continuous-data">Continuous data</h4>
 <p>A <strong>histogram</strong> groups data into ranges and plot number of occurrences in each range. This helps you find the distribution of your data.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>sns.set_style(<span class="st">'whitegrid'</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>sns.histplot(data<span class="op">=</span>df_USAhousing, x<span class="op">=</span><span class="st">'median_house_value'</span>, bins<span class="op">=</span><span class="dv">30</span>)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'median value'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>sns.set_style(<span class="st">'whitegrid'</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>sns.histplot(data<span class="op">=</span>df_USAhousing, x<span class="op">=</span><span class="st">'median_house_value'</span>, bins<span class="op">=</span><span class="dv">30</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'median value'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><img src="../../figures/hist_med_house_value.png" class="img-fluid" style="width:60.0%"></p>
 <p>More info: <a href="https://seaborn.pydata.org/tutorial/distributions.html">seaborn.pydata.org</a></p>
 <p>A <strong>empirical cumulative distribution function</strong> shows the proportion of samples with values below a certain value.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>sns.set_style(<span class="st">'whitegrid'</span>)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>sns.ecdfplot(data<span class="op">=</span>train_df[<span class="st">"feature"</span>].sample(<span class="dv">10000</span>))</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Sales per Customer'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>sns.set_style(<span class="st">'whitegrid'</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>sns.ecdfplot(data<span class="op">=</span>train_df[<span class="st">"feature"</span>].sample(<span class="dv">10000</span>))</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Sales per Customer'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><img src="../../figures/ecdf_plot.png" class="img-fluid" style="width:60.0%"></p>
 <p>More info: <a href="https://seaborn.pydata.org/generated/seaborn.ecdfplot.html">seaborn.pydata.org</a></p>
 </section>
@@ -418,38 +436,38 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h4 class="anchored" data-anchor-id="continuous-vs-continuous">Continuous vs Continuous</h4>
 <p><strong>Scatter-plots</strong> plot the values of the datapoints of one attribute on the x-axis and the other attribute on the y-axis. This helps you find the correlations, order of the relationship, outliers etc.</p>
 <p>Use a <strong>pairplot</strong> to make a scatter plot of multiple features against each other.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>sns.pairplot(df_USAhousing[[<span class="st">"median_income"</span>, <span class="st">"median_house_value"</span>, <span class="st">"total_rooms"</span>]], diag_kind<span class="op">=</span><span class="st">"hist"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>sns.pairplot(df_USAhousing[[<span class="st">"median_income"</span>, <span class="st">"median_house_value"</span>, <span class="st">"total_rooms"</span>]], diag_kind<span class="op">=</span><span class="st">"hist"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><img src="../../figures/pairplot_usa_housing.png" class="img-fluid" style="width:80.0%"></p>
 <p>Alternatively use <strong>joint plots</strong>, to visualize the marginal (univariate) distributions on the sides:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>sns.jointplot(data<span class="op">=</span>df_USAhousing, x<span class="op">=</span><span class="st">"median_income"</span>, y<span class="op">=</span><span class="st">"median_house_value"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>sns.jointplot(data<span class="op">=</span>df_USAhousing, x<span class="op">=</span><span class="st">"median_income"</span>, y<span class="op">=</span><span class="st">"median_house_value"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><img src="../../figures/jointplot_housing.png" class="img-fluid" style="width:65.0%"></p>
 <p><strong>Heatmaps</strong> plot the magnitude of values in different categories. It is commonly used in exploratory data analysis to show the correlation of the different attributes.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>sns.heatmap(df.corr(), cmap<span class="op">=</span><span class="st">"coolwarm"</span>, vmin<span class="op">=-</span><span class="dv">1</span>, vmax<span class="op">=</span><span class="dv">1</span>, annot<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>sns.heatmap(df.corr(), cmap<span class="op">=</span><span class="st">"coolwarm"</span>, vmin<span class="op">=-</span><span class="dv">1</span>, vmax<span class="op">=</span><span class="dv">1</span>, annot<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><img src="../../figures/heatmap_usa_housing.png" class="img-fluid" style="width:65.0%"></p>
 <p>More info: <a href="https://seaborn.pydata.org/tutorial/relational.html">seaborn.pydata.org</a></p>
 </section>
 <section id="continuous-vs.-categorical-data" class="level4">
 <h4 class="anchored" data-anchor-id="continuous-vs.-categorical-data">Continuous vs.&nbsp;Categorical data</h4>
 <p><strong>Overlapping histograms</strong> plot the marginal distribution of the continuous distributions, using different colors for each category:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>sns.set_style(<span class="st">'whitegrid'</span>)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>sns.histplot(data<span class="op">=</span>df_USAhousing, x<span class="op">=</span><span class="st">'median_house_value'</span>, hue<span class="op">=</span><span class="st">"ocean_proximity"</span>, element<span class="op">=</span><span class="st">"poly"</span>,  bins<span class="op">=</span><span class="dv">30</span>)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'median value'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>sns.set_style(<span class="st">'whitegrid'</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>sns.histplot(data<span class="op">=</span>df_USAhousing, x<span class="op">=</span><span class="st">'median_house_value'</span>, hue<span class="op">=</span><span class="st">"ocean_proximity"</span>, element<span class="op">=</span><span class="st">"poly"</span>,  bins<span class="op">=</span><span class="dv">30</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'median value'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><img src="../../figures/overlap_hist_usa_housing.png" class="img-fluid" style="width:60.0%"></p>
 <p>Use separate <strong>violin plots</strong> for each of the different categories:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>sns.catplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">"cont_col"</span>, y<span class="op">=</span><span class="st">"cat_col"</span>, hue<span class="op">=</span><span class="st">"binary_col"</span>, kind<span class="op">=</span><span class="st">"violin"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>sns.catplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">"cont_col"</span>, y<span class="op">=</span><span class="st">"cat_col"</span>, hue<span class="op">=</span><span class="st">"binary_col"</span>, kind<span class="op">=</span><span class="st">"violin"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Use <strong>heatmaps</strong> with two categorical feature as x- and y-axis respectively and a continuous attribute as magnitude (“heat”).</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>sns.heatmap(df.pivot(index<span class="op">=</span><span class="st">"cat_col1"</span>, columns<span class="op">=</span><span class="st">"cat_col2"</span>, values<span class="op">=</span><span class="st">"cont_col"</span>), annot<span class="op">=</span><span class="va">True</span>, linewidth<span class="op">=</span><span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>sns.heatmap(df.pivot(index<span class="op">=</span><span class="st">"cat_col1"</span>, columns<span class="op">=</span><span class="st">"cat_col2"</span>, values<span class="op">=</span><span class="st">"cont_col"</span>), annot<span class="op">=</span><span class="va">True</span>, linewidth<span class="op">=</span><span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="categorical-vs-categorical" class="level4">
 <h4 class="anchored" data-anchor-id="categorical-vs-categorical">Categorical vs Categorical</h4>
 <p><strong>Categorical plots</strong> plot the count / percentage of different categorical attributes in side-by-side bar charts</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>sns.catplot(data<span class="op">=</span>df, y<span class="op">=</span><span class="st">"cat_col1"</span>, hue<span class="op">=</span><span class="st">"cat_col2"</span>, kind<span class="op">=</span><span class="st">"bar"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>sns.catplot(data<span class="op">=</span>df, y<span class="op">=</span><span class="st">"cat_col1"</span>, hue<span class="op">=</span><span class="st">"cat_col2"</span>, kind<span class="op">=</span><span class="st">"bar"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>More info: <a href="https://seaborn.pydata.org/tutorial/categorical.html">seaborn.pydata.org</a></p>
 </section>
 </section>
