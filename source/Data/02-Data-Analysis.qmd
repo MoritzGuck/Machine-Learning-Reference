@@ -18,22 +18,22 @@ extract:
 ``` python
 import pandas as pd
 pd.options.display.float_format = '{:,.2f}'.format
-print("First 5 samples:"
+print("First 5 samples:")
 print(df.head())
 print(":.. and last 5 samples:")
 print(df.tail())
 print("First sample per month:")
-print(df_transport.groupby("Month").first())
+print(df.groupby("Month").first())
 # The number of non-null values and the respective data type per column:
 df.info() 
 # The count, uniques, mean, standard deviation, min, max, quartiles per column:
 df.describe(include='all') 
-print("rows: "+ df.shape[0])
-print("columns: "+ df.shape[1])
-print("empty rows: "+ df_transport.isnull().sum())
+print("rows: "+ str(df.shape[0]))
+print("columns: "+ str(df.shape[1]))
+print("empty rows: "+ str(df.isnull().sum()))
 
 # Rarely used:
-train_df["Day"].unique() # returns unique values in a column
+df["col1"].unique() # returns unique values in a column
 ```
 
 ### R
