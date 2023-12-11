@@ -9,8 +9,7 @@
 <meta name="author" content="Moritz Gueck">
 <meta name="dcterms.date" content="2023-12-11">
 
-<title>Machine
-Learning Reference - 15&nbsp; Exploring German LLM Expert Bots</title>
+<title>Machine Learning Reference - Exploring German LLM Expert Bots</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -336,7 +335,7 @@ German LLM Expert Bots</span></span></a>
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#creating-a-grounding-database" id="toc-creating-a-grounding-database" class="nav-link active" data-scroll-target="#creating-a-grounding-database"><span class="header-section-number">15.1</span> 1. Creating a grounding
+  <li><a href="#creating-a-grounding-database" id="toc-creating-a-grounding-database" class="nav-link active" data-scroll-target="#creating-a-grounding-database">1. Creating a grounding
   database</a>
   <ul>
   <li><a href="#gather-the-information" id="toc-gather-the-information" class="nav-link" data-scroll-target="#gather-the-information">1.1. Gather the information</a></li>
@@ -353,8 +352,8 @@ German LLM Expert Bots</span></span></a>
   <li><a href="#store-embeddings-in-a-vector-database" id="toc-store-embeddings-in-a-vector-database" class="nav-link" data-scroll-target="#store-embeddings-in-a-vector-database">1.4. Store embeddings
   in a vector database</a></li>
   </ul></li>
-  <li><a href="#answering-questions-using-the-grounding-database" id="toc-answering-questions-using-the-grounding-database" class="nav-link" data-scroll-target="#answering-questions-using-the-grounding-database"><span class="header-section-number">15.2</span> 2. Answering questions using
-  the grounding database</a>
+  <li><a href="#answering-questions-using-the-grounding-database" id="toc-answering-questions-using-the-grounding-database" class="nav-link" data-scroll-target="#answering-questions-using-the-grounding-database">2. Answering
+  questions using the grounding database</a>
   <ul>
   <li><a href="#the-manual-approach-not-recommended-just-for-understanding" id="toc-the-manual-approach-not-recommended-just-for-understanding" class="nav-link" data-scroll-target="#the-manual-approach-not-recommended-just-for-understanding">2.1.
   The manual approach (not recommended, just for understanding)</a></li>
@@ -375,8 +374,8 @@ German LLM Expert Bots</span></span></a>
   Mistral 7B</a></li>
   </ul></li>
   </ul></li>
-  <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions"><span class="header-section-number">15.3</span> Conclusions</a></li>
-  <li><a href="#outlook" id="toc-outlook" class="nav-link" data-scroll-target="#outlook"><span class="header-section-number">15.4</span> Outlook</a></li>
+  <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions">Conclusions</a></li>
+  <li><a href="#outlook" id="toc-outlook" class="nav-link" data-scroll-target="#outlook">Outlook</a></li>
   </ul>
 </nav>
 </nav>
@@ -472,9 +471,8 @@ search the database for the snippets with the most similar vectors.</li>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(textwrap.fill(text, <span class="dv">120</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<section id="creating-a-grounding-database" class="level2" data-number="15.1">
-<h2 data-number="15.1" class="anchored" data-anchor-id="creating-a-grounding-database"><span class="header-section-number">15.1</span>
-1. Creating a grounding database</h2>
+<section id="creating-a-grounding-database" class="level2">
+<h2 class="anchored" data-anchor-id="creating-a-grounding-database">1. Creating a grounding database</h2>
 <section id="gather-the-information" class="level3">
 <h3 class="anchored" data-anchor-id="gather-the-information">1.1. Gather the information</h3>
 <p>In this step we will load the data that we want our model to answer
@@ -685,9 +683,8 @@ open-source chroma database for this purpose.</p>
 </div>
 </section>
 </section>
-<section id="answering-questions-using-the-grounding-database" class="level2" data-number="15.2">
-<h2 data-number="15.2" class="anchored" data-anchor-id="answering-questions-using-the-grounding-database"><span class="header-section-number">15.2</span>
-2. Answering questions using the grounding database</h2>
+<section id="answering-questions-using-the-grounding-database" class="level2">
+<h2 class="anchored" data-anchor-id="answering-questions-using-the-grounding-database">2. Answering questions using the grounding database</h2>
 <section id="the-manual-approach-not-recommended-just-for-understanding" class="level3">
 <h3 class="anchored" data-anchor-id="the-manual-approach-not-recommended-just-for-understanding">2.1. The manual approach (not recommended, just for
 understanding)</h3>
@@ -985,9 +982,8 @@ feasible to use it in a chatbot on commodity hardware.</p>
 </section>
 </section>
 </section>
-<section id="conclusions" class="level2" data-number="15.3">
-<h2 data-number="15.3" class="anchored" data-anchor-id="conclusions"><span class="header-section-number">15.3</span>
-Conclusions</h2>
+<section id="conclusions" class="level2">
+<h2 class="anchored" data-anchor-id="conclusions">Conclusions</h2>
 <ul>
 <li>Grounding:
 <ul>
@@ -1011,9 +1007,8 @@ dramatically.</li>
 sources easy.</li>
 </ul>
 </section>
-<section id="outlook" class="level2" data-number="15.4">
-<h2 data-number="15.4" class="anchored" data-anchor-id="outlook"><span class="header-section-number">15.4</span>
-Outlook</h2>
+<section id="outlook" class="level2">
+<h2 class="anchored" data-anchor-id="outlook">Outlook</h2>
 <p>Just today Mistral released a new multi-lingual model with very
 impressive reported performance. It’s size is between Mistral 7B and
 LLama2 70B. This might solve our problems: <a href="https://mistral.ai/news/mixtral-of-experts/">Mistral: Mixtral of
