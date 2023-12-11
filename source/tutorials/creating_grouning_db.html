@@ -1,0 +1,1285 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Moritz Gueck">
+<meta name="dcterms.date" content="2023-12-11">
+
+<title>Machine
+Learning Reference - 15&nbsp; Exploring German LLM Expert Bots</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../source/Other/0-Checklists.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../source/tutorials/creating_grouning_db.html">Tutorials</a></li><li class="breadcrumb-item"><a href="../../source/tutorials/creating_grouning_db.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Exploring German LLM Expert Bots</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../../">Machine Learning
+Reference</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/MoritzGuck/Machine-Learning-Reference" rel="" title="" class="quarto-navigation-tool px-1" aria-label="GitHub"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../source/Intro/02-Setup-env.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Setup
+Environment</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Math
+fundamentals</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../source/Maths/00-Statistics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Statistics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../source/Maths/01-Linear-Algebra.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Linear
+Algebra</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">Data</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../source/Data/01-Similarity.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Similarity
+and Distance Measures</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../source/Data/02-Data-Analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data
+Analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../source/Data/03-Preprocessing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Preprocessing data</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../source/Supervised/00-Supervised.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Supervised learning</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../source/Supervised/01-General-methods.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">General
+methods and concepts</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../source/Supervised/02-Classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Classification</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../source/Supervised/03-Regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Regression</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+ <span class="menu-text">Unsupervised
+learning</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../source/Unsupervised/01-Clustering.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Custering
+methods</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../source/Unsupervised/02-lower-dim-mapping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Mapping to
+lower dimensions</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+ <span class="menu-text">Neural
+Networks</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../source/Neural-Networks/0-Neural.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Neural
+Networks</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true">
+ <span class="menu-text">Other</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../source/Other/0-ML_PM.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">ML Project
+Management</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../source/Other/0-Checklists.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Checklists</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true">
+ <span class="menu-text">Tutorials</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../source/tutorials/creating_grouning_db.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Exploring
+German LLM Expert Bots</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+    <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#gather-the-information" id="toc-gather-the-information" class="nav-link active" data-scroll-target="#gather-the-information"><span class="header-section-number">16</span> 1.1. Gather the
+  information</a></li>
+  <li><a href="#cut-the-data-into-snippets" id="toc-cut-the-data-into-snippets" class="nav-link" data-scroll-target="#cut-the-data-into-snippets"><span class="header-section-number">17</span> 1.2. Cut the data into
+  snippets</a>
+  <ul>
+  <li><a href="#minimalist-approach-not-used" id="toc-minimalist-approach-not-used" class="nav-link" data-scroll-target="#minimalist-approach-not-used"><span class="header-section-number">17.1</span> 1.2.1. Minimalist approach
+  (not used)</a></li>
+  <li><a href="#subsection-based-splitting-used" id="toc-subsection-based-splitting-used" class="nav-link" data-scroll-target="#subsection-based-splitting-used"><span class="header-section-number">17.2</span> 1.2.2. Subsection based
+  splitting (used)</a></li>
+  </ul></li>
+  <li><a href="#map-each-snippet-to-a-vector" id="toc-map-each-snippet-to-a-vector" class="nav-link" data-scroll-target="#map-each-snippet-to-a-vector"><span class="header-section-number">18</span> 1.3. Map each snippet to a
+  vector</a></li>
+  <li><a href="#store-embeddings-in-a-vector-database" id="toc-store-embeddings-in-a-vector-database" class="nav-link" data-scroll-target="#store-embeddings-in-a-vector-database"><span class="header-section-number">19</span> 1.4. Store embeddings in a
+  vector database</a></li>
+  <li><a href="#the-manual-approach-not-recommended-just-for-understanding" id="toc-the-manual-approach-not-recommended-just-for-understanding" class="nav-link" data-scroll-target="#the-manual-approach-not-recommended-just-for-understanding"><span class="header-section-number">20</span> 2.1. The manual approach (not
+  recommended, just for understanding)</a>
+  <ul>
+  <li><a href="#given-a-question-map-it-to-a-vector-and-search-the-database" id="toc-given-a-question-map-it-to-a-vector-and-search-the-database" class="nav-link" data-scroll-target="#given-a-question-map-it-to-a-vector-and-search-the-database"><span class="header-section-number">20.1</span> 2.1.1. Given a question, map
+  it to a vector and search the database</a></li>
+  <li><a href="#prepend-the-relevant-snippets-to-your-question" id="toc-prepend-the-relevant-snippets-to-your-question" class="nav-link" data-scroll-target="#prepend-the-relevant-snippets-to-your-question"><span class="header-section-number">20.2</span> 2.1.2. Prepend the relevant
+  snippets to your question</a></li>
+  </ul></li>
+  <li><a href="#the-automated-approach-recommended" id="toc-the-automated-approach-recommended" class="nav-link" data-scroll-target="#the-automated-approach-recommended"><span class="header-section-number">21</span> 2.2. The automated approach
+  (recommended)</a>
+  <ul>
+  <li><a href="#openai-gpt-3.5" id="toc-openai-gpt-3.5" class="nav-link" data-scroll-target="#openai-gpt-3.5"><span class="header-section-number">21.1</span> OpenAI GPT-3.5</a></li>
+  <li><a href="#llama-2-70b" id="toc-llama-2-70b" class="nav-link" data-scroll-target="#llama-2-70b"><span class="header-section-number">21.2</span> LLama-2 70B</a></li>
+  <li><a href="#mistral-7b" id="toc-mistral-7b" class="nav-link" data-scroll-target="#mistral-7b"><span class="header-section-number">21.3</span> Mistral 7B</a></li>
+  <li><a href="#german-mistral-7b" id="toc-german-mistral-7b" class="nav-link" data-scroll-target="#german-mistral-7b"><span class="header-section-number">21.4</span> German Mistral 7B</a></li>
+  </ul></li>
+  <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions"><span class="header-section-number">22</span> Conclusions</a></li>
+  <li><a href="#outlook" id="toc-outlook" class="nav-link" data-scroll-target="#outlook"><span class="header-section-number">23</span> Outlook</a></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Exploring German LLM Expert Bots</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Moritz Gueck </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">December 11, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<p><strong>Goals:</strong></p>
+<ul>
+<li>Knowing how to build an expert bot that can answer questions in
+German based on content that you have in a knowledge base.</li>
+<li>Achieving this by grounding large language models (llms).</li>
+<li>Experiencing the performance and limitations of different
+models.</li>
+</ul>
+<p><strong>What we need:</strong></p>
+<ol type="1">
+<li>A large language model that can answer questions. -&gt; Question
+Answering llm (QA-llm)</li>
+<li>A large language model that can map text to vectors. -&gt;
+Vector-llm</li>
+<li>A database to store the vectors.</li>
+</ol>
+<p>We will be using the framework langchain for grounding and connecting
+to models and sources. You will see that you can switch between sources
+and models very easily.</p>
+<p><strong>How to do it:</strong></p>
+<ol type="1">
+<li>Create a grounding database for your QA-LLM.
+<ol type="1">
+<li>Gather the information you want your QA-llm to answer questions
+about.</li>
+<li>Cut the data into snippets that are small enough to be processed by
+your QA-llm.</li>
+<li>Map each snippet to a vector using your Vector-llm. The vector
+represents the meaning/topic of the snippet.</li>
+<li>Store the vectors in a database.</li>
+</ol></li>
+<li>Answer questions using the grounding database.
+<ol type="1">
+<li>Given a question, map it to a vector using your Vector-llm. Then
+search the database for the snippets with the most similar vectors.</li>
+<li>Prepend the snippet to your question.</li>
+<li>Feed the augmented question to your QA-llm.</li>
+</ol></li>
+</ol>
+<div class="cell" data-execution_count="10">
+<details>
+<summary>Show code: Base libraries to import</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Importing libraries</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> urllib.request, urllib.error, urllib.parse</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> textwrap</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="11">
+<details>
+<summary>Show code: Print results more nicely</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> nice_print(text):</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(textwrap.fill(text, <span class="dv">120</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>1. Creating a grounding database</p>
+<section id="gather-the-information" class="level1" data-number="16">
+<h1 data-number="16"><span class="header-section-number">16</span> 1.1.
+Gather the information</h1>
+<p>In this step we will load the data that we want our model to answer
+questions about. We will use the data from the public, German Helsana
+website (largest health insurance in Switzerland).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> urllib.parse <span class="im">import</span> urlparse</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Required functions for loading the data:</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> download_webpage(url):</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> urllib.request.urlopen(url)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    webContent <span class="op">=</span> response.read().decode(<span class="st">"UTF-8"</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    file_path <span class="op">=</span> <span class="st">"data/html/"</span> <span class="op">+</span> get_page_name(url)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    f <span class="op">=</span> <span class="bu">open</span>(file_path, <span class="st">"w"</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    f.write(webContent)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    f.close</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_page_name(url):</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    parsed_url <span class="op">=</span> urlparse(url)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    page_name <span class="op">=</span> parsed_url.path.split(<span class="st">"/"</span>)[<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> page_name</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="13">
+<details>
+<summary>Show code: Web-pages to crawl</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># List of web-pages where we will find the information for our knowledge base</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>urls <span class="op">=</span> [</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://www.helsana.ch/de/private/versicherungen/grundversicherung.html"</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://www.helsana.ch/de/private/versicherungen/grundversicherung/basis.html"</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://www.helsana.ch/de/private/versicherungen/grundversicherung/benefit-plus-hausarzt.html"</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://www.helsana.ch/de/private/versicherungen/grundversicherung/benefit-plus-telmed.html"</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://www.helsana.ch/de/private/versicherungen/grundversicherung/benefit-plus-flexmed.html"</span>,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://www.helsana.ch/de/private/versicherungen/grundversicherung/premed-24.html"</span>,</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://www.helsana.ch/de/private/versicherungen/zusatzversicherungen.html"</span>,</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://www.helsana.ch/de/private/versicherungen/zusatzversicherungen/ambulant.html"</span>,</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://www.helsana.ch/de/private/versicherungen/grundversicherung/uebersicht-grundversicherungen.html"</span>,</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://www.helsana.ch/de/private/versicherungen/spezialversicherungen.html"</span>,</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://www.helsana.ch/de/private/versicherungen/zusatzversicherungen/ambulant/leistungsuebersicht.html"</span>,</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://www.helsana.ch/de/private/versicherungen/zusatzversicherungen/ambulant/top.html"</span>,</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://www.helsana.ch/de/private/versicherungen/zusatzversicherungen/ambulant/sana.html"</span>,</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://www.helsana.ch/de/private/versicherungen/zusatzversicherungen/ambulant/completa.html"</span>,</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://www.helsana.ch/de/private/versicherungen/zusatzversicherungen/ambulant/world.html"</span>,</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://www.helsana.ch/de/private/versicherungen/zusatzversicherungen/ambulant/primeo.html"</span>,</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://www.helsana.ch/de/private/versicherungen/zusatzversicherungen/spitalversicherung.html"</span>,</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://www.helsana.ch/de/private/versicherungen/zusatzversicherungen/spitalversicherung/hospital-eco.html"</span>,</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://www.helsana.ch/de/private/versicherungen/zusatzversicherungen/spitalversicherung/hospital-halbprivat.html"</span>,</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://www.helsana.ch/de/private/versicherungen/zusatzversicherungen/spitalversicherung/hospital-privat.html"</span>,</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://www.helsana.ch/de/private/versicherungen/zusatzversicherungen/spitalversicherung/hospital-flex.html"</span>,</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://www.helsana.ch/de/private/versicherungen/zusatzversicherungen/zahnversicherung.html"</span>,</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://www.helsana.ch/de/private/versicherungen/zusatzversicherungen/weitere/advocare-plus.html"</span>,</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://www.helsana.ch/de/private/versicherungen/zusatzversicherungen/weitere/advocare-extra.html"</span>,</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Downloading </span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> url <span class="kw">in</span> urls:</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    download_webpage(url)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="cut-the-data-into-snippets" class="level1" data-number="17">
+<h1 data-number="17"><span class="header-section-number">17</span> 1.2.
+Cut the data into snippets</h1>
+<p>Now we need to cut the contents from the page into snippets that are
+small enough to be processed by our QA-llm but large enough to contain
+the relevant context.</p>
+<section id="minimalist-approach-not-used" class="level2" data-number="17.1">
+<h2 data-number="17.1" class="anchored" data-anchor-id="minimalist-approach-not-used"><span class="header-section-number">17.1</span>
+1.2.1. Minimalist approach (not used)</h2>
+<p>This is probably the simplest approach to cut the webpages into
+snippets. Regrettable the Vector-llm had a hard time to reasonably map
+the snippets to meaningful vectors and the QA-llm was not able to answer
+questions based on the snippets.</p>
+<p>Therefore, I did not use this approach, but <strong>used approach
+2.2. instead</strong>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.text_splitter <span class="im">import</span> RecursiveCharacterTextSplitter</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>website_texts <span class="op">=</span> []</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> html_document_path <span class="kw">in</span> os.listdir(<span class="st">"data/html"</span>):</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    soup <span class="op">=</span> BeautifulSoup(</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>        <span class="bu">open</span>(<span class="st">"./data/html/"</span> <span class="op">+</span> html_document_path), features<span class="op">=</span><span class="st">"html.parser"</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    website_text <span class="op">=</span> soup.get_text()</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    text_splitter <span class="op">=</span> RecursiveCharacterTextSplitter(</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>        chunk_size<span class="op">=</span><span class="dv">800</span>,</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>        chunk_overlap<span class="op">=</span><span class="dv">50</span>,</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>        length_function<span class="op">=</span><span class="bu">len</span>,</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>        add_start_index<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    page_texts <span class="op">=</span> text_splitter.create_documents([website_text])</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    website_texts <span class="op">=</span> website_texts <span class="op">+</span> page_texts</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="subsection-based-splitting-used" class="level2" data-number="17.2">
+<h2 data-number="17.2" class="anchored" data-anchor-id="subsection-based-splitting-used"><span class="header-section-number">17.2</span>
+1.2.2. Subsection based splitting (used)</h2>
+<p>To embed the meaning and context clearer, we prepend the title and
+subtile of the relevant snippet to each text.</p>
+<div class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This algorithm might be stupid but it works. :D</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> parse_website_texts(soup):</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""We cut website texts into snippets. The snippets sould be short enough to capture one topic</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">    but long enough to have the relevant context. </span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Args:</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">        soup (BeautifulSoup.soup): Soup object from the Beautiful soup webscraper. </span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">         It contains the different elements of the html-code of the website.</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns:</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co">        : list of lists of strings: List of lists of strings. </span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co">         Each list of strings contains the title, subtitle and text of a snippet.</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    level_dict <span class="op">=</span> {</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">"h1"</span>: <span class="dv">0</span>,</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>        <span class="st">"h2"</span>: <span class="dv">1</span>,</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">"h3"</span>: <span class="dv">2</span>,</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">"p"</span>: <span class="dv">3</span>,</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>        <span class="st">"li"</span>: <span class="dv">3</span>,</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    }  <span class="co"># hierarchical level from html tags</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>    element_list <span class="op">=</span> soup.find_all([<span class="st">"h1"</span>, <span class="st">"h2"</span>, <span class="st">"h3"</span>, <span class="st">"p"</span>, <span class="st">"li"</span>])</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>    prev_level <span class="op">=</span> <span class="dv">9999</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>    webpage_snippet_list <span class="op">=</span> []</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>    snippet_texts_list <span class="op">=</span> []</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Pattern of each snippet: h1-title, h2-subtitle, h3-subsubtitle, paragraph-text:</span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>    base_element_list <span class="op">=</span> [<span class="st">""</span>,<span class="st">""</span>, <span class="st">""</span>, <span class="st">""</span>]  </span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> element <span class="kw">in</span> element_list:</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>        current_level <span class="op">=</span> level_dict[element.name]</span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> current_level <span class="op">&lt;</span> prev_level:  <span class="co"># i.e. we are at a new topic</span></span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>            <span class="co"># save the previous snippet as one string</span></span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>            webpage_string_snip <span class="op">=</span> <span class="st">" "</span>.join(snippet_texts_list)</span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>            webpage_string_snip <span class="op">=</span> webpage_string_snip.replace(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span>, <span class="st">" "</span>)</span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> webpage_string_snip <span class="op">!=</span> <span class="st">""</span>:</span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>                webpage_snippet_list.append(webpage_string_snip)</span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>            <span class="co"># update base_element_list</span></span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>            base_element_list[prev_level:current_level] <span class="op">=</span> <span class="st">""</span></span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>            base_element_list[current_level] <span class="op">=</span> element.text</span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>            snippet_texts_list <span class="op">=</span> base_element_list</span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a>        <span class="co"># update snippet_texts_list</span></span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a>            snippet_texts_list <span class="op">=</span> snippet_texts_list <span class="op">+</span> [element.text]</span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a>        prev_level <span class="op">=</span> current_level</span>
+<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> webpage_snippet_list</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>website_texts <span class="op">=</span> []</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> html_document_path <span class="kw">in</span> os.listdir(<span class="st">"data/html"</span>):</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    soup <span class="op">=</span> BeautifulSoup(</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>        <span class="bu">open</span>(<span class="st">"./data/html/"</span> <span class="op">+</span> html_document_path), features<span class="op">=</span><span class="st">"html.parser"</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    website_texts_page <span class="op">=</span> parse_website_texts(soup)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    website_texts <span class="op">=</span> website_texts <span class="op">+</span> website_texts_page</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now we receive the context (heading and subheadings) for all
+paragraphhs:</p>
+<div class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> text <span class="kw">in</span> random.sample(website_texts, <span class="dv">5</span>):</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Helsana Advocare PLUS Häufig gestellte Fragen    Wer kann diese Versicherung abschliessen?    Sie können die Versicherung abschliessen, wenn Sie folgende Voraussetzungen erfüllen: Sie leben in der Schweiz (offizieller Wohnsitz). Sie haben bereits eine der Zusatzversicherungen TOP, OMNIA oder COMPLETA oder beantragen diese zeitgleich mit Helsana Advocare PLUS.
+SANA Weitere Zusatzversicherungen TOP  Ihr Zusatz zur Grundversicherung: Wichtige ambulante Leistungen sind gedeckt.
+BeneFit PLUS Telmed    Bei gesundheitlichen Problemen rufen Sie immer zuerst das unabhängige Zentrum für Telemedizin an: 0800 800 090. Sie erhalten rund um die Uhr medizinische Unterstützung und einen attraktiven Prämienrabatt.    24/7 kostenlose, verbindliche medizinische Telefonberatung     Digitale Services, wie z. B. Symptom-Checker und Videokonsultation     Attraktiver Prämienrabatt  
+BeneFit PLUS Telmed  Prämie berechnen  Ihre Prämie CHF 0 CHF 500 CHF 300 CHF 500 CHF 1000 CHF 1500 CHF 2000 CHF 2500 eingeschlossen ausgeschlossen
+BeneFit PLUS Flexmed Weitere Modelle der Grundversicherung BeneFit PLUS Hausarzt  Der Hausarzt oder die HMO-Gruppenpraxis ist Ihre erste Anlaufstelle.</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="map-each-snippet-to-a-vector" class="level1" data-number="18">
+<h1 data-number="18"><span class="header-section-number">18</span> 1.3.
+Map each snippet to a vector</h1>
+<p>Here we use another large language model to map each snippet to a
+vector. This vector represents the meaning/topic of the snippet. I used
+the FastEmbed model for practical reasons. However, I would recommend to
+use a more powerful model like this one:
+https://huggingface.co/sentence-transformers/all-mpnet-base-v2</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.embeddings.fastembed <span class="im">import</span> FastEmbedEmbeddings</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Choosing a suitable embedding model can make a big difference in retrieval performance.</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co"># For simplicity, we use the FastEmbedEmbeddings model off-the-shelf.</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>embedder <span class="op">=</span> FastEmbedEmbeddings() </span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Just to show a vector, we embed the first snippet:</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>embeddings <span class="op">=</span> embedder.embed_documents(website_texts[<span class="dv">0</span>])</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(embeddings[<span class="dv">0</span>][<span class="dv">0</span>:<span class="dv">5</span>])  <span class="co"># The first 5 dimensions of the vector</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[-0.013905464671552181, 0.038332026451826096, 0.01669456996023655, 0.010435071773827076, -0.01078716292977333]</code></pre>
+</div>
+</div>
+</section>
+<section id="store-embeddings-in-a-vector-database" class="level1" data-number="19">
+<h1 data-number="19"><span class="header-section-number">19</span> 1.4.
+Store embeddings in a vector database</h1>
+<p>We could just keep the embeddings in memory or store them in a file.
+It is however more efficient to store them in a database. I used the
+open-source chroma database for this purpose.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.vectorstores <span class="im">import</span> Chroma</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>chroma_db <span class="op">=</span> Chroma.from_texts(website_texts, embedder)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>2. Answering questions using the grounding database</p>
+</section>
+<section id="the-manual-approach-not-recommended-just-for-understanding" class="level1" data-number="20">
+<h1 data-number="20"><span class="header-section-number">20</span> 2.1.
+The manual approach (not recommended, just for understanding)</h1>
+<section id="given-a-question-map-it-to-a-vector-and-search-the-database" class="level2" data-number="20.1">
+<h2 data-number="20.1" class="anchored" data-anchor-id="given-a-question-map-it-to-a-vector-and-search-the-database"><span class="header-section-number">20.1</span>
+2.1.1. Given a question, map it to a vector and search the database</h2>
+<p>Now we will use the Vector-llm to map the question to a vector. Then
+we will search the database for the snippets with the most similar
+vectors. These contain the information that we need to answer the
+question.</p>
+<p>First we need a question. Here we ask whether the additional
+insurance model “Completa” of the Helsana health insurance cover the
+costs of glasses.</p>
+<div class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>question <span class="op">=</span> <span class="st">"Sind Kosten für meine Brille von Completa gedeckt?"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now we task the chroma-db to find snippets, which are similar to the
+topic of the question:</p>
+<div class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>n_neighbors <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>similar_docs <span class="op">=</span> chroma_db.similarity_search(question, k<span class="op">=</span>n_neighbors)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> doc <span class="kw">in</span> similar_docs:</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    nice_print(doc.page_content)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>COMPLETA Weitere Zusatzversicherungen COMPLETA PLUS  COMPLETA PLUS erweitert den Deckungsumfang von COMPLETA.
+COMPLETA Häufig gestellte Fragen    Wann lohnt sich ein Upgrade zu COMPLETA PLUS?     COMPLETA PLUS erweitert den
+Deckungsumfang von COMPLETA. Die Zusatzversicherung lohnt sich, wenn Ihnen Leistungen rund um Gesundheitsförderung
+wichtig sind. Sie erhalten unter anderem zusätzliche Kostenbeiträge für Gesundheitsförderung, Komplementärmedizin,
+Prävention sowie für Brillen, Kontaktlinsen und Augenlaserkorrekturen.
+COMPLETA Häufig gestellte Fragen    Lohnt sich ein Upgrade zu COMPLETA, wenn ich bereits TOP oder SANA habe?    Wenn Sie
+gerne möglichst breit abgesichert sind, dann lohnt sich COMPLETA für Sie. Damit schliessen Sie die meisten
+Deckungslücken der Grundversicherung. COMPLETA vereint die Vorteile von TOP und SANA. Besser noch: Viele Vergütungen
+sind noch grosszügiger, beispielsweise für medizinische Hilfsmittel oder Präventionsmassnahmen wie Check-ups. Und für
+Brillen und Kontaktlinsen erhalten Sie gar doppelt so viel Geld erstattet wie mit TOP. Zudem werden Behandlungen im
+Ausland sowie durch Nichtvertragsärzte unterstützt.
+COMPLETA Häufig gestellte Fragen    Wer kann COMPLETA abschliessen?    Sie können die Versicherung abschliessen, wenn
+Sie in der Schweiz wohnhaft sind (offizieller Wohnsitz) und über eine Gesundheitsdeklaration mit positivem
+Aufnahmebescheid verfügen.
+COMPLETA Versicherte Leistungen Prämie berechnen  Nachfolgende Leistungen erstatten wir Ihnen ergänzend zu den
+gesetzlichen Leistungen der Grundversicherung aus der Zusatzversicherung COMPLETA zurück:</code></pre>
+</div>
+</div>
+</section>
+<section id="prepend-the-relevant-snippets-to-your-question" class="level2" data-number="20.2">
+<h2 data-number="20.2" class="anchored" data-anchor-id="prepend-the-relevant-snippets-to-your-question"><span class="header-section-number">20.2</span>
+2.1.2. Prepend the relevant snippets to your question</h2>
+<p>To give our QA-model the information it needs to answer the question,
+we prepend the relevant snippets to the question. Additionally we add
+some instructions to the model to make sure it understands what we want
+from it.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>docs_in_prompt <span class="op">=</span> <span class="st">""</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="bu">id</span>, doc <span class="kw">in</span> <span class="bu">enumerate</span>(similar_docs):</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    docs_in_prompt <span class="op">+=</span> <span class="bu">str</span>(<span class="bu">id</span> <span class="op">+</span> <span class="dv">1</span>) <span class="op">+</span> <span class="st">": "</span> <span class="op">+</span> doc.page_content <span class="op">+</span> <span class="st">"</span><span class="ch">\n</span><span class="st">"</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>context_instruction <span class="op">=</span> <span class="st">"""Du bist ein hilfreicher Assistent. Benutze die Informationen der Helsana Gesundheitsversicherung um die darauf folgende Frage zu beantworten."""</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>augmented_prompt <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>context_instruction<span class="sc">}</span><span class="ss"> </span><span class="ch">\n</span><span class="ss">Die Informationen: </span><span class="sc">{</span>docs_in_prompt<span class="sc">}</span><span class="ss">Frage: </span><span class="sc">{</span>question<span class="sc">}</span><span class="ss"> Assistant:"</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(augmented_prompt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Du bist ein hilfreicher Assistent. Benutze die Informationen der Helsana Gesundheitsversicherung um die darauf folgende Frage zu beantworten. 
+Die Informationen: 1: COMPLETA Weitere Zusatzversicherungen COMPLETA PLUS  COMPLETA PLUS erweitert den Deckungsumfang von COMPLETA. 
+2: COMPLETA Weitere Zusatzversicherungen COMPLETA PLUS  COMPLETA PLUS erweitert den Deckungsumfang von COMPLETA. 
+3: COMPLETA Häufig gestellte Fragen    Wann lohnt sich ein Upgrade zu COMPLETA PLUS?     COMPLETA PLUS erweitert den Deckungsumfang von COMPLETA. Die Zusatzversicherung lohnt sich, wenn Ihnen Leistungen rund um Gesundheitsförderung wichtig sind. Sie erhalten unter anderem zusätzliche Kostenbeiträge für Gesundheitsförderung, Komplementärmedizin, Prävention sowie für Brillen, Kontaktlinsen und Augenlaserkorrekturen.
+4: COMPLETA Häufig gestellte Fragen    Wann lohnt sich ein Upgrade zu COMPLETA PLUS?     COMPLETA PLUS erweitert den Deckungsumfang von COMPLETA. Die Zusatzversicherung lohnt sich, wenn Ihnen Leistungen rund um Gesundheitsförderung wichtig sind. Sie erhalten unter anderem zusätzliche Kostenbeiträge für Gesundheitsförderung, Komplementärmedizin, Prävention sowie für Brillen, Kontaktlinsen und Augenlaserkorrekturen.
+5: COMPLETA Häufig gestellte Fragen    Lohnt sich ein Upgrade zu COMPLETA, wenn ich bereits TOP oder SANA habe?    Wenn Sie gerne möglichst breit abgesichert sind, dann lohnt sich COMPLETA für Sie. Damit schliessen Sie die meisten Deckungslücken der Grundversicherung. COMPLETA vereint die Vorteile von TOP und SANA. Besser noch: Viele Vergütungen sind noch grosszügiger, beispielsweise für medizinische Hilfsmittel oder Präventionsmassnahmen wie Check-ups. Und für Brillen und Kontaktlinsen erhalten Sie gar doppelt so viel Geld erstattet wie mit TOP. Zudem werden Behandlungen im Ausland sowie durch Nichtvertragsärzte unterstützt.
+Frage: Sind Kosten für meine Brille von Completa gedeckt? Assistant:</code></pre>
+</div>
+</div>
+<p>Now we could use this prompt and send it to out QA-llm. But there is
+a better automated way:</p>
+</section>
+</section>
+<section id="the-automated-approach-recommended" class="level1" data-number="21">
+<h1 data-number="21"><span class="header-section-number">21</span> 2.2.
+The automated approach (recommended)</h1>
+<p>Now we will try out different QA-llms to answer the question and see
+which model performs the best.</p>
+<p>We will try:</p>
+<ul>
+<li>OpenAI ChatGPT-3.5</li>
+<li>Llama2 70B</li>
+<li>Mistral 7B and Mistral 7B tuned on German texts</li>
+</ul>
+<section id="openai-gpt-3.5" class="level2" data-number="21.1">
+<h2 data-number="21.1" class="anchored" data-anchor-id="openai-gpt-3.5"><span class="header-section-number">21.1</span>
+OpenAI GPT-3.5</h2>
+<p>Currently one of the strongest but also biggest models. We can only
+run it via an API-request to the OpenAI-Server. You can find advice for
+prompting the model here:
+[https://www.promptingguide.ai/models/chatgpt]</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.chains <span class="im">import</span> RetrievalQA</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.prompts <span class="im">import</span> PromptTemplate</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.llms <span class="im">import</span> OpenAI</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>To use the OpenAI API, you need to register (<a href="https://openai.com/blog/openai-api">OpenAI API</a>) and save the
+API-key as an environment variable:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>opneai_llm <span class="op">=</span> OpenAI(openai_api_key<span class="op">=</span>os.environ[<span class="st">"OPENAI_API_KEY"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Since langchain lets us swap out models easily, we write one
+query-function for all our models:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> query_llm(model, prompt_template):</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    qa_chain <span class="op">=</span> RetrievalQA.from_chain_type(</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>        model,</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>        retriever<span class="op">=</span>chroma_db.as_retriever(</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>            search_type<span class="op">=</span><span class="st">"mmr"</span>, search_kwargs<span class="op">=</span>{<span class="st">"k"</span>: <span class="dv">6</span>, <span class="st">"lambda_mult"</span>: <span class="fl">0.25</span>}</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>        chain_type_kwargs<span class="op">=</span>{<span class="st">"prompt"</span>: prompt_template},</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> qa_chain({<span class="st">"query"</span>: question})</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>    nice_print(response[<span class="st">"result"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now we can write a prompt-template where we can plug-in our question
+and context. As with the manual approach, the QA-model gets our context
+and instructions to answer our question:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>openai_prompt_template <span class="op">=</span> PromptTemplate.from_template(</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"""Du bist ein hilfreicher Assistent der Fragen beantwortet. Benutze die folgenden Stücke von Context zur Helsana um die darauf folgende Frage zu beantworten. Wenn du die Antwort nicht findest, schreibe, dass du es nicht weisst. Benutze maximal drei Sätze und sei präzise beim Antworten.  </span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="st">    ### Frage: </span><span class="sc">{question}</span><span class="st"> </span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="st">    ### Context: </span><span class="sc">{context}</span><span class="st"> </span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="st">    ### Antwort: """</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>query_llm(opneai_llm, openai_prompt_template)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Ja, Kosten für eine Brille von Completa sind gedeckt, sofern die Angaben über die Brillenstärke auf der Rechnung
+ausgewiesen sind.</code></pre>
+</div>
+</div>
+<p>The answer looks pretty correct to me. Only missing is the
+information that the insurance covers the costs up to 300 CHF per
+annum.</p>
+</section>
+<section id="llama-2-70b" class="level2" data-number="21.2">
+<h2 data-number="21.2" class="anchored" data-anchor-id="llama-2-70b"><span class="header-section-number">21.2</span>
+LLama-2 70B</h2>
+<p>This is a large model but still smaller than GPT-3.5. It is still too
+big to run it on our machine. Therefore we will run it in the cloud (in
+our case on [replicate.com]). You can find more info on LLama here: <a href="https://huggingface.co/meta-llama/Llama-2-70b-chat-hf">Hugging
+Face: Llama2</a></p>
+<div class="cell" data-execution_count="69">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>llama_llm <span class="op">=</span> Replicate(</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span><span class="st">"meta/llama-2-70b-chat:02e509c789964a7ea8736978a43525956ef40397be9033abf9fd2badfe68c9e3"</span>,</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    model_kwargs<span class="op">=</span>{<span class="st">"temperature"</span>: <span class="fl">0.75</span>},</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Different models profit from different prompt formats. Thus, we
+create a different template here:</p>
+<div class="cell" data-execution_count="72">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>llama_prompt_template <span class="op">=</span> PromptTemplate.from_template(</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"""[INST] Du bist ein hilfreicher Assistent. Benutze den folgenden Context zur Helsana um die darauf folgende Frage zu beantworten. Wenn du die Antwort nicht findest, schreibe, dass du die Antwort nicht weisst. Benutze maximal drei Sätze und sei präzise beim Antworten. </span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="st">    Frage: </span><span class="sc">{question}</span><span class="st"> </span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="st">    Context: </span><span class="sc">{context}</span><span class="st"> </span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="st">    Antwort:[/INST]"""</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>query_llm(llama_llm, llama_prompt_template)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Ja, die Kosten für Ihre Brille sind von Completa gedeckt. According to the information provided, you will receive 90%
+of the costs up to a maximum of 150 francs per calendar year for your glasses or contact lenses. However, it is
+important to note that there may be a deductible and coinsurance applicable to the coverage. Additionally, if you have
+already exhausted your annual limit for glasses or contact lenses under your TOP policy, you may not be able to claim
+the full amount under Completa. It's always best to check</code></pre>
+</div>
+</div>
+<p>The answer is correct. However it suddenly starts writing in English.
+Let’s try to fix this by using few shot-learning: We will provide it a
+few examples of questions and answers in German.</p>
+<div class="cell" data-execution_count="71">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>llama_prompt_template <span class="op">=</span> PromptTemplate.from_template(</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"""[INST] Du bist ein hilfreicher Assistent. Benutze den folgenden Context zur Helsana um die darauf folgende Frage zu beantworten. Wenn du die Antwort nicht findest, schreibe, dass du die Antwort nicht weisst. Benutze maximal drei Sätze und sei präzise beim Antworten. Antworte ausschliesslich auf Deutsch. Beispiel </span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="st">    Frage: Sind Notfälle im Ausland vom Modell BeneFit PLUS abgedeckt? </span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="st">    Context: Bei einem Notfall erhalten Sie in den EU/EFTA-Staaten den jeweiligen Sozialtarif. In allen übrigen Ländern erstatten wir maximal das Doppelte des in der Schweiz versicherten Betrages. </span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="st">    Antwort:[/INST] Ja, Notfälle im Ausland sind abgedeckt. In nicht-EU/EFTA-Staaten erstatten wir maximal das Doppelte des in der Schweiz versicherten Betrages. [INST]</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="st">    Frage: Ich bin Hospital Privat versichert. Ich hatte einen Unfall und war auf eine Haushaltshilfe angewiesen. Erstattet mir die Helsana die Kosten zurück? </span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="st">    Context: Kann ein akuter stationärer Spital- oder Kuraufenthalt durch eine ärztlich verordnete Haushaltshilfe verhindert oder zumindest verkürzt werden, erhalten Sie bis max. 200 Franken pro Tag während max. 30 Tagen pro Kalenderjahr. </span></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a><span class="st">    Antwort: [/INST] Ja, die Helsana erstattet Ihnen bis zu 200 Franken pro Tag während max. 30 Tagen pro Kalenderjahr.[INST] </span></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a><span class="st">    Frage: </span><span class="sc">{question}</span><span class="st"> </span></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a><span class="st">    Context: </span><span class="sc">{context}</span><span class="st"> </span></span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a><span class="st">    Antwort: [/INST]"""</span></span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>query_llm(llama_llm, llama_prompt_template)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Ja, die Kosten für Ihre Brille sind von Completa gedeckt. Sie erhalten 90% der Kosten bis max. 150 Franken pro
+Kalenderjahr für Ihre Brillengläser und Kontaktlinsen. Wenn Sie jedoch eine Upgrade zu COMPLETA PLUS erwogen, lohnt sich
+dies, da Viele Vergütungen noch grosszügiger sind, wie zum Beispiel für medizinische Hilfsmittel oder
+Präventionsmassnahmen wie Check-ups. Und für Brillen und Kontaktlinsen erhalten Sie</code></pre>
+</div>
+</div>
+<p>This looks already much better. The model gives a correct answer with
+all the relevant context. There is just one wrong word in the answer
+(erwogen). Let’s go one step smaller.</p>
+</section>
+<section id="mistral-7b" class="level2" data-number="21.3">
+<h2 data-number="21.3" class="anchored" data-anchor-id="mistral-7b"><span class="header-section-number">21.3</span>
+Mistral 7B</h2>
+<p>This is a much smaller model than GPT-3.5 but still pretty strong. We
+could run this model on our device, but it is faster to run it in the
+cloud (in our case on replicate.com). More info here: <a href="https://mistral.ai/news/announcing-mistral-7b/">Mistral: Mistral
+7B</a></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.chains <span class="im">import</span> LLMChain</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.llms <span class="im">import</span> Replicate</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.prompts <span class="im">import</span> PromptTemplate</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="85">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>mistral_llm <span class="op">=</span> Replicate(</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span><span class="st">"mistralai/mistral-7b-instruct-v0.1:83b6a56e7c828e667f21fd596c338fd4f0039b46bcfa18d973e8e70e455fda70"</span>,</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>    model_kwargs<span class="op">=</span>{<span class="st">"temperature"</span>: <span class="fl">0.7</span>, <span class="st">"max_length"</span>: <span class="dv">500</span>},</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="86">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>mistral_prompt_template <span class="op">=</span> PromptTemplate.from_template(</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"""[INST] Du bist ein hilfreicher Assistent. Benutze den folgenden Context zur Helsana um die darauf folgende Frage zu beantworten. Wenn du die Antwort nicht findest, schreibe, dass du die Antwort nicht weisst. Benutze maximal drei Sätze und sei präzise beim Antworten. </span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="st">    Frage: </span><span class="sc">{question}</span><span class="st"> </span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="st">    Context: </span><span class="sc">{context}</span><span class="st"> </span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="st">    Antwort:[/INST]"""</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>query_llm(mistral_llm, mistral_prompt_template)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Ihre Brille ist von Completa gedeckt.  Sie erhalten 100% der Kosten für ambulante und stationäre Notfallbehandlungen in
+EU- und EFTA-Ländern sowie Grossbritannien, wobei Sie die schweizerische Kostenbeteiligung (Jahresfranchise und
+Selbstbehalt) selbst tragen müssen.</code></pre>
+</div>
+</div>
+<p>Well, the model found some information but it is not really correct.
+It seems like the model does not understand the question and just
+summarized the facts. Furthermore, the German is not semantically and
+grammatically correct and is mixed with English words.</p>
+<p>Let’s try to improve the prompt with few-shot learning:</p>
+<div class="cell" data-execution_count="61">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>mistral_prompt_template <span class="op">=</span> PromptTemplate.from_template(</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"""&lt;s&gt;[INST] Du bist ein hilfreicher Assistent. Benutze den folgenden Context zur Helsana um die darauf folgende Frage zu beantworten. Wenn du die Antwort nicht findest, schreibe, dass du die Antwort nicht weisst. Benutze maximal drei Sätze und sei präzise beim Antworten. Beispiel </span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="st">    Frage: Sind Notfälle im Ausland vom Modell BeneFit PLUS abgedeckt? </span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="st">    Context: Bei einem Notfall erhalten Sie in den EU/EFTA-Staaten den jeweiligen Sozialtarif. In allen übrigen Ländern erstatten wir maximal das Doppelte des in der Schweiz versicherten Betrages. </span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="st">    Antwort:[/INST] Ja, Notfälle im Ausland sind abgedeckt. In nicht-EU/EFTA-Staaten erstatten wir maximal das Doppelte des in der Schweiz versicherten Betrages. [INST]</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a><span class="st">    Frage: Ich bin Hospital Privat versichert. Ich hatte einen Unfall und war auf eine Haushaltshilfe angewiesen. Erstattet mir die Helsana die Kosten zurück? </span></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="st">    Context: Kann ein akuter stationärer Spital- oder Kuraufenthalt durch eine ärztlich verordnete Haushaltshilfe verhindert oder zumindest verkürzt werden, erhalten Sie bis max. 200 Franken pro Tag während max. 30 Tagen pro Kalenderjahr. </span></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a><span class="st">    Antwort: [/INST] Ja, die Helsana erstattet Ihnen bis zu 200 Franken pro Tag während max. 30 Tagen pro Kalenderjahr. &lt;/s&gt; [INST] </span></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a><span class="st">    Frage: </span><span class="sc">{question}</span><span class="st"> </span></span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a><span class="st">    Context: </span><span class="sc">{context}</span><span class="st"> </span></span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a><span class="st">    Antwort: [/INST]"""</span></span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a>query_llm(mistral_llm, mistral_prompt_template)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Ja, Brillen und Kontaktlinsen von Completa sind von COMPLETA gedeckt. Für Brillengläser und Kontaktlinsen erhalten Sie
+bis zu 90% der Kosten bis zu 150 Franken pro Jahr. Für Kinder und Jugendliche bis 18 Jahre erhalten Sie 180 Franken pro
+Jahr.</code></pre>
+</div>
+</div>
+<p>This answer is already better but still a bit misleading. (And I have
+to admit that I generated a few more incomplete answers.) Let us try to
+use a model that is tuned on German texts.</p>
+</section>
+<section id="german-mistral-7b" class="level2" data-number="21.4">
+<h2 data-number="21.4" class="anchored" data-anchor-id="german-mistral-7b"><span class="header-section-number">21.4</span>
+German Mistral 7B</h2>
+<p>Let us use a version of Mistral that has been tuned for German texts.
+Maybe it will perform better. More info on the model here: <a href="https://huggingface.co/jphme/em_german_leo_mistral">Hugging Face:
+em_german_leo_mistral</a></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.llms <span class="im">import</span> Ollama</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.callbacks.manager <span class="im">import</span> CallbackManager</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.callbacks.streaming_stdout <span class="im">import</span> StreamingStdOutCallbackHandler</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="57">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This time we will run it on our own device:</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>german_mistral_llm <span class="op">=</span> Ollama(</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span><span class="st">"germanleo"</span>,</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>    callback_manager<span class="op">=</span>CallbackManager([StreamingStdOutCallbackHandler()]),</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="65">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>german_mistral_prompt_template <span class="op">=</span> PromptTemplate.from_template(</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"""Du bist ein hilfreicher Assistent. Für die folgende Aufgabe stehen dir zwischen den tags BEGININPUT und ENDINPUT mehrere Quellen zur Verfügung. Die eigentliche Aufgabe oder Frage ist zwischen BEGININSTRUCTION und ENDINCSTRUCTION zu finden. Beantworte diese wortwörtlich mit einem Zitat aus den Quellen. Sollten diese keine Antwort enthalten, antworte, dass auf Basis der gegebenen Informationen keine Antwort möglich ist!</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="st">    BEGININSTRUCTION Sind Notfälle im Ausland vom Modell BeneFit PLUS abgedeckt? ENDINCSTRUCTION BEGININPUT Bei einem Notfall erhalten Sie in den EU/EFTA-Staaten den jeweiligen Sozialtarif. In allen übrigen Ländern erstatten wir maximal das Doppelte des in der Schweiz versicherten Betrages. ENDINPUT </span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="st">    ASSISTANT: "Ja, Notfälle im Ausland sind abgedeckt. In nicht-EU/EFTA-Staaten erstatten wir maximal das Doppelte des in der Schweiz versicherten Betrages."</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="st">    BEGININSTRUCTION Ich bin Hospital Privat versichert. Ich hatte einen Unfall und war auf eine Haushaltshilfe angewiesen. Erstattet mir die Helsana die Kosten zurück? ENDINCSTRUCTION BEGININPUT Kann ein akuter stationärer Spital- oder Kuraufenthalt durch eine ärztlich verordnete Haushaltshilfe verhindert oder zumindest verkürzt werden, erhalten Sie bis max. 200 Franken pro Tag während max. 30 Tagen pro Kalenderjahr. ENDINPUT </span></span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a><span class="st">    ASSISTANT: "Ja, die Helsana erstattet Ihnen bis zu 200 Franken pro Tag während max. 30 Tagen pro Kalenderjahr. Voraussetzung ist eine ärztliche Verordnung." </span></span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a><span class="st">    BEGININSTRUCTION </span><span class="sc">{question}</span><span class="st"> ENDINCSTRUCTION</span></span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a><span class="st">    BEGININPUT </span><span class="sc">{context}</span><span class="st"> ENDINPUT </span></span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a><span class="st">    ASSISTANT: """</span></span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>query_llm(german_mistral_llm, german_mistral_prompt_template)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> "Ja, die Kosten für Ihre Brille von Completa sind gedeckt. Kompleta PLUS erweitert den Deckungsumfang und lohnt sich insbesondere dann, wenn Sie gerne möglichst breit abgesichert sind." "Ja, die Kosten für Ihre Brille von Completa sind gedeckt. Kompleta PLUS erweitert den Deckungsumfang und lohnt sich
+insbesondere dann, wenn Sie gerne möglichst breit abgesichert sind."</code></pre>
+</div>
+</div>
+<p>This looks already a bit better. The answer contains irrelevant
+information and some important information is missing.</p>
+<p>A side-mark: On my device the model took 3:34 minutes to answer the
+questions. So even for a small model like this, it is not really
+feasible to use it in a chatbot on commodity hardware.</p>
+</section>
+</section>
+<section id="conclusions" class="level1" data-number="22">
+<h1 data-number="22"><span class="header-section-number">22</span>
+Conclusions</h1>
+<ul>
+<li>Grounding:
+<ul>
+<li>Grounding your model helps it giving you correct answers to very
+specific questions.</li>
+<li>Formatting the text in a way that the model can understand it is
+crucial.</li>
+</ul></li>
+<li>Larger Models perform better:
+<ul>
+<li>GPT3.5 is better at answering questions off-the-shelf.</li>
+<li>Llama-2 70B is able to answer the questions correctly. However, it
+needs to be tuned on German texts.</li>
+<li>Mistral 7B struggles to answer questions correctly. More effort than
+I took is required.</li>
+</ul></li>
+<li>Different models need different prompt templates.</li>
+<li>With few-shot learning you can improve the quality of the response
+dramatically.</li>
+<li>A high-level framework like langchain makes switching models and
+sources easy.</li>
+</ul>
+</section>
+<section id="outlook" class="level1" data-number="23">
+<h1 data-number="23"><span class="header-section-number">23</span>
+Outlook</h1>
+<p>Just today Mistral released a new multi-lingual model with very
+impressive reported performance. This might solve our problems: <a href="https://mistral.ai/news/mixtral-of-experts/">Mistral: Mixtral of
+experts</a></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          // default icon
+          link.classList.add("external");
+      }
+    }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../source/Other/0-Checklists.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp;
+<span class="chapter-title">Checklists</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>
