@@ -54,6 +54,10 @@ book:
 
 bibliography: references.bib
 
+website:
+  favicon: assets/favicon.png
+
+
 format:
   html:
     theme:
