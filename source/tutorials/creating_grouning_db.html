@@ -336,12 +336,11 @@ German LLM Expert Bots</span></span></a>
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#creating-a-grounding-database" id="toc-creating-a-grounding-database" class="nav-link active" data-scroll-target="#creating-a-grounding-database"><span class="header-section-number">16</span> 1. Creating a grounding
+  <li><a href="#creating-a-grounding-database" id="toc-creating-a-grounding-database" class="nav-link active" data-scroll-target="#creating-a-grounding-database"><span class="header-section-number">15.1</span> 1. Creating a grounding
   database</a>
   <ul>
-  <li><a href="#gather-the-information" id="toc-gather-the-information" class="nav-link" data-scroll-target="#gather-the-information"><span class="header-section-number">16.1</span> 1.1. Gather the
-  information</a></li>
-  <li><a href="#cut-the-data-into-snippets" id="toc-cut-the-data-into-snippets" class="nav-link" data-scroll-target="#cut-the-data-into-snippets"><span class="header-section-number">16.2</span> 1.2. Cut the data into
+  <li><a href="#gather-the-information" id="toc-gather-the-information" class="nav-link" data-scroll-target="#gather-the-information">1.1. Gather the information</a></li>
+  <li><a href="#cut-the-data-into-snippets" id="toc-cut-the-data-into-snippets" class="nav-link" data-scroll-target="#cut-the-data-into-snippets">1.2. Cut the data into
   snippets</a>
   <ul class="collapse">
   <li><a href="#minimalist-approach-not-used" id="toc-minimalist-approach-not-used" class="nav-link" data-scroll-target="#minimalist-approach-not-used">1.2.1. Minimalist approach (not
@@ -349,24 +348,24 @@ German LLM Expert Bots</span></span></a>
   <li><a href="#subsection-based-splitting-used" id="toc-subsection-based-splitting-used" class="nav-link" data-scroll-target="#subsection-based-splitting-used">1.2.2. Subsection based
   splitting (used)</a></li>
   </ul></li>
-  <li><a href="#map-each-snippet-to-a-vector" id="toc-map-each-snippet-to-a-vector" class="nav-link" data-scroll-target="#map-each-snippet-to-a-vector"><span class="header-section-number">16.3</span> 1.3. Map each snippet to a
+  <li><a href="#map-each-snippet-to-a-vector" id="toc-map-each-snippet-to-a-vector" class="nav-link" data-scroll-target="#map-each-snippet-to-a-vector">1.3. Map each snippet to a
   vector</a></li>
-  <li><a href="#store-embeddings-in-a-vector-database" id="toc-store-embeddings-in-a-vector-database" class="nav-link" data-scroll-target="#store-embeddings-in-a-vector-database"><span class="header-section-number">16.4</span> 1.4. Store embeddings in a
-  vector database</a></li>
+  <li><a href="#store-embeddings-in-a-vector-database" id="toc-store-embeddings-in-a-vector-database" class="nav-link" data-scroll-target="#store-embeddings-in-a-vector-database">1.4. Store embeddings
+  in a vector database</a></li>
   </ul></li>
-  <li><a href="#answering-questions-using-the-grounding-database" id="toc-answering-questions-using-the-grounding-database" class="nav-link" data-scroll-target="#answering-questions-using-the-grounding-database"><span class="header-section-number">17</span> 2. Answering questions using
+  <li><a href="#answering-questions-using-the-grounding-database" id="toc-answering-questions-using-the-grounding-database" class="nav-link" data-scroll-target="#answering-questions-using-the-grounding-database"><span class="header-section-number">15.2</span> 2. Answering questions using
   the grounding database</a>
   <ul>
-  <li><a href="#the-manual-approach-not-recommended-just-for-understanding" id="toc-the-manual-approach-not-recommended-just-for-understanding" class="nav-link" data-scroll-target="#the-manual-approach-not-recommended-just-for-understanding"><span class="header-section-number">17.1</span> 2.1. The manual approach
-  (not recommended, just for understanding)</a>
-  <ul class="collapse">
+  <li><a href="#the-manual-approach-not-recommended-just-for-understanding" id="toc-the-manual-approach-not-recommended-just-for-understanding" class="nav-link" data-scroll-target="#the-manual-approach-not-recommended-just-for-understanding">2.1.
+  The manual approach (not recommended, just for understanding)</a></li>
   <li><a href="#given-a-question-map-it-to-a-vector-and-search-the-database" id="toc-given-a-question-map-it-to-a-vector-and-search-the-database" class="nav-link" data-scroll-target="#given-a-question-map-it-to-a-vector-and-search-the-database">2.1.1.
-  Given a question, map it to a vector and search the database</a></li>
+  Given a question, map it to a vector and search the database</a>
+  <ul class="collapse">
   <li><a href="#prepend-the-relevant-snippets-to-your-question" id="toc-prepend-the-relevant-snippets-to-your-question" class="nav-link" data-scroll-target="#prepend-the-relevant-snippets-to-your-question">2.1.2. Prepend
   the relevant snippets to your question</a></li>
   </ul></li>
-  <li><a href="#the-automated-approach-recommended" id="toc-the-automated-approach-recommended" class="nav-link" data-scroll-target="#the-automated-approach-recommended"><span class="header-section-number">17.2</span> 2.2. The automated approach
-  (recommended)</a>
+  <li><a href="#the-automated-approach-recommended" id="toc-the-automated-approach-recommended" class="nav-link" data-scroll-target="#the-automated-approach-recommended">2.2. The automated
+  approach (recommended)</a>
   <ul class="collapse">
   <li><a href="#openai-gpt-3.5" id="toc-openai-gpt-3.5" class="nav-link" data-scroll-target="#openai-gpt-3.5">OpenAI
   GPT-3.5</a></li>
@@ -375,9 +374,9 @@ German LLM Expert Bots</span></span></a>
   <li><a href="#german-mistral-7b" id="toc-german-mistral-7b" class="nav-link" data-scroll-target="#german-mistral-7b">German
   Mistral 7B</a></li>
   </ul></li>
-  <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions"><span class="header-section-number">17.3</span> Conclusions</a></li>
-  <li><a href="#outlook" id="toc-outlook" class="nav-link" data-scroll-target="#outlook"><span class="header-section-number">17.4</span> Outlook</a></li>
   </ul></li>
+  <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions"><span class="header-section-number">15.3</span> Conclusions</a></li>
+  <li><a href="#outlook" id="toc-outlook" class="nav-link" data-scroll-target="#outlook"><span class="header-section-number">15.4</span> Outlook</a></li>
   </ul>
 </nav>
 </nav>
@@ -473,12 +472,11 @@ search the database for the snippets with the most similar vectors.</li>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(textwrap.fill(text, <span class="dv">120</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<section id="creating-a-grounding-database" class="level1" data-number="16">
-<h1 data-number="16"><span class="header-section-number">16</span> 1.
-Creating a grounding database</h1>
-<section id="gather-the-information" class="level2" data-number="16.1">
-<h2 data-number="16.1" class="anchored" data-anchor-id="gather-the-information"><span class="header-section-number">16.1</span>
-1.1. Gather the information</h2>
+<section id="creating-a-grounding-database" class="level2" data-number="15.1">
+<h2 data-number="15.1" class="anchored" data-anchor-id="creating-a-grounding-database"><span class="header-section-number">15.1</span>
+1. Creating a grounding database</h2>
+<section id="gather-the-information" class="level3">
+<h3 class="anchored" data-anchor-id="gather-the-information">1.1. Gather the information</h3>
 <p>In this step we will load the data that we want our model to answer
 questions about. We will use the data from the public, German Helsana
 website (largest health insurance in Switzerland).</p>
@@ -539,14 +537,13 @@ website (largest health insurance in Switzerland).</p>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    download_webpage(url)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="cut-the-data-into-snippets" class="level2" data-number="16.2">
-<h2 data-number="16.2" class="anchored" data-anchor-id="cut-the-data-into-snippets"><span class="header-section-number">16.2</span>
-1.2. Cut the data into snippets</h2>
+<section id="cut-the-data-into-snippets" class="level3">
+<h3 class="anchored" data-anchor-id="cut-the-data-into-snippets">1.2. Cut the data into snippets</h3>
 <p>Now we need to cut the contents from the page into snippets that are
 small enough to be processed by our QA-llm but large enough to contain
 the relevant context.</p>
-<section id="minimalist-approach-not-used" class="level3">
-<h3 class="anchored" data-anchor-id="minimalist-approach-not-used">1.2.1. Minimalist approach (not used)</h3>
+<section id="minimalist-approach-not-used" class="level4">
+<h4 class="anchored" data-anchor-id="minimalist-approach-not-used">1.2.1. Minimalist approach (not used)</h4>
 <p>This is probably the simplest approach to cut the webpages into
 snippets. Regrettable the Vector-llm had a hard time to reasonably map
 the snippets to meaningful vectors and the QA-llm was not able to answer
@@ -575,8 +572,8 @@ questions based on the snippets.</p>
 <span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    website_texts <span class="op">=</span> website_texts <span class="op">+</span> page_texts</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="subsection-based-splitting-used" class="level3">
-<h3 class="anchored" data-anchor-id="subsection-based-splitting-used">1.2.2. Subsection based splitting (used)</h3>
+<section id="subsection-based-splitting-used" class="level4">
+<h4 class="anchored" data-anchor-id="subsection-based-splitting-used">1.2.2. Subsection based splitting (used)</h4>
 <p>To embed the meaning and context clearer, we prepend the title and
 subtile of the relevant snippet to each text.</p>
 <div class="cell" data-execution_count="16">
@@ -652,9 +649,8 @@ BeneFit PLUS Flexmed Weitere Modelle der Grundversicherung BeneFit PLUS Hausarzt
 </div>
 </section>
 </section>
-<section id="map-each-snippet-to-a-vector" class="level2" data-number="16.3">
-<h2 data-number="16.3" class="anchored" data-anchor-id="map-each-snippet-to-a-vector"><span class="header-section-number">16.3</span>
-1.3. Map each snippet to a vector</h2>
+<section id="map-each-snippet-to-a-vector" class="level3">
+<h3 class="anchored" data-anchor-id="map-each-snippet-to-a-vector">1.3. Map each snippet to a vector</h3>
 <p>Here we use another large language model to map each snippet to a
 vector. This vector represents the meaning/topic of the snippet. I used
 the FastEmbed model for practical reasons. However, I would recommend to
@@ -676,9 +672,8 @@ https://huggingface.co/sentence-transformers/all-mpnet-base-v2</p>
 </div>
 </div>
 </section>
-<section id="store-embeddings-in-a-vector-database" class="level2" data-number="16.4">
-<h2 data-number="16.4" class="anchored" data-anchor-id="store-embeddings-in-a-vector-database"><span class="header-section-number">16.4</span>
-1.4. Store embeddings in a vector database</h2>
+<section id="store-embeddings-in-a-vector-database" class="level3">
+<h3 class="anchored" data-anchor-id="store-embeddings-in-a-vector-database">1.4. Store embeddings in a vector database</h3>
 <p>We could just keep the embeddings in memory or store them in a file.
 It is however more efficient to store them in a database. I used the
 open-source chroma database for this purpose.</p>
@@ -690,12 +685,13 @@ open-source chroma database for this purpose.</p>
 </div>
 </section>
 </section>
-<section id="answering-questions-using-the-grounding-database" class="level1" data-number="17">
-<h1 data-number="17"><span class="header-section-number">17</span> 2.
-Answering questions using the grounding database</h1>
-<section id="the-manual-approach-not-recommended-just-for-understanding" class="level2" data-number="17.1">
-<h2 data-number="17.1" class="anchored" data-anchor-id="the-manual-approach-not-recommended-just-for-understanding"><span class="header-section-number">17.1</span>
-2.1. The manual approach (not recommended, just for understanding)</h2>
+<section id="answering-questions-using-the-grounding-database" class="level2" data-number="15.2">
+<h2 data-number="15.2" class="anchored" data-anchor-id="answering-questions-using-the-grounding-database"><span class="header-section-number">15.2</span>
+2. Answering questions using the grounding database</h2>
+<section id="the-manual-approach-not-recommended-just-for-understanding" class="level3">
+<h3 class="anchored" data-anchor-id="the-manual-approach-not-recommended-just-for-understanding">2.1. The manual approach (not recommended, just for
+understanding)</h3>
+</section>
 <section id="given-a-question-map-it-to-a-vector-and-search-the-database" class="level3">
 <h3 class="anchored" data-anchor-id="given-a-question-map-it-to-a-vector-and-search-the-database">2.1.1. Given a question, map it to a vector and search the
 database</h3>
@@ -736,9 +732,8 @@ COMPLETA Versicherte Leistungen Prämie berechnen  Nachfolgende Leistungen ersta
 gesetzlichen Leistungen der Grundversicherung aus der Zusatzversicherung COMPLETA zurück:</code></pre>
 </div>
 </div>
-</section>
-<section id="prepend-the-relevant-snippets-to-your-question" class="level3">
-<h3 class="anchored" data-anchor-id="prepend-the-relevant-snippets-to-your-question">2.1.2. Prepend the relevant snippets to your question</h3>
+<section id="prepend-the-relevant-snippets-to-your-question" class="level4">
+<h4 class="anchored" data-anchor-id="prepend-the-relevant-snippets-to-your-question">2.1.2. Prepend the relevant snippets to your question</h4>
 <p>To give our QA-model the information it needs to answer the question,
 we prepend the relevant snippets to the question. Additionally we add
 some instructions to the model to make sure it understands what we want
@@ -764,9 +759,8 @@ Frage: Sind Kosten für meine Brille von Completa gedeckt? Assistant:</code></pr
 a better automated way:</p>
 </section>
 </section>
-<section id="the-automated-approach-recommended" class="level2" data-number="17.2">
-<h2 data-number="17.2" class="anchored" data-anchor-id="the-automated-approach-recommended"><span class="header-section-number">17.2</span>
-2.2. The automated approach (recommended)</h2>
+<section id="the-automated-approach-recommended" class="level3">
+<h3 class="anchored" data-anchor-id="the-automated-approach-recommended">2.2. The automated approach (recommended)</h3>
 <p>Now we will try out different QA-llms to answer the question and see
 which model performs the best.</p>
 <p>We will try:</p>
@@ -775,8 +769,8 @@ which model performs the best.</p>
 <li>Llama2 70B</li>
 <li>Mistral 7B and Mistral 7B tuned on German texts</li>
 </ul>
-<section id="openai-gpt-3.5" class="level3">
-<h3 class="anchored" data-anchor-id="openai-gpt-3.5">OpenAI GPT-3.5</h3>
+<section id="openai-gpt-3.5" class="level4">
+<h4 class="anchored" data-anchor-id="openai-gpt-3.5">OpenAI GPT-3.5</h4>
 <p>Currently one of the strongest but also biggest models. We can only
 run it via an API-request to the OpenAI-Server. You can find advice for
 prompting the model here:
@@ -826,8 +820,8 @@ ausgewiesen sind.</code></pre>
 information that the insurance covers the costs up to 300 CHF per
 annum.</p>
 </section>
-<section id="llama-2-70b" class="level3">
-<h3 class="anchored" data-anchor-id="llama-2-70b">LLama-2 70B</h3>
+<section id="llama-2-70b" class="level4">
+<h4 class="anchored" data-anchor-id="llama-2-70b">LLama-2 70B</h4>
 <p>This is a large model but still smaller than GPT-3.5. It is still too
 big to run it on our machine. Therefore we will run it in the cloud (in
 our case on [replicate.com]). You can find more info on LLama here: <a href="https://huggingface.co/meta-llama/Llama-2-70b-chat-hf">Hugging
@@ -886,8 +880,8 @@ Präventionsmassnahmen wie Check-ups. Und für Brillen und Kontaktlinsen erhalte
 all the relevant context. There is just one wrong word in the answer
 (erwogen). Let’s go one step smaller.</p>
 </section>
-<section id="mistral-7b" class="level3">
-<h3 class="anchored" data-anchor-id="mistral-7b">Mistral 7B</h3>
+<section id="mistral-7b" class="level4">
+<h4 class="anchored" data-anchor-id="mistral-7b">Mistral 7B</h4>
 <p>This is a much smaller model than GPT-3.5 but still pretty strong. We
 could run this model on our device, but it is faster to run it in the
 cloud (in our case on replicate.com). More info here: <a href="https://mistral.ai/news/announcing-mistral-7b/">Mistral: Mistral
@@ -948,8 +942,8 @@ Jahr.</code></pre>
 to admit that I generated a few more incomplete answers.) Let us try to
 use a model that is tuned on German texts.</p>
 </section>
-<section id="german-mistral-7b" class="level3">
-<h3 class="anchored" data-anchor-id="german-mistral-7b">German Mistral 7B</h3>
+<section id="german-mistral-7b" class="level4">
+<h4 class="anchored" data-anchor-id="german-mistral-7b">German Mistral 7B</h4>
 <p>Let us use a version of Mistral that has been tuned for German texts.
 Maybe it will perform better. More info on the model here: <a href="https://huggingface.co/jphme/em_german_leo_mistral">Hugging Face:
 em_german_leo_mistral</a></p>
@@ -990,8 +984,9 @@ questions. So even for a small model like this, it is not really
 feasible to use it in a chatbot on commodity hardware.</p>
 </section>
 </section>
-<section id="conclusions" class="level2" data-number="17.3">
-<h2 data-number="17.3" class="anchored" data-anchor-id="conclusions"><span class="header-section-number">17.3</span>
+</section>
+<section id="conclusions" class="level2" data-number="15.3">
+<h2 data-number="15.3" class="anchored" data-anchor-id="conclusions"><span class="header-section-number">15.3</span>
 Conclusions</h2>
 <ul>
 <li>Grounding:
@@ -1016,8 +1011,8 @@ dramatically.</li>
 sources easy.</li>
 </ul>
 </section>
-<section id="outlook" class="level2" data-number="17.4">
-<h2 data-number="17.4" class="anchored" data-anchor-id="outlook"><span class="header-section-number">17.4</span>
+<section id="outlook" class="level2" data-number="15.4">
+<h2 data-number="15.4" class="anchored" data-anchor-id="outlook"><span class="header-section-number">15.4</span>
 Outlook</h2>
 <p>Just today Mistral released a new multi-lingual model with very
 impressive reported performance. It’s size is between Mistral 7B and
@@ -1025,7 +1020,6 @@ LLama2 70B. This might solve our problems: <a href="https://mistral.ai/news/mixt
 experts</a></p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
