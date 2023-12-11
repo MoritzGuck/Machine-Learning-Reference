@@ -35,6 +35,9 @@ book:
       chapters:
         - "source/Other/0-ML_PM.qmd"
         - "source/Other/0-Checklists.qmd"
+    - part: "Tutorials"
+      chapters:
+        - "source/tutorials/creating_grouning_db.ipynb"
 
   sidebar:
     search: true
