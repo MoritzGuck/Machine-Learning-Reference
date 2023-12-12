@@ -96,6 +96,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script src="../../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 </head>
@@ -454,6 +457,29 @@ search the database for the snippets with the most similar vectors.</li>
 <li>Feed the augmented question to your QA-llm.</li>
 </ol></li>
 </ol>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+  subgraph SB[build grounding database]
+  A(Data Sources) --&gt;|Load| B(Text-Files)
+  B --&gt;|Chunk| C(Snippets)
+  C --&gt;|vector-map| D[(Vector DB)]
+  end
+  subgraph SU[use grounding database]
+  D --&gt;|retrieve| E(Relevant snippets)
+  E --&gt;|insert| F(Augmented Prompt)
+  F --&gt;|query| G(Result)
+  end
+  style SB fill:#d4ebf2
+  style SU fill:#d4ebf2
+
+</pre>
+</div>
+</div>
+</div>
+</div>
 <div class="cell" data-execution_count="10">
 <details>
 <summary>Show code: Base libraries to import</summary>
