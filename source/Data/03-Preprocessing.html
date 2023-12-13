@@ -319,7 +319,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true">
- <span class="menu-text">Tutorials</span></a>
+ <span class="menu-text">Blog</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -335,64 +335,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
     </ul>
     </div>
-    <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
     <h2 id="toc-title">On this page</h2>
    
-  <ul>
+  <ul class="collapse">
   <li><a href="#joining-merging-separate-tables" id="toc-joining-merging-separate-tables" class="nav-link active" data-scroll-target="#joining-merging-separate-tables"><span class="header-section-number">6.1</span> Joining / merging separate tables</a></li>
-  <li><a href="#missing-wrong-data" id="toc-missing-wrong-data" class="nav-link" data-scroll-target="#missing-wrong-data"><span class="header-section-number">6.2</span> Missing &amp; wrong data</a>
-  <ul>
-  <li><a href="#iterative-imputor-by-sklearn" id="toc-iterative-imputor-by-sklearn" class="nav-link" data-scroll-target="#iterative-imputor-by-sklearn">Iterative imputor by sklearn</a></li>
-  <li><a href="#median-average-imputation" id="toc-median-average-imputation" class="nav-link" data-scroll-target="#median-average-imputation">Median / average imputation</a></li>
-  <li><a href="#deleting-missing-values" id="toc-deleting-missing-values" class="nav-link" data-scroll-target="#deleting-missing-values">Deleting missing values</a></li>
-  <li><a href="#deleting-duplicate-entries" id="toc-deleting-duplicate-entries" class="nav-link" data-scroll-target="#deleting-duplicate-entries">Deleting duplicate entries</a></li>
-  <li><a href="#replacing-data" id="toc-replacing-data" class="nav-link" data-scroll-target="#replacing-data">Replacing data</a></li>
-  <li><a href="#filter-out-data" id="toc-filter-out-data" class="nav-link" data-scroll-target="#filter-out-data">Filter out data</a></li>
-  </ul></li>
-  <li><a href="#continuous-data" id="toc-continuous-data" class="nav-link" data-scroll-target="#continuous-data"><span class="header-section-number">6.3</span> Continuous data</a>
-  <ul>
-  <li><a href="#polynomial-transform" id="toc-polynomial-transform" class="nav-link" data-scroll-target="#polynomial-transform">Polynomial transform</a></li>
-  <li><a href="#reduce-skew" id="toc-reduce-skew" class="nav-link" data-scroll-target="#reduce-skew">Reduce skew</a></li>
-  </ul></li>
-  <li><a href="#categorical-data" id="toc-categorical-data" class="nav-link" data-scroll-target="#categorical-data"><span class="header-section-number">6.4</span> Categorical data</a>
-  <ul>
-  <li><a href="#ordinal-encoding" id="toc-ordinal-encoding" class="nav-link" data-scroll-target="#ordinal-encoding">Ordinal encoding</a></li>
-  <li><a href="#one-hot-encoding" id="toc-one-hot-encoding" class="nav-link" data-scroll-target="#one-hot-encoding">One-hot encoding</a></li>
-  <li><a href="#discretizing-binning-data" id="toc-discretizing-binning-data" class="nav-link" data-scroll-target="#discretizing-binning-data">Discretizing / binning data</a></li>
-  <li><a href="#combining-rare-categories" id="toc-combining-rare-categories" class="nav-link" data-scroll-target="#combining-rare-categories">Combining rare categories</a></li>
-  </ul></li>
+  <li><a href="#missing-wrong-data" id="toc-missing-wrong-data" class="nav-link" data-scroll-target="#missing-wrong-data"><span class="header-section-number">6.2</span> Missing &amp; wrong data</a></li>
+  <li><a href="#continuous-data" id="toc-continuous-data" class="nav-link" data-scroll-target="#continuous-data"><span class="header-section-number">6.3</span> Continuous data</a></li>
+  <li><a href="#categorical-data" id="toc-categorical-data" class="nav-link" data-scroll-target="#categorical-data"><span class="header-section-number">6.4</span> Categorical data</a></li>
   <li><a href="#date--and-time-data" id="toc-date--and-time-data" class="nav-link" data-scroll-target="#date--and-time-data"><span class="header-section-number">6.5</span> Date- and time-data</a></li>
   <li><a href="#graph-representation-of-data" id="toc-graph-representation-of-data" class="nav-link" data-scroll-target="#graph-representation-of-data"><span class="header-section-number">6.6</span> Graph representation of data</a></li>
-  <li><a href="#text-data" id="toc-text-data" class="nav-link" data-scroll-target="#text-data"><span class="header-section-number">6.7</span> Text data</a>
-  <ul>
-  <li><a href="#cleaning-text-data" id="toc-cleaning-text-data" class="nav-link" data-scroll-target="#cleaning-text-data">Cleaning text data</a></li>
-  <li><a href="#tokenization" id="toc-tokenization" class="nav-link" data-scroll-target="#tokenization">Tokenization</a>
-  <ul class="collapse">
-  <li><a href="#word-tokenization" id="toc-word-tokenization" class="nav-link" data-scroll-target="#word-tokenization">Word-Tokenization</a></li>
-  <li><a href="#sentence-tokenization" id="toc-sentence-tokenization" class="nav-link" data-scroll-target="#sentence-tokenization">Sentence Tokenization</a></li>
-  </ul></li>
-  <li><a href="#vectorization" id="toc-vectorization" class="nav-link" data-scroll-target="#vectorization">Vectorization</a>
-  <ul class="collapse">
-  <li><a href="#word-count-encoding" id="toc-word-count-encoding" class="nav-link" data-scroll-target="#word-count-encoding">Word count encoding</a></li>
-  <li><a href="#term-frequency-inverse-document-frequency-tf-idf" id="toc-term-frequency-inverse-document-frequency-tf-idf" class="nav-link" data-scroll-target="#term-frequency-inverse-document-frequency-tf-idf">Term frequency-inverse document frequency (tf-idf)</a></li>
-  </ul></li>
-  <li><a href="#padding" id="toc-padding" class="nav-link" data-scroll-target="#padding">Padding</a></li>
-  <li><a href="#embedding" id="toc-embedding" class="nav-link" data-scroll-target="#embedding">Embedding</a></li>
-  </ul></li>
+  <li><a href="#text-data" id="toc-text-data" class="nav-link" data-scroll-target="#text-data"><span class="header-section-number">6.7</span> Text data</a></li>
   <li><a href="#image-data" id="toc-image-data" class="nav-link" data-scroll-target="#image-data"><span class="header-section-number">6.8</span> Image data</a></li>
   <li><a href="#standardization" id="toc-standardization" class="nav-link" data-scroll-target="#standardization"><span class="header-section-number">7</span> Standardization</a></li>
   <li><a href="#splitting-in-training--and-test-data" id="toc-splitting-in-training--and-test-data" class="nav-link" data-scroll-target="#splitting-in-training--and-test-data"><span class="header-section-number">8</span> Splitting in training- and test-data</a></li>
   <li><a href="#feature-selection" id="toc-feature-selection" class="nav-link" data-scroll-target="#feature-selection"><span class="header-section-number">9</span> Feature selection</a>
-  <ul>
+  <ul class="collapse">
   <li><a href="#a-priori-feature-selection" id="toc-a-priori-feature-selection" class="nav-link" data-scroll-target="#a-priori-feature-selection"><span class="header-section-number">9.1</span> A priori feature selection</a></li>
   <li><a href="#wrapper-methods" id="toc-wrapper-methods" class="nav-link" data-scroll-target="#wrapper-methods"><span class="header-section-number">9.2</span> wrapper methods</a></li>
   </ul></li>
   </ul>
 </nav>
-</nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
-<!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">

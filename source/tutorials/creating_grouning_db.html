@@ -112,7 +112,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../source/tutorials/creating_grouning_db.html">Tutorials</a></li><li class="breadcrumb-item"><a href="../../source/tutorials/creating_grouning_db.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Exploring German LLM Expert Bots</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../source/tutorials/creating_grouning_db.html">Blog</a></li><li class="breadcrumb-item"><a href="../../source/tutorials/creating_grouning_db.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Exploring German LLM Expert Bots</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -317,7 +317,7 @@ Management</span></span></a>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true">
- <span class="menu-text">Tutorials</span></a>
+ <span class="menu-text">Blog</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -334,22 +334,21 @@ German LLM Expert Bots</span></span></a>
   </li>
     </ul>
     </div>
-    <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#creating-a-grounding-database" id="toc-creating-a-grounding-database" class="nav-link active" data-scroll-target="#creating-a-grounding-database">1. Creating a grounding
+  <li><a href="#intro" id="toc-intro" class="nav-link active" data-scroll-target="#intro">Intro</a></li>
+  <li><a href="#creating-a-grounding-database" id="toc-creating-a-grounding-database" class="nav-link" data-scroll-target="#creating-a-grounding-database">1. Creating a grounding
   database</a>
-  <ul>
+  <ul class="collapse">
   <li><a href="#gather-the-information" id="toc-gather-the-information" class="nav-link" data-scroll-target="#gather-the-information">1.1. Gather the information</a></li>
   <li><a href="#cut-the-data-into-snippets" id="toc-cut-the-data-into-snippets" class="nav-link" data-scroll-target="#cut-the-data-into-snippets">1.2. Cut the data into
-  snippets</a>
-  <ul class="collapse">
-  <li><a href="#minimalist-approach-not-used" id="toc-minimalist-approach-not-used" class="nav-link" data-scroll-target="#minimalist-approach-not-used">1.2.1. Minimalist approach (not
-  used)</a></li>
-  <li><a href="#subsection-based-splitting-used" id="toc-subsection-based-splitting-used" class="nav-link" data-scroll-target="#subsection-based-splitting-used">1.2.2. Subsection based
-  splitting (used)</a></li>
-  </ul></li>
+  snippets</a></li>
   <li><a href="#map-each-snippet-to-a-vector" id="toc-map-each-snippet-to-a-vector" class="nav-link" data-scroll-target="#map-each-snippet-to-a-vector">1.3. Map each snippet to a
   vector</a></li>
   <li><a href="#store-embeddings-in-a-vector-database" id="toc-store-embeddings-in-a-vector-database" class="nav-link" data-scroll-target="#store-embeddings-in-a-vector-database">1.4. Store embeddings
@@ -357,34 +356,16 @@ German LLM Expert Bots</span></span></a>
   </ul></li>
   <li><a href="#answering-questions-using-the-grounding-database" id="toc-answering-questions-using-the-grounding-database" class="nav-link" data-scroll-target="#answering-questions-using-the-grounding-database">2. Answering
   questions using the grounding database</a>
-  <ul>
+  <ul class="collapse">
   <li><a href="#the-manual-approach-not-recommended-just-for-understanding" id="toc-the-manual-approach-not-recommended-just-for-understanding" class="nav-link" data-scroll-target="#the-manual-approach-not-recommended-just-for-understanding">2.1.
   The manual approach (not recommended, just for understanding)</a></li>
-  <li><a href="#given-a-question-map-it-to-a-vector-and-search-the-database" id="toc-given-a-question-map-it-to-a-vector-and-search-the-database" class="nav-link" data-scroll-target="#given-a-question-map-it-to-a-vector-and-search-the-database">2.1.1.
-  Given a question, map it to a vector and search the database</a>
-  <ul class="collapse">
-  <li><a href="#prepend-the-relevant-snippets-to-your-question" id="toc-prepend-the-relevant-snippets-to-your-question" class="nav-link" data-scroll-target="#prepend-the-relevant-snippets-to-your-question">2.1.2. Prepend
-  the relevant snippets to your question</a></li>
-  </ul></li>
   <li><a href="#the-automated-approach-recommended" id="toc-the-automated-approach-recommended" class="nav-link" data-scroll-target="#the-automated-approach-recommended">2.2. The automated
-  approach (recommended)</a>
-  <ul class="collapse">
-  <li><a href="#openai-gpt-3.5" id="toc-openai-gpt-3.5" class="nav-link" data-scroll-target="#openai-gpt-3.5">OpenAI
-  GPT-3.5</a></li>
-  <li><a href="#llama-2-70b" id="toc-llama-2-70b" class="nav-link" data-scroll-target="#llama-2-70b">LLama-2 70B</a></li>
-  <li><a href="#mistral-7b" id="toc-mistral-7b" class="nav-link" data-scroll-target="#mistral-7b">Mistral 7B</a></li>
-  <li><a href="#german-mistral-7b" id="toc-german-mistral-7b" class="nav-link" data-scroll-target="#german-mistral-7b">German
-  Mistral 7B</a></li>
-  </ul></li>
+  approach (recommended)</a></li>
   </ul></li>
   <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions">Conclusions</a></li>
   <li><a href="#outlook" id="toc-outlook" class="nav-link" data-scroll-target="#outlook">Outlook</a></li>
   </ul>
 </nav>
-</nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
-<!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -418,28 +399,31 @@ German LLM Expert Bots</span></span></a>
 
 </header>
 
-<p><strong>Goals:</strong></p>
-<ul>
-<li>Knowing how to build an expert bot that can answer questions in
-German based on content that you have in a knowledge base.</li>
-<li>Achieving this by grounding large language models (llms).</li>
-<li>Experiencing the performance and limitations of different
-models.</li>
-</ul>
-<p><strong>What we need:</strong></p>
+<p>In this post we are exploring how we can provide a large language
+model with context information (“grounding”) and have it answer
+questions in German about it. We will then explore how different models
+perform at answering the questions.</p>
+<section id="intro" class="level2">
+<h2 class="anchored" data-anchor-id="intro">Intro</h2>
+<section id="what-we-need" class="level4">
+<h4 class="anchored" data-anchor-id="what-we-need">What we need:</h4>
 <ol type="1">
 <li>A large language model that can answer questions. -&gt; Question
-Answering llm (QA-llm)</li>
+Answering LLM (QA-LLM)</li>
 <li>A large language model that can map text to vectors. -&gt;
-Vector-llm</li>
+Vector-LLM</li>
 <li>A database to store the vectors.</li>
 </ol>
-<p>We will be using the framework langchain for grounding and connecting
-to models and sources. You will see that you can switch between sources
-and models very easily.</p>
-<p><strong>How to do it:</strong></p>
+<p>We will be using the framework Langchain for splitting texts,
+grounding and connecting to models and sources. You will see that you
+can switch between sources and models very easily. Here is a good intro
+to the topic: <a href="https://python.langchain.com/docs/modules/data_connection/">langchain:
+Retrieval</a>.</p>
+</section>
+<section id="how-to-do-it" class="level4">
+<h4 class="anchored" data-anchor-id="how-to-do-it">How to do it:</h4>
 <ol type="1">
-<li>Create a grounding database for your QA-LLM.
+<li><strong>Create a grounding database for your QA-LLM</strong>.
 <ol type="1">
 <li>Gather the information you want your QA-llm to answer questions
 about.</li>
@@ -449,7 +433,7 @@ your QA-llm.</li>
 represents the meaning/topic of the snippet.</li>
 <li>Store the vectors in a database.</li>
 </ol></li>
-<li>Answer questions using the grounding database.
+<li><strong>Answer questions using the grounding database</strong>.
 <ol type="1">
 <li>Given a question, map it to a vector using your Vector-llm. Then
 search the database for the snippets with the most similar vectors.</li>
@@ -461,20 +445,23 @@ search the database for the snippets with the most similar vectors.</li>
 <div class="cell-output-display">
 <div>
 <div>
-<pre class="mermaid mermaid-js">flowchart TD
-  subgraph SB[build grounding database]
+<pre class="mermaid mermaid-js">graph TB
+  subgraph SB["build grounding database"]
   A(Data Sources) --&gt;|Load| B(Text-Files)
   B --&gt;|Chunk| C(Snippets)
-  C --&gt;|vector-map| D[(Vector DB)]
+  C --&gt;|"vector-map (Vector-LLM)"| D[(Vector DB)]
+
   end
-  subgraph SU[use grounding database]
+
+  subgraph SU["use grounding database"]
   D --&gt;|retrieve| E(Relevant snippets)
   E --&gt;|insert| F(Augmented Prompt)
-  F --&gt;|query| G(Result)
+  F --&gt;|"query (QA-LLM)"| G(Result)
   end
-  style SB fill:#d4ebf2
-  style SU fill:#d4ebf2
 
+  style SB fill:#F2F2F2
+  style SU fill:#F2F2F2
+  linkStyle 0,1,2,3,4,5 stroke:#BFBFBF 
 </pre>
 </div>
 </div>
@@ -497,6 +484,8 @@ search the database for the snippets with the most similar vectors.</li>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(textwrap.fill(text, <span class="dv">120</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
+</section>
+</section>
 <section id="creating-a-grounding-database" class="level2">
 <h2 class="anchored" data-anchor-id="creating-a-grounding-database">1. Creating a grounding database</h2>
 <section id="gather-the-information" class="level3">
@@ -569,11 +558,11 @@ the relevant context.</p>
 <section id="minimalist-approach-not-used" class="level4">
 <h4 class="anchored" data-anchor-id="minimalist-approach-not-used">1.2.1. Minimalist approach (not used)</h4>
 <p>This is probably the simplest approach to cut the webpages into
-snippets. Regrettable the Vector-llm had a hard time to reasonably map
-the snippets to meaningful vectors and the QA-llm was not able to answer
+snippets. Regrettably, the vector-LLM had a hard time to reasonably map
+the snippets to meaningful vectors and the QA-LLM was not able to answer
 questions based on the snippets.</p>
 <p>Therefore, I did not use this approach, but <strong>used approach
-2.2. instead</strong>.</p>
+1.2.2. instead</strong>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.text_splitter <span class="im">import</span> RecursiveCharacterTextSplitter</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -601,17 +590,17 @@ questions based on the snippets.</p>
 <p>To embed the meaning and context clearer, we prepend the title and
 subtile of the relevant snippet to each text.</p>
 <div class="cell" data-execution_count="16">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This algorithm might be stupid but it works. :D</span></span>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This algorithm might be stupid but it works. :-D</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> parse_website_texts(soup):</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""We cut website texts into snippets. The snippets sould be short enough to capture one topic</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">    but long enough to have the relevant context. </span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Cut website texts into snippets. </span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Args:</span></span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">        soup (BeautifulSoup.soup): Soup object from the Beautiful soup webscraper. </span></span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">         It contains the different elements of the html-code of the website.</span></span>
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns:</span></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co">        : list of lists of strings: List of lists of strings. </span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co">         Each list of strings contains the title, subtitle and text of a snippet.</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co">        : list(str): List of strings. </span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co">         Each strings contains the title, subtitle and text of a snippet.</span></span>
 <span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
 <span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    level_dict <span class="op">=</span> {</span>
 <span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">"h1"</span>: <span class="dv">0</span>,</span>
@@ -658,8 +647,8 @@ subtile of the relevant snippet to each text.</p>
 <span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    website_texts <span class="op">=</span> website_texts <span class="op">+</span> website_texts_page</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Now we receive the context (heading and subheadings) for all
-paragraphhs:</p>
+<p>Here is an example of the snippets (heading + subheadings +
+paragraphs):</p>
 <div class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> text <span class="kw">in</span> random.sample(website_texts, <span class="dv">5</span>):</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -678,8 +667,7 @@ BeneFit PLUS Flexmed Weitere Modelle der Grundversicherung BeneFit PLUS Hausarzt
 <p>Here we use another large language model to map each snippet to a
 vector. This vector represents the meaning/topic of the snippet. I used
 the FastEmbed model for practical reasons. However, I would recommend to
-use a more powerful model like this one:
-https://huggingface.co/sentence-transformers/all-mpnet-base-v2</p>
+use a more powerful model like this one: <a href="https://huggingface.co/sentence-transformers/all-mpnet-base-v2">https://huggingface.co/sentence-transformers/all-mpnet-base-v2</a></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.embeddings.fastembed <span class="im">import</span> FastEmbedEmbeddings</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -714,10 +702,9 @@ open-source chroma database for this purpose.</p>
 <section id="the-manual-approach-not-recommended-just-for-understanding" class="level3">
 <h3 class="anchored" data-anchor-id="the-manual-approach-not-recommended-just-for-understanding">2.1. The manual approach (not recommended, just for
 understanding)</h3>
-</section>
-<section id="given-a-question-map-it-to-a-vector-and-search-the-database" class="level3">
-<h3 class="anchored" data-anchor-id="given-a-question-map-it-to-a-vector-and-search-the-database">2.1.1. Given a question, map it to a vector and search the
-database</h3>
+<section id="given-a-question-map-it-to-a-vector-and-search-the-database" class="level4">
+<h4 class="anchored" data-anchor-id="given-a-question-map-it-to-a-vector-and-search-the-database">2.1.1. Given a question, map it to a vector and search the
+database</h4>
 <p>Now we will use the Vector-llm to map the question to a vector. Then
 we will search the database for the snippets with the most similar
 vectors. These contain the information that we need to answer the
@@ -755,6 +742,7 @@ COMPLETA Versicherte Leistungen Prämie berechnen  Nachfolgende Leistungen ersta
 gesetzlichen Leistungen der Grundversicherung aus der Zusatzversicherung COMPLETA zurück:</code></pre>
 </div>
 </div>
+</section>
 <section id="prepend-the-relevant-snippets-to-your-question" class="level4">
 <h4 class="anchored" data-anchor-id="prepend-the-relevant-snippets-to-your-question">2.1.2. Prepend the relevant snippets to your question</h4>
 <p>To give our QA-model the information it needs to answer the question,
@@ -796,8 +784,8 @@ which model performs the best.</p>
 <h4 class="anchored" data-anchor-id="openai-gpt-3.5">OpenAI GPT-3.5</h4>
 <p>Currently one of the strongest but also biggest models. We can only
 run it via an API-request to the OpenAI-Server. You can find advice for
-prompting the model here:
-[https://www.promptingguide.ai/models/chatgpt]</p>
+prompting the model here: <a href="https://www.promptingguide.ai/models/chatgpt">Promptingguide.ai:
+chatgpt</a></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.chains <span class="im">import</span> RetrievalQA</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.prompts <span class="im">import</span> PromptTemplate</span>
@@ -847,7 +835,8 @@ annum.</p>
 <h4 class="anchored" data-anchor-id="llama-2-70b">LLama-2 70B</h4>
 <p>This is a large model but still smaller than GPT-3.5. It is still too
 big to run it on our machine. Therefore we will run it in the cloud (in
-our case on [replicate.com]). You can find more info on LLama here: <a href="https://huggingface.co/meta-llama/Llama-2-70b-chat-hf">Hugging
+our case on <a href="https://www.replicate.com">replicate.com</a>). You
+can find more info on LLama here: <a href="https://huggingface.co/meta-llama/Llama-2-70b-chat-hf">Hugging
 Face: Llama2</a></p>
 <div class="cell" data-execution_count="69">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>llama_llm <span class="op">=</span> Replicate(</span>
@@ -920,41 +909,22 @@ cloud (in our case on replicate.com). More info here: <a href="https://mistral.a
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>    model_kwargs<span class="op">=</span>{<span class="st">"temperature"</span>: <span class="fl">0.7</span>, <span class="st">"max_length"</span>: <span class="dv">500</span>},</span>
 <span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="86">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>mistral_prompt_template <span class="op">=</span> PromptTemplate.from_template(</span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"""[INST] Du bist ein hilfreicher Assistent. Benutze den folgenden Context zur Helsana um die darauf folgende Frage zu beantworten. Wenn du die Antwort nicht findest, schreibe, dass du die Antwort nicht weisst. Benutze maximal drei Sätze und sei präzise beim Antworten. </span></span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="st">    Frage: </span><span class="sc">{question}</span><span class="st"> </span></span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="st">    Context: </span><span class="sc">{context}</span><span class="st"> </span></span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="st">    Antwort:[/INST]"""</span></span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>query_llm(mistral_llm, mistral_prompt_template)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Ihre Brille ist von Completa gedeckt.  Sie erhalten 100% der Kosten für ambulante und stationäre Notfallbehandlungen in
-EU- und EFTA-Ländern sowie Grossbritannien, wobei Sie die schweizerische Kostenbeteiligung (Jahresfranchise und
-Selbstbehalt) selbst tragen müssen.</code></pre>
-</div>
-</div>
-<p>Well, the model found some information but it is not really correct.
-It seems like the model does not understand the question and just
-summarized the facts. Furthermore, the German is not semantically and
-grammatically correct and is mixed with English words.</p>
-<p>Let’s try to improve the prompt with few-shot learning:</p>
+<p>Let’s use the few-shot learning approach directly:</p>
 <div class="cell" data-execution_count="61">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>mistral_prompt_template <span class="op">=</span> PromptTemplate.from_template(</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"""&lt;s&gt;[INST] Du bist ein hilfreicher Assistent. Benutze den folgenden Context zur Helsana um die darauf folgende Frage zu beantworten. Wenn du die Antwort nicht findest, schreibe, dass du die Antwort nicht weisst. Benutze maximal drei Sätze und sei präzise beim Antworten. Beispiel </span></span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="st">    Frage: Sind Notfälle im Ausland vom Modell BeneFit PLUS abgedeckt? </span></span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="st">    Context: Bei einem Notfall erhalten Sie in den EU/EFTA-Staaten den jeweiligen Sozialtarif. In allen übrigen Ländern erstatten wir maximal das Doppelte des in der Schweiz versicherten Betrages. </span></span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="st">    Antwort:[/INST] Ja, Notfälle im Ausland sind abgedeckt. In nicht-EU/EFTA-Staaten erstatten wir maximal das Doppelte des in der Schweiz versicherten Betrages. [INST]</span></span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a><span class="st">    Frage: Ich bin Hospital Privat versichert. Ich hatte einen Unfall und war auf eine Haushaltshilfe angewiesen. Erstattet mir die Helsana die Kosten zurück? </span></span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="st">    Context: Kann ein akuter stationärer Spital- oder Kuraufenthalt durch eine ärztlich verordnete Haushaltshilfe verhindert oder zumindest verkürzt werden, erhalten Sie bis max. 200 Franken pro Tag während max. 30 Tagen pro Kalenderjahr. </span></span>
-<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a><span class="st">    Antwort: [/INST] Ja, die Helsana erstattet Ihnen bis zu 200 Franken pro Tag während max. 30 Tagen pro Kalenderjahr. &lt;/s&gt; [INST] </span></span>
-<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a><span class="st">    Frage: </span><span class="sc">{question}</span><span class="st"> </span></span>
-<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a><span class="st">    Context: </span><span class="sc">{context}</span><span class="st"> </span></span>
-<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a><span class="st">    Antwort: [/INST]"""</span></span>
-<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a>query_llm(mistral_llm, mistral_prompt_template)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>mistral_prompt_template <span class="op">=</span> PromptTemplate.from_template(</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"""&lt;s&gt;[INST] Du bist ein hilfreicher Assistent. Benutze den folgenden Context zur Helsana um die darauf folgende Frage zu beantworten. Wenn du die Antwort nicht findest, schreibe, dass du die Antwort nicht weisst. Benutze maximal drei Sätze und sei präzise beim Antworten. Beispiel </span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="st">    Frage: Sind Notfälle im Ausland vom Modell BeneFit PLUS abgedeckt? </span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="st">    Context: Bei einem Notfall erhalten Sie in den EU/EFTA-Staaten den jeweiligen Sozialtarif. In allen übrigen Ländern erstatten wir maximal das Doppelte des in der Schweiz versicherten Betrages. </span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="st">    Antwort:[/INST] Ja, Notfälle im Ausland sind abgedeckt. In nicht-EU/EFTA-Staaten erstatten wir maximal das Doppelte des in der Schweiz versicherten Betrages. [INST]</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="st">    Frage: Ich bin Hospital Privat versichert. Ich hatte einen Unfall und war auf eine Haushaltshilfe angewiesen. Erstattet mir die Helsana die Kosten zurück? </span></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="st">    Context: Kann ein akuter stationärer Spital- oder Kuraufenthalt durch eine ärztlich verordnete Haushaltshilfe verhindert oder zumindest verkürzt werden, erhalten Sie bis max. 200 Franken pro Tag während max. 30 Tagen pro Kalenderjahr. </span></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a><span class="st">    Antwort: [/INST] Ja, die Helsana erstattet Ihnen bis zu 200 Franken pro Tag während max. 30 Tagen pro Kalenderjahr. &lt;/s&gt; [INST] </span></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a><span class="st">    Frage: </span><span class="sc">{question}</span><span class="st"> </span></span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a><span class="st">    Context: </span><span class="sc">{context}</span><span class="st"> </span></span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a><span class="st">    Antwort: [/INST]"""</span></span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a>query_llm(mistral_llm, mistral_prompt_template)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Ja, Brillen und Kontaktlinsen von Completa sind von COMPLETA gedeckt. Für Brillengläser und Kontaktlinsen erhalten Sie
 bis zu 90% der Kosten bis zu 150 Franken pro Jahr. Für Kinder und Jugendliche bis 18 Jahre erhalten Sie 180 Franken pro
@@ -971,30 +941,30 @@ use a model that is tuned on German texts.</p>
 Maybe it will perform better. More info on the model here: <a href="https://huggingface.co/jphme/em_german_leo_mistral">Hugging Face:
 em_german_leo_mistral</a></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.llms <span class="im">import</span> Ollama</span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.callbacks.manager <span class="im">import</span> CallbackManager</span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.callbacks.streaming_stdout <span class="im">import</span> StreamingStdOutCallbackHandler</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.llms <span class="im">import</span> Ollama</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.callbacks.manager <span class="im">import</span> CallbackManager</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.callbacks.streaming_stdout <span class="im">import</span> StreamingStdOutCallbackHandler</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-execution_count="57">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This time we will run it on our own device:</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>german_mistral_llm <span class="op">=</span> Ollama(</span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span><span class="st">"germanleo"</span>,</span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>    callback_manager<span class="op">=</span>CallbackManager([StreamingStdOutCallbackHandler()]),</span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This time we will run it on our own device:</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>german_mistral_llm <span class="op">=</span> Ollama(</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span><span class="st">"germanleo"</span>,</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>    callback_manager<span class="op">=</span>CallbackManager([StreamingStdOutCallbackHandler()]),</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-execution_count="65">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>german_mistral_prompt_template <span class="op">=</span> PromptTemplate.from_template(</span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"""Du bist ein hilfreicher Assistent. Für die folgende Aufgabe stehen dir zwischen den tags BEGININPUT und ENDINPUT mehrere Quellen zur Verfügung. Die eigentliche Aufgabe oder Frage ist zwischen BEGININSTRUCTION und ENDINCSTRUCTION zu finden. Beantworte diese wortwörtlich mit einem Zitat aus den Quellen. Sollten diese keine Antwort enthalten, antworte, dass auf Basis der gegebenen Informationen keine Antwort möglich ist!</span></span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="st">    BEGININSTRUCTION Sind Notfälle im Ausland vom Modell BeneFit PLUS abgedeckt? ENDINCSTRUCTION BEGININPUT Bei einem Notfall erhalten Sie in den EU/EFTA-Staaten den jeweiligen Sozialtarif. In allen übrigen Ländern erstatten wir maximal das Doppelte des in der Schweiz versicherten Betrages. ENDINPUT </span></span>
-<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="st">    ASSISTANT: "Ja, Notfälle im Ausland sind abgedeckt. In nicht-EU/EFTA-Staaten erstatten wir maximal das Doppelte des in der Schweiz versicherten Betrages."</span></span>
-<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="st">    BEGININSTRUCTION Ich bin Hospital Privat versichert. Ich hatte einen Unfall und war auf eine Haushaltshilfe angewiesen. Erstattet mir die Helsana die Kosten zurück? ENDINCSTRUCTION BEGININPUT Kann ein akuter stationärer Spital- oder Kuraufenthalt durch eine ärztlich verordnete Haushaltshilfe verhindert oder zumindest verkürzt werden, erhalten Sie bis max. 200 Franken pro Tag während max. 30 Tagen pro Kalenderjahr. ENDINPUT </span></span>
-<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a><span class="st">    ASSISTANT: "Ja, die Helsana erstattet Ihnen bis zu 200 Franken pro Tag während max. 30 Tagen pro Kalenderjahr. Voraussetzung ist eine ärztliche Verordnung." </span></span>
-<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a><span class="st">    BEGININSTRUCTION </span><span class="sc">{question}</span><span class="st"> ENDINCSTRUCTION</span></span>
-<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a><span class="st">    BEGININPUT </span><span class="sc">{context}</span><span class="st"> ENDINPUT </span></span>
-<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a><span class="st">    ASSISTANT: """</span></span>
-<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>query_llm(german_mistral_llm, german_mistral_prompt_template)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>german_mistral_prompt_template <span class="op">=</span> PromptTemplate.from_template(</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"""Du bist ein hilfreicher Assistent. Für die folgende Aufgabe stehen dir zwischen den tags BEGININPUT und ENDINPUT mehrere Quellen zur Verfügung. Die eigentliche Aufgabe oder Frage ist zwischen BEGININSTRUCTION und ENDINCSTRUCTION zu finden. Beantworte diese wortwörtlich mit einem Zitat aus den Quellen. Sollten diese keine Antwort enthalten, antworte, dass auf Basis der gegebenen Informationen keine Antwort möglich ist!</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="st">    BEGININSTRUCTION Sind Notfälle im Ausland vom Modell BeneFit PLUS abgedeckt? ENDINCSTRUCTION BEGININPUT Bei einem Notfall erhalten Sie in den EU/EFTA-Staaten den jeweiligen Sozialtarif. In allen übrigen Ländern erstatten wir maximal das Doppelte des in der Schweiz versicherten Betrages. ENDINPUT </span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="st">    ASSISTANT: "Ja, Notfälle im Ausland sind abgedeckt. In nicht-EU/EFTA-Staaten erstatten wir maximal das Doppelte des in der Schweiz versicherten Betrages."</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="st">    BEGININSTRUCTION Ich bin Hospital Privat versichert. Ich hatte einen Unfall und war auf eine Haushaltshilfe angewiesen. Erstattet mir die Helsana die Kosten zurück? ENDINCSTRUCTION BEGININPUT Kann ein akuter stationärer Spital- oder Kuraufenthalt durch eine ärztlich verordnete Haushaltshilfe verhindert oder zumindest verkürzt werden, erhalten Sie bis max. 200 Franken pro Tag während max. 30 Tagen pro Kalenderjahr. ENDINPUT </span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a><span class="st">    ASSISTANT: "Ja, die Helsana erstattet Ihnen bis zu 200 Franken pro Tag während max. 30 Tagen pro Kalenderjahr. Voraussetzung ist eine ärztliche Verordnung." </span></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a><span class="st">    BEGININSTRUCTION </span><span class="sc">{question}</span><span class="st"> ENDINCSTRUCTION</span></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a><span class="st">    BEGININPUT </span><span class="sc">{context}</span><span class="st"> ENDINPUT </span></span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a><span class="st">    ASSISTANT: """</span></span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>query_llm(german_mistral_llm, german_mistral_prompt_template)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> "Ja, die Kosten für Ihre Brille von Completa sind gedeckt. Kompleta PLUS erweitert den Deckungsumfang und lohnt sich insbesondere dann, wenn Sie gerne möglichst breit abgesichert sind." "Ja, die Kosten für Ihre Brille von Completa sind gedeckt. Kompleta PLUS erweitert den Deckungsumfang und lohnt sich
 insbesondere dann, wenn Sie gerne möglichst breit abgesichert sind."</code></pre>
@@ -1002,9 +972,11 @@ insbesondere dann, wenn Sie gerne möglichst breit abgesichert sind."</code></pr
 </div>
 <p>This looks already a bit better. The answer contains irrelevant
 information and some important information is missing.</p>
-<p>A side-mark: On my device the model took 3:34 minutes to answer the
-questions. So even for a small model like this, it is not really
-feasible to use it in a chatbot on commodity hardware.</p>
+<p><strong>A side-mark:</strong></p>
+<p>On my device (without using possible optimizations), the model took
+3:34 minutes to answer the questions. So even for a small model like
+this, it is not really feasible to use it in a chatbot on commodity
+hardware.</p>
 </section>
 </section>
 </section>
