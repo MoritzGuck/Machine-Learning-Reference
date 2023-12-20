@@ -364,6 +364,7 @@ German LLM Expert Bots</span></span></a>
   </ul></li>
   <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions">Conclusions</a></li>
   <li><a href="#outlook" id="toc-outlook" class="nav-link" data-scroll-target="#outlook">Outlook</a></li>
+  <li><a href="#acknowledgments" id="toc-acknowledgments" class="nav-link" data-scroll-target="#acknowledgments">Acknowledgments</a></li>
   </ul>
 </nav>
     </div>
@@ -412,12 +413,19 @@ perform at answering the questions.</p>
 Answering LLM (QA-LLM)</li>
 <li>A large language model that can map text to vectors. -&gt;
 Vector-LLM</li>
-<li>A database to store the vectors.</li>
+<li>A database to store the vectors. -&gt; Vector-DB</li>
 </ol>
 <p>We will be using the framework Langchain for splitting texts,
-grounding and connecting to models and sources. You will see that you
-can switch between sources and models very easily. Here is a good intro
-to the topic: <a href="https://python.langchain.com/docs/modules/data_connection/">langchain:
+grounding and connecting to models and sources. Langchain provides us
+with a couple of benefits over specific APIs from different
+providers:</p>
+<ul>
+<li>Standardised interface for different document-loaders, LLMs and
+vector-DBs</li>
+<li>Easy integration of different LLMs into different vector-DBs</li>
+<li>The high level API avoids boilerplate code.</li>
+</ul>
+<p>Here is a good intro to the topic: <a href="https://python.langchain.com/docs/modules/data_connection/">langchain:
 Retrieval</a>.</p>
 </section>
 <section id="how-to-do-it" class="level4">
@@ -558,11 +566,7 @@ the relevant context.</p>
 <section id="minimalist-approach-not-used" class="level4">
 <h4 class="anchored" data-anchor-id="minimalist-approach-not-used">1.2.1. Minimalist approach (not used)</h4>
 <p>This is probably the simplest approach to cut the webpages into
-snippets. Regrettably, the vector-LLM had a hard time to reasonably map
-the snippets to meaningful vectors and the QA-LLM was not able to answer
-questions based on the snippets.</p>
-<p>Therefore, I did not use this approach, but <strong>used approach
-1.2.2. instead</strong>.</p>
+snippets.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.text_splitter <span class="im">import</span> RecursiveCharacterTextSplitter</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -584,6 +588,14 @@ questions based on the snippets.</p>
 <span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    page_texts <span class="op">=</span> text_splitter.create_documents([website_text])</span>
 <span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    website_texts <span class="op">=</span> website_texts <span class="op">+</span> page_texts</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>Regrettably, the vector-LLM had a hard time to reasonably map the
+snippets to meaningful vectors and the QA-LLM was not able to answer
+questions based on the snippets. The reasons were probably, that the
+snippets started in the middle of paragraphs and titles from the
+paragraphs were missing. The QA-LLM then used snippets to answer
+questions from wrong topics.</p>
+<p>Therefore, I did not use this approach, but <strong>used approach
+1.2.2. instead</strong>.</p>
 </section>
 <section id="subsection-based-splitting-used" class="level4">
 <h4 class="anchored" data-anchor-id="subsection-based-splitting-used">1.2.2. Subsection based splitting (used)</h4>
@@ -835,8 +847,8 @@ annum.</p>
 <h4 class="anchored" data-anchor-id="llama-2-70b">LLama-2 70B</h4>
 <p>This is a large model but still smaller than GPT-3.5. It is still too
 big to run it on our machine. Therefore we will run it in the cloud (in
-our case on <a href="https://www.replicate.com">replicate.com</a>). You
-can find more info on LLama here: <a href="https://huggingface.co/meta-llama/Llama-2-70b-chat-hf">Hugging
+our case on an Nvidia A100 GPU on <a href="https://www.replicate.com">replicate.com</a>). You can find more
+info on LLama here: <a href="https://huggingface.co/meta-llama/Llama-2-70b-chat-hf">Hugging
 Face: Llama2</a></p>
 <div class="cell" data-execution_count="69">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>llama_llm <span class="op">=</span> Replicate(</span>
@@ -888,15 +900,17 @@ dies, da Viele Vergütungen noch grosszügiger sind, wie zum Beispiel für mediz
 Präventionsmassnahmen wie Check-ups. Und für Brillen und Kontaktlinsen erhalten Sie</code></pre>
 </div>
 </div>
-<p>This looks already much better. The model gives a correct answer with
-all the relevant context. There is just one wrong word in the answer
-(erwogen). Let’s go one step smaller.</p>
+<p>This looks already much better. For this specific question, the model
+gives a correct answer with all the relevant context. There is just one
+wrong word in the answer (erwogen). Let’s go one step smaller.</p>
 </section>
 <section id="mistral-7b" class="level4">
 <h4 class="anchored" data-anchor-id="mistral-7b">Mistral 7B</h4>
 <p>This is a much smaller model than GPT-3.5 but still pretty strong. We
-could run this model on our device, but it is faster to run it in the
-cloud (in our case on replicate.com). More info here: <a href="https://mistral.ai/news/announcing-mistral-7b/">Mistral: Mistral
+could run this model on a standard notebook (16GB RAM required), but it
+is faster to run it on GPUs in the cloud (in our case on a Nvidia A40
+GPU on replicate.com). Using GPUs generated a speedup of up to 50x in
+our case. More info here: <a href="https://mistral.ai/news/announcing-mistral-7b/">Mistral: Mistral
 7B</a></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.chains <span class="im">import</span> LLMChain</span>
@@ -994,7 +1008,7 @@ crucial.</li>
 <ul>
 <li>GPT3.5 is better at answering questions off-the-shelf.</li>
 <li>Llama-2 70B is able to answer the questions correctly. However, it
-needs to be tuned on German texts.</li>
+struggles to provide correct German texts.</li>
 <li>Mistral 7B struggles to answer questions correctly. More effort than
 I took is required.</li>
 </ul></li>
@@ -1007,10 +1021,33 @@ sources easy.</li>
 </section>
 <section id="outlook" class="level2">
 <h2 class="anchored" data-anchor-id="outlook">Outlook</h2>
-<p>Just today Mistral released a new multi-lingual model with very
+<ul>
+<li><strong>New Models:</strong>
+<ul>
+<li>Just today Mistral released a new multi-lingual model with very
 impressive reported performance. It’s size is between Mistral 7B and
-LLama2 70B. This might solve our problems: <a href="https://mistral.ai/news/mixtral-of-experts/">Mistral: Mixtral of
-experts</a></p>
+LLama2 70B. This might solve our problems with Mistral: <a href="https://mistral.ai/news/mixtral-of-experts/">Mistral: Mixtral of
+experts</a></li>
+<li>There are LLama-Models that have been pretrained on German texts and
+might provide a better performance with our German prompts and
+responses: <a href="https://huggingface.co/TheBloke/llama-2-13B-German-Assistant-v2-GGML">Huggingface:
+LLama2 German Assistant</a></li>
+</ul></li>
+<li><strong>Fine Tuning models:</strong> Since the models from Mistral
+are substantially smaller, they can more easily be retrained
+(fine-tuned) to achieve higher accuracy. Furthermore, parameter tuning
+could help lessening hallucinations of the model (i.e.&nbsp;making things
+up).</li>
+<li><strong>Benchmarking:</strong> To properly evaluate the performance
+of the different approaches (Vector-LLM and QA-LLM), a larger test-set
+and requirements for correct answers would be needed.</li>
+</ul>
+</section>
+<section id="acknowledgments" class="level2">
+<h2 class="anchored" data-anchor-id="acknowledgments">Acknowledgments</h2>
+<p>A special thank you to Moritz Settele and Koen Tersago from
+<em>morrow ventures</em> for their helpful feedback on this
+blog-post.</p>
 
 
 </section>
