@@ -142,7 +142,7 @@ into integers. This can be done by two methods:
 
 An integer is assigned to each category (e.g. "male"=0, "female"=1)
 
-::: {panel-tabset}
+::: {.panel-tabset}
 
 ##### Sklearn
 
@@ -794,9 +794,10 @@ selector.fit_transform(X)
 More info:
 [scikit-learn.org](https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.VarianceThreshold.html#sklearn.feature_selection.VarianceThreshold)
 
-The **Mutual information score** works by choosing the
-features that have the highest dependency between the features and the
-label. {#mutual_info}
+#### Mutual information score {#mutual_info}
+
+works by choosing the features that have the highest dependency between the features and the
+label. 
 
 $$ I(X, Y) 
 \\ = D_{KL} \left( P(X=x, Y=y),
