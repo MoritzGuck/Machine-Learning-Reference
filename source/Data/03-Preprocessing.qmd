@@ -42,10 +42,24 @@ More info:
 
 Simply replace missing values with the median or average of the feature:
 
+::: {.panel-tabset}
+
+##### Pandas
+
 ```python
 import pandas as pd
 df["feature"] = df["feature"].fillna(df["feature"].median())
 ```
+
+##### R
+
+```R
+dataset[, co_i] = ifelse(is.na(dataset[, co_i]), 
+                       ave(dataset[, co_i], FUN = function(x) mean(x, na.rm = TRUE)),
+                       dataset[, co_i])
+```
+
+::: 
 
 #### Deleting missing values
 
@@ -128,6 +142,10 @@ into integers. This can be done by two methods:
 
 An integer is assigned to each category (e.g. "male"=0, "female"=1)
 
+::: {panel-tabset}
+
+##### Sklearn
+
 ```python
 from sklearn.preprocessing import OrdinalEncoder
 ord_enc = OrdinalEncoder(min_frequency=0.05)
@@ -137,6 +155,19 @@ X_transf = ord_enc.transform(X)
 
 More info:
 [scikit-learn.org](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OrdinalEncoder.html#sklearn.preprocessing.OrdinalEncoder)\
+
+##### R
+
+```R
+dataset$col = factor(dataset$col, 
+                      labels=c(1,2,3))
+```
+
+:::
+
+
+
+
 This method is useful when the categories have an ordered relationship
 (e.g. "bad", "medium", "good"). If this is not the case (e.g. "dog",
 "cat", "bunny") this is to be avoided since the algorithm might deduct
@@ -713,6 +744,10 @@ special considerations to the following points:
 -   Conversely, sampling the test- and training-sets randomly to avoid
     introducing bias in the two sets.
 
+::: {.panel-tabset}
+
+##### Sklearn
+
 ```python
 # assuming you already imported the data and separated the label column:
 from sklearn.model_selection import train_test_split
@@ -721,6 +756,19 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random
 
 More info:
 [scikit-learn.org](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html)
+
+##### R
+
+```R
+library(caTools)
+
+set.seed(42)
+split = sample.split(dataset$label_col, SplitRatio = 0.8) # generates a vector with TRUE and FALSE entries
+training_set = subset(dataset, split == TRUE)
+test_set= subset(dataset, split == FALSE)
+```
+
+::: 
 
 ## Feature selection
 
