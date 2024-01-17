@@ -166,8 +166,6 @@ dataset$col = factor(dataset$col,
 :::
 
 
-
-
 This method is useful when the categories have an ordered relationship
 (e.g. "bad", "medium", "good"). If this is not the case (e.g. "dog",
 "cat", "bunny") this is to be avoided since the algorithm might deduct
@@ -176,7 +174,7 @@ one-hot-encoding is to be used.
 
 For **encoding the label** for classification tasks, you can also use the scikit-learn's `LabelEncoder`. More info here: [scikit-learn.org](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html)
 
-#### One-hot encoding
+#### One-hot encoding / dummy variables
 
 One-hot encoding assigns a separate feature-column for each category and
 encodes it binarily (e.g. if the sample is a dog, it has 1 in the
@@ -711,6 +709,10 @@ Many machine learning models assume that the features are centered
 around 0 and that all have a similar variance. Therefore the data has to
 be centered and scaled to unit variance before training and prediction.
 
+::: {.panel-tabset}
+
+##### Sklearn
+
 ```python
 from sklearn.preprocessing import StandardScaler
 scaler = StandardScaler()
@@ -719,6 +721,19 @@ scaler.fit_transform(input_df)
 
 More info:
 [scikit-learn.org](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html)
+
+##### R
+
+```R
+library(caret)
+preProcessor = preProcess(training_set, method = c("center", "scale"))
+train_set_transformed = predict(preProcessor, training_set)
+test_set_transformed = predict(preProcessor, test_set)
+```
+
+More info: [caret documentation: centering and scaling](https://topepo.github.io/caret/pre-processing.html#centering-and-scaling)
+
+:::
 
 Another option for scaling is normalization. This is used, when the
 values have to fall strictly between a max and min value.\
