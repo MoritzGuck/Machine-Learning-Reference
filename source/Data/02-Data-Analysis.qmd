@@ -38,7 +38,6 @@ df["col1"].unique() # returns unique values in a column
 
 ### R
 
-```R
 Specific summary statistic
 : ```R
 sapply(mtcars, mean, na.rm=TRUE) # statistics: mean, sd, var, min, max, median, range, and quantile

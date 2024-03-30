@@ -42,10 +42,24 @@ More info:
 
 Simply replace missing values with the median or average of the feature:
 
+::: {.panel-tabset}
+
+##### Pandas
+
 ```python
 import pandas as pd
 df["feature"] = df["feature"].fillna(df["feature"].median())
 ```
+
+##### R
+
+```R
+dataset[, co_i] = ifelse(is.na(dataset[, co_i]), 
+                       ave(dataset[, co_i], FUN = function(x) mean(x, na.rm = TRUE)),
+                       dataset[, co_i])
+```
+
+::: 
 
 #### Deleting missing values
 
@@ -128,6 +142,10 @@ into integers. This can be done by two methods:
 
 An integer is assigned to each category (e.g. "male"=0, "female"=1)
 
+::: {.panel-tabset}
+
+##### Sklearn
+
 ```python
 from sklearn.preprocessing import OrdinalEncoder
 ord_enc = OrdinalEncoder(min_frequency=0.05)
@@ -137,6 +155,17 @@ X_transf = ord_enc.transform(X)
 
 More info:
 [scikit-learn.org](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OrdinalEncoder.html#sklearn.preprocessing.OrdinalEncoder)\
+
+##### R
+
+```R
+dataset$col = factor(dataset$col, 
+                      labels=c(1,2,3))
+```
+
+:::
+
+
 This method is useful when the categories have an ordered relationship
 (e.g. "bad", "medium", "good"). If this is not the case (e.g. "dog",
 "cat", "bunny") this is to be avoided since the algorithm might deduct
@@ -145,7 +174,7 @@ one-hot-encoding is to be used.
 
 For **encoding the label** for classification tasks, you can also use the scikit-learn's `LabelEncoder`. More info here: [scikit-learn.org](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html)
 
-#### One-hot encoding
+#### One-hot encoding / dummy variables
 
 One-hot encoding assigns a separate feature-column for each category and
 encodes it binarily (e.g. if the sample is a dog, it has 1 in the
@@ -680,6 +709,10 @@ Many machine learning models assume that the features are centered
 around 0 and that all have a similar variance. Therefore the data has to
 be centered and scaled to unit variance before training and prediction.
 
+::: {.panel-tabset}
+
+##### Sklearn
+
 ```python
 from sklearn.preprocessing import StandardScaler
 scaler = StandardScaler()
@@ -688,6 +721,19 @@ scaler.fit_transform(input_df)
 
 More info:
 [scikit-learn.org](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html)
+
+##### R
+
+```R
+library(caret)
+preProcessor = preProcess(training_set, method = c("center", "scale"))
+train_set_transformed = predict(preProcessor, training_set)
+test_set_transformed = predict(preProcessor, test_set)
+```
+
+More info: [caret documentation: centering and scaling](https://topepo.github.io/caret/pre-processing.html#centering-and-scaling)
+
+:::
 
 Another option for scaling is normalization. This is used, when the
 values have to fall strictly between a max and min value.\
@@ -713,6 +759,10 @@ special considerations to the following points:
 -   Conversely, sampling the test- and training-sets randomly to avoid
     introducing bias in the two sets.
 
+::: {.panel-tabset}
+
+##### Sklearn
+
 ```python
 # assuming you already imported the data and separated the label column:
 from sklearn.model_selection import train_test_split
@@ -721,6 +771,19 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random
 
 More info:
 [scikit-learn.org](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html)
+
+##### R
+
+```R
+library(caTools)
+
+set.seed(42)
+split = sample.split(dataset$label_col, SplitRatio = 0.8) # generates a vector with TRUE and FALSE entries
+training_set = subset(dataset, split == TRUE)
+test_set= subset(dataset, split == FALSE)
+```
+
+::: 
 
 ## Feature selection
 
@@ -746,9 +809,10 @@ selector.fit_transform(X)
 More info:
 [scikit-learn.org](https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.VarianceThreshold.html#sklearn.feature_selection.VarianceThreshold)
 
-The **Mutual information score** works by choosing the
-features that have the highest dependency between the features and the
-label. {#mutual_info}
+#### Mutual information score {#mutual_info}
+
+works by choosing the features that have the highest dependency between the features and the
+label. 
 
 $$ I(X, Y) 
 \\ = D_{KL} \left( P(X=x, Y=y),
