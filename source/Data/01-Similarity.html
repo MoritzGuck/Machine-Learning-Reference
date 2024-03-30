@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.552">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -81,7 +81,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -90,6 +96,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -113,6 +120,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
 
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
 </head>
 
 <body class="nav-sidebar floating">
@@ -121,12 +155,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../source/Data/01-Similarity.html">Data</a></li><li class="breadcrumb-item"><a href="../../source/Data/01-Similarity.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Similarity and Distance Measures</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../source/Data/01-Similarity.html">Data</a></li><li class="breadcrumb-item"><a href="../../source/Data/01-Similarity.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Similarity and Distance Measures</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
@@ -136,12 +170,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="../../">Machine Learning Reference</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/MoritzGuck/Machine-Learning-Reference" rel="" title="" class="quarto-navigation-tool px-1" aria-label="GitHub"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/MoritzGuck/Machine-Learning-Reference" title="" class="quarto-navigation-tool px-1" aria-label="GitHub"><i class="bi bi-github"></i></a>
 </div>
     </div>
       </div>
@@ -324,7 +358,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../source/tutorials/creating_grouning_db.html" class="sidebar-item-text sidebar-link">
+  <a href="../../source/tutorials/creating_grounding_db.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Exploring German LLM Expert Bots</span></span></a>
   </div>
 </li>
@@ -333,7 +367,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
@@ -342,14 +376,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#metrics" id="toc-metrics" class="nav-link active" data-scroll-target="#metrics"><span class="header-section-number">4.1</span> Metrics</a></li>
   <li><a href="#similarity-measures-on-vectors" id="toc-similarity-measures-on-vectors" class="nav-link" data-scroll-target="#similarity-measures-on-vectors"><span class="header-section-number">4.2</span> Similarity measures on vectors</a></li>
-  <li><a href="#kernels" id="toc-kernels" class="nav-link" data-scroll-target="#kernels"><span class="header-section-number">4.3</span> Kernels</a></li>
+  <li><a href="#similarity-measures-on-sets-of-objects" id="toc-similarity-measures-on-sets-of-objects" class="nav-link" data-scroll-target="#similarity-measures-on-sets-of-objects"><span class="header-section-number">4.3</span> Similarity measures on sets of objects</a></li>
+  <li><a href="#similarity-measures-on-sets-of-vectors" id="toc-similarity-measures-on-sets-of-vectors" class="nav-link" data-scroll-target="#similarity-measures-on-sets-of-vectors"><span class="header-section-number">4.4</span> Similarity measures on sets of vectors</a></li>
+  <li><a href="#similarity-measures-on-strings" id="toc-similarity-measures-on-strings" class="nav-link" data-scroll-target="#similarity-measures-on-strings"><span class="header-section-number">4.5</span> Similarity measures on strings</a></li>
+  <li><a href="#similarity-measures-for-nodes-in-a-graph" id="toc-similarity-measures-for-nodes-in-a-graph" class="nav-link" data-scroll-target="#similarity-measures-for-nodes-in-a-graph"><span class="header-section-number">4.6</span> Similarity measures for nodes in a Graph</a></li>
+  <li><a href="#similarity-measures-on-graphs" id="toc-similarity-measures-on-graphs" class="nav-link" data-scroll-target="#similarity-measures-on-graphs"><span class="header-section-number">4.7</span> Similarity measures on Graphs</a></li>
+  <li><a href="#similarity-measures-for-time-series" id="toc-similarity-measures-for-time-series" class="nav-link" data-scroll-target="#similarity-measures-for-time-series"><span class="header-section-number">4.8</span> Similarity measures for time series</a></li>
+  <li><a href="#kernels" id="toc-kernels" class="nav-link" data-scroll-target="#kernels"><span class="header-section-number">4.9</span> Kernels</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../source/Data/01-Similarity.html">Data</a></li><li class="breadcrumb-item"><a href="../../source/Data/01-Similarity.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Similarity and Distance Measures</span></a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Similarity and Distance Measures</span></h1>
 </div>
@@ -364,7 +404,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   
 
+
 </header>
+
 
 <p>Choosing the right distance measures is important for achieving good results in statistics, predictions and clusterings.</p>
 <section id="metrics" class="level2" data-number="4.1">
@@ -397,10 +439,10 @@ More info: <a href="https://scikit-learn.org/stable/modules/generated/sklearn.me
 <p>This metric is used for pairs of strings and works equivalently to the Manhattan distance. It is the number of positions that are different between the strings.<br>
 More info at <a href="https://en.wikipedia.org/wiki/Hamming_distance">wikipedia.org</a>.</p>
 </section>
-<section id="euclidian-distance" class="level3">
-<h3 class="anchored" data-anchor-id="euclidian-distance">Euclidian distance</h3>
+<section id="euclidean-distance" class="level3">
+<h3 class="anchored" data-anchor-id="euclidean-distance">Euclidean distance</h3>
 <p><span class="math display">d(A, B) = | A - B | = \sqrt{\sum_{i=1}^d (A_i-B_i)^2} </span></p>
-<p>More info on the euclidian distance on <a href="https://en.wikipedia.org/wiki/Euclidean_distance">wikipedia.org</a>.<br>
+<p>More info on the euclidean distance on <a href="https://en.wikipedia.org/wiki/Euclidean_distance">wikipedia.org</a>.<br>
 The usefulness of this metric can deteriorate in high dimensional spaces. See <a href="https://en.wikipedia.org/wiki/Curse_of_dimensionality#Distance_function">curse of dimensionality</a></p>
 </section>
 <section id="chebyshev-distance" class="level3">
@@ -412,46 +454,114 @@ The usefulness of this metric can deteriorate in high dimensional spaces. See <a
 <section id="minkowski-distance" class="level3">
 <h3 class="anchored" data-anchor-id="minkowski-distance">Minkowski Distance</h3>
 <p><span class="math display">d(A, B) = (\sum_{i=1}^d |A_i-B_i|^p)^\frac{1}{p} </span></p>
-<p>For <span class="math inline">p=2</span> the Minkowski distance is equal to the Euclidian distance, for <span class="math inline">p=1</span> it corresponds to the Manhattan distance and it converges to the Chebyshev distance for <span class="math inline">p \to \infty</span>. &nbsp; More info at <a href="https://en.wikipedia.org/wiki/Minkowski_distance">wikipedia.org</a>.</p>
-<!--# ### Similarity measures on sets of objects
-
-#### Jaccard coefficient
-
-#### Jaccard distance
-
-#### Overlap coefficient
-
-#### Sorensen-Dice coefficient
-
-### Similarity measures on sets of vectors
-
-#### Single link distance function
-
-#### Complete link distance function
-
-#### Average link distance function
-
-### Similarity measures on sets of strings
-
-#### k-mer based similarity measures
-
-### Similartiy measures for nodes in a Graph
-
-#### Shortest path distance
-
-### Similarity measures on Graphs
-
-#### Wiener index
-
-#### Weisfeiler Lehmann Kernel
-
-### Similarty measures for time series
-
-#### Dynamic Time Warping (DTW) distance -->
+<p>For <span class="math inline">p=2</span> the Minkowski distance is equal to the Euclidean distance, for <span class="math inline">p=1</span> it corresponds to the Manhattan distance and it converges to the Chebyshev distance for <span class="math inline">p \to \infty</span>. &nbsp; More info at <a href="https://en.wikipedia.org/wiki/Minkowski_distance">wikipedia.org</a>.</p>
 </section>
 </section>
-<section id="kernels" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="kernels"><span class="header-section-number">4.3</span> Kernels</h2>
+<section id="similarity-measures-on-sets-of-objects" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="similarity-measures-on-sets-of-objects"><span class="header-section-number">4.3</span> Similarity measures on sets of objects</h2>
+<p>These measures compare the similarity of two sets of samples. This can be useful in e.g.&nbsp;recommender systems and market basket analysis.</p>
+<section id="jaccard-coefficient" class="level3">
+<h3 class="anchored" data-anchor-id="jaccard-coefficient">Jaccard coefficient</h3>
+<p><span class="math display"> j(A,B) = {{|A \cap B|}\over{|A \cup B|}} </span></p>
+<p>The Jaccard distance is defined as: <span class="math inline">1 - j(A,B)</span></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> jaccard_score</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>jaccard_score(a_set, b_set)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>More info: <a href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.jaccard_score.html#sklearn.metrics.jaccard_score">scikit-learn.org - jaccard score</a></p>
+</section>
+<section id="overlap-coefficient" class="level3">
+<h3 class="anchored" data-anchor-id="overlap-coefficient">Overlap coefficient</h3>
+<p><span class="math display"> o(A,B) = {{|A \cap B|}\over{\min(|A|, |B|)}} </span></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> confusion_matrix</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>conf_mat <span class="op">=</span> confusion_matrix(a_set, b_set)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>a_intersect_b <span class="op">=</span> conf_mat[<span class="dv">1</span>,<span class="dv">1</span>]</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>overlap_coeff <span class="op">=</span> a_intersect_b <span class="op">/</span> (<span class="bu">min</span>((<span class="bu">sum</span>(a_set), <span class="bu">sum</span>(b_set))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="sorensen-dice-coefficient" class="level3">
+<h3 class="anchored" data-anchor-id="sorensen-dice-coefficient">Sorensen-Dice coefficient</h3>
+<p><span class="math display"> s(A,B) = {{2* |A \cap B|}\over{|A| + |B|}} </span></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> confusion_matrix</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>conf_mat <span class="op">=</span> confusion_matrix(a_set, b_set)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>a_intersect_b <span class="op">=</span> conf_mat[<span class="dv">1</span>,<span class="dv">1</span>]</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>sor_dic_coeff <span class="op">=</span> <span class="dv">2</span><span class="op">*</span> a_intersect_b <span class="op">/</span> ((<span class="bu">sum</span>(a_set) <span class="op">+</span> <span class="bu">sum</span>(b_set)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="similarity-measures-on-sets-of-vectors" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="similarity-measures-on-sets-of-vectors"><span class="header-section-number">4.4</span> Similarity measures on sets of vectors</h2>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> pairwise_distances</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.cluster.hierarchy <span class="im">import</span> linkage</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>X1 <span class="op">=</span> np.array([[<span class="dv">2</span>,<span class="dv">3</span>]])</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>X2 <span class="op">=</span> np.array([[<span class="dv">2</span>,<span class="dv">4</span>]])</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>distanes <span class="op">=</span> pairwise_distances(X1,X2, metric<span class="op">=</span><span class="st">"manhattan"</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>single_link_distance <span class="op">=</span> linkage(distances, <span class="st">'single'</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>complete_link_distance <span class="op">=</span> linkage(distances, <span class="st">'complete'</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>ave_link_distance <span class="op">=</span> linkage(distances, <span class="st">'average'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="single-link-distance-function" class="level3">
+<h3 class="anchored" data-anchor-id="single-link-distance-function">Single link distance function</h3>
+<p><span class="math display">d(A,B) = min_{a \in A, b \in B }  d_{vector}(a,b)</span></p>
+<p>i.e.&nbsp;The distance of the set is defined by the distance of the closest two vectors.</p>
+</section>
+<section id="complete-link-distance-function" class="level3">
+<h3 class="anchored" data-anchor-id="complete-link-distance-function">Complete link distance function</h3>
+<p><span class="math display">d(A,B) = max_{a \in A, b \in B} d_{vector}(a,b)</span></p>
+</section>
+<section id="average-link-distance-function" class="level3">
+<h3 class="anchored" data-anchor-id="average-link-distance-function">Average link distance function</h3>
+<p><span class="math display">d(A,B) = {{1}\over{|A||B|}} \sum_{a \in A} \sum_{b \in B} d_{vector}(a,b)</span></p>
+</section>
+</section>
+<section id="similarity-measures-on-strings" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="similarity-measures-on-strings"><span class="header-section-number">4.5</span> Similarity measures on strings</h2>
+<section id="k-mer-based-similarity-measures" class="level3">
+<h3 class="anchored" data-anchor-id="k-mer-based-similarity-measures">k-mer based similarity measures</h3>
+<p>k-mers are substrings of length k. You represent each string <em>s</em> as a histogram of k-mer frequencies <span class="math inline">h_k(s)</span>. Then you count the number of matching pairs of k-mers in two strings <span class="math inline">s_1</span> and <span class="math inline">s_2</span>.</p>
+<p><font color="grey"></font></p><font color="grey">
+</font></section><font color="grey">
+</font></section><font color="grey">
+<section id="similarity-measures-for-nodes-in-a-graph" class="level2" data-number="4.6">
+<h2 data-number="4.6" class="anchored" data-anchor-id="similarity-measures-for-nodes-in-a-graph"><span class="header-section-number">4.6</span> Similarity measures for nodes in a Graph</h2>
+<p>Context: Your samples are nodes in a graph. Edge weights <span class="math inline">w(i,j)</span> represent distances between nodes <span class="math inline">i</span> and <span class="math inline">j</span>.</p>
+<section id="shortest-path-distance" class="level3">
+<h3 class="anchored" data-anchor-id="shortest-path-distance">Shortest path distance</h3>
+<p>Floyd-Warshall’s algorithm allows to compute a pairs shortest path.</p>
+</section>
+</section>
+</font><section id="similarity-measures-on-graphs" class="level2" data-number="4.7"><font color="grey">
+<h2 data-number="4.7" class="anchored" data-anchor-id="similarity-measures-on-graphs"><span class="header-section-number">4.7</span> Similarity measures on Graphs</h2>
+<p>There are three approaches:</p>
+<ul>
+<li>Graph or subgraph isomorphism test</li>
+<li>Graph edit distance (cost to transform graph 1 into graph 2)</li>
+<li>Map graph topological vectors &amp; compare vector distances</li>
+</ul>
+<section id="wiener-index" class="level3">
+<h3 class="anchored" data-anchor-id="wiener-index">Wiener index</h3>
+<p>… is used to represent <em>one</em> graph.</p>
+<p><span class="math display">w(G) = {{1}\over{|P|}} \sum_{p \in P} l(p)</span></p>
+<p>where G is the graph with vertices v and edges E. P is the set of all shortest paths in G and <span class="math inline">l(p)</span> is the length of path p.</p>
+</section>
+</font><section id="weisfeiler-lehmann-kernel" class="level3"><font color="grey">
+<h3 class="anchored" data-anchor-id="weisfeiler-lehmann-kernel">Weisfeiler-Lehmann Kernel</h3>
+<p>measures similarity between two graphs by creating a vector containing each node of the graph and encodings of each node given by its direct neighbors. You then compare the distance between the two vectors.</p>
+</font><p><font color="grey"></font></p>
+</section>
+</section>
+<section id="similarity-measures-for-time-series" class="level2" data-number="4.8">
+<h2 data-number="4.8" class="anchored" data-anchor-id="similarity-measures-for-time-series"><span class="header-section-number">4.8</span> Similarity measures for time series</h2>
+<p>Problem: we often compare time series of different lengths and time points are not recorded synchronously and in different frequency.</p>
+<section id="dynamic-time-warping-dtw-distance" class="level3">
+<h3 class="anchored" data-anchor-id="dynamic-time-warping-dtw-distance">Dynamic Time Warping (DTW) distance</h3>
+<p>Distance measure that allows for different lengths and intervals. Iterate over each position in <span class="math inline">x</span> and <span class="math inline">x'</span>:</p>
+<p><span class="math display">
+DTW(i,j) = d(x_i, x_j') + \min \begin{cases}
+                DTW(i, j-1), \text{ then repeat } x_i \\
+                DTW(i-1, j), \text{ then repeat } x'_j \\
+                DTW(i-1, j-1), \text{ then repeat neither}
+            \end{cases}
+</span></p>
+</section>
+</section>
+<section id="kernels" class="level2" data-number="4.9">
+<h2 data-number="4.9" class="anchored" data-anchor-id="kernels"><span class="header-section-number">4.9</span> Kernels</h2>
 <p>Kernels are functions that output the relationship between points in your data. They correspond to mapping the data into high-dimensional space and allow to implicitly draw nonlinear decision boundaries with linear models. The <em>kernel trick</em> denotes, that you don’t have to map the points into high dimensional space explicitly.</p>
 <section id="closure-properties-of-kernels" class="level3">
 <h3 class="anchored" data-anchor-id="closure-properties-of-kernels">Closure properties of kernels</h3>
@@ -570,10 +680,34 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
+          // default icon
+          link.classList.add("external");
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -583,8 +717,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -596,7 +739,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -640,6 +906,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -665,6 +932,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -722,37 +1015,22 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       });
     }
   }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-          // target, if specified
-          link.setAttribute("target", "_blank");
-          // default icon
-          link.classList.add("external");
-      }
-    }
 });
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../source/Maths/01-Linear-Algebra.html" class="pagination-link">
+      <a href="../../source/Maths/01-Linear-Algebra.html" class="pagination-link" aria-label="Linear Algebra">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Linear Algebra</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../source/Data/02-Data-Analysis.html" class="pagination-link">
+      <a href="../../source/Data/02-Data-Analysis.html" class="pagination-link" aria-label="Data Analysis">
         <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data Analysis</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
+
 
 
 

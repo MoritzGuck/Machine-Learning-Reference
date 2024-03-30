@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.552">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -81,7 +81,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -90,11 +96,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
 }</script>
+<script src="../../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
   <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
@@ -113,6 +123,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
 
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
 </head>
 
 <body class="nav-sidebar floating">
@@ -121,12 +158,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../source/Neural-Networks/0-Neural.html">Neural Networks</a></li><li class="breadcrumb-item"><a href="../../source/Neural-Networks/0-Neural.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Neural Networks</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../source/Neural-Networks/0-Neural.html">Neural Networks</a></li><li class="breadcrumb-item"><a href="../../source/Neural-Networks/0-Neural.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Neural Networks</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
@@ -136,12 +173,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="../../">Machine Learning Reference</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/MoritzGuck/Machine-Learning-Reference" rel="" title="" class="quarto-navigation-tool px-1" aria-label="GitHub"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/MoritzGuck/Machine-Learning-Reference" title="" class="quarto-navigation-tool px-1" aria-label="GitHub"><i class="bi bi-github"></i></a>
 </div>
     </div>
       </div>
@@ -324,7 +361,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../source/tutorials/creating_grouning_db.html" class="sidebar-item-text sidebar-link">
+  <a href="../../source/tutorials/creating_grounding_db.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Exploring German LLM Expert Bots</span></span></a>
   </div>
 </li>
@@ -333,7 +370,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
@@ -344,8 +381,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#non-linearities" id="toc-non-linearities" class="nav-link" data-scroll-target="#non-linearities"><span class="header-section-number">13.1</span> Non-Linearities</a></li>
   <li><a href="#terminology" id="toc-terminology" class="nav-link" data-scroll-target="#terminology"><span class="header-section-number">13.2</span> Terminology</a></li>
-  <li><a href="#feedforward-neural-network-multi-layer-perceptron" id="toc-feedforward-neural-network-multi-layer-perceptron" class="nav-link" data-scroll-target="#feedforward-neural-network-multi-layer-perceptron"><span class="header-section-number">13.3</span> Feedforward Neural Network / Multi-Layer Perceptron</a></li>
-  <li><a href="#backpropagation" id="toc-backpropagation" class="nav-link" data-scroll-target="#backpropagation"><span class="header-section-number">13.4</span> Backpropagation</a></li>
+  <li><a href="#feed-forward-neural-network-multi-layer-perceptron" id="toc-feed-forward-neural-network-multi-layer-perceptron" class="nav-link" data-scroll-target="#feed-forward-neural-network-multi-layer-perceptron"><span class="header-section-number">13.3</span> Feed-forward Neural Network / Multi-Layer Perceptron</a></li>
+  <li><a href="#back-propagation" id="toc-back-propagation" class="nav-link" data-scroll-target="#back-propagation"><span class="header-section-number">13.4</span> Back-propagation</a></li>
   <li><a href="#initialization" id="toc-initialization" class="nav-link" data-scroll-target="#initialization"><span class="header-section-number">13.5</span> Initialization</a></li>
   </ul></li>
   <li><a href="#types-of-nns" id="toc-types-of-nns" class="nav-link" data-scroll-target="#types-of-nns"><span class="header-section-number">14</span> Types of NNs</a>
@@ -359,6 +396,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#learnig-methods" id="toc-learnig-methods" class="nav-link" data-scroll-target="#learnig-methods"><span class="header-section-number">15</span> Learnig methods</a>
   <ul class="collapse">
   <li><a href="#transfer-learning" id="toc-transfer-learning" class="nav-link" data-scroll-target="#transfer-learning"><span class="header-section-number">15.1</span> Transfer learning</a></li>
+  <li><a href="#meta-learning" id="toc-meta-learning" class="nav-link" data-scroll-target="#meta-learning"><span class="header-section-number">15.2</span> Meta-learning</a></li>
+  <li><a href="#contrastive-learning" id="toc-contrastive-learning" class="nav-link" data-scroll-target="#contrastive-learning"><span class="header-section-number">15.3</span> Contrastive Learning</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -366,7 +405,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../source/Neural-Networks/0-Neural.html">Neural Networks</a></li><li class="breadcrumb-item"><a href="../../source/Neural-Networks/0-Neural.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Neural Networks</span></a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">Neural Networks</h1>
 </div>
@@ -381,7 +420,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   
 
+
 </header>
+
 
 <section id="fundamentals" class="level1" data-number="13">
 <h1 data-number="13"><span class="header-section-number">13</span> Fundamentals</h1>
@@ -391,10 +432,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p><strong>Non-linearity</strong>: <span class="math inline">f(x, \theta)=\sigma(a)</span> (e.g.&nbsp;a sigmoid function for logistic regression, giving you a probability output. <span class="math inline">\theta</span> is a threshold)</p></li>
 </ol>
 <p>The neurons (nodes) in the first layer uses as its input the sample values and feeds its output into the activation function of the next nodes in the next layer, a.s.o. The later layers should thereby learn more and more complicated concepts or structures.</p>
-<div id="CDF" class="quarto-figure quarto-figure-center anchored">
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../figures/Artificial_Neural_Network.jpg" class="img-fluid figure-img" style="width:70.0%"></p>
-<figcaption class="figure-caption">Model of an artificial neural network with one hidden layer. <em>Figure from <a href="https://commons.wikimedia.org/wiki/File:Artificial_Neural_Network.jpg">user LearnDataSci on wikimedia.org</a>.</em></figcaption>
+<figcaption>Model of an artificial neural network with one hidden layer. <em>Figure from <a href="https://commons.wikimedia.org/wiki/File:Artificial_Neural_Network.jpg">user LearnDataSci on wikimedia.org</a>.</em></figcaption>
 </figure>
 </div>
 <p>Explanation on the idea and mechanisms of neural networks: <a href="https://cs231n.github.io/neural-networks-1/">Stanford Computer Vision Class</a></p>
@@ -405,8 +446,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="sigmoidlogistic-functions">Sigmoid/Logistic Functions</h3>
 <p>This activation function is often used in the last layer of NNs for classification (since it scales the output between 0 and 1).</p>
 <p><span class="math display">f(x) = \frac{1}{1+e^{-x}}</span></p>
-<div class="cell" data-execution_count="1">
-<details>
+<div id="6cc6710f" class="cell" data-execution_count="1">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
@@ -425,7 +466,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>Text(0, 0.5, 'f(x)')</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="0-Neural_files/figure-html/cell-2-output-2.png" width="309" height="215"></p>
+<div>
+<figure class="figure">
+<p><img src="0-Neural_files/figure-html/cell-2-output-2.png" width="309" height="215" class="figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <p><strong>Pros:</strong></p>
@@ -436,15 +481,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><strong>Cons:</strong></p>
 <ul>
 <li><p>No saturation / dying neuron / vanishing gradient: When f(x) = 0 or 1, the gradient of f(x) is 0. This blocks back-propagation (see <a href="https://medium.com/analytics-vidhya/comprehensive-synthesis-of-the-main-activation-functions-pros-and-cons-dab105fe4b3b">here</a>)</p></li>
-<li><p>Output not centered around 0: All weight-updates during backpropagation are either positive or negative, leading to zig-zag SGD instead of direct descent to optimum (see <a href="https://rohanvarma.me/inputnormalization/">here</a> or <a href="https://stats.stackexchange.com/questions/237169/why-are-non-zero-centered-activation-functions-a-problem-in-backpropagation">here</a>)</p></li>
+<li><p>Output not centered around 0: All weight-updates during back-propagation are either positive or negative, leading to zig-zag SGD instead of direct descent to optimum (see <a href="https://rohanvarma.me/inputnormalization/">here</a> or <a href="https://stats.stackexchange.com/questions/237169/why-are-non-zero-centered-activation-functions-a-problem-in-backpropagation">here</a>)</p></li>
 <li><p>computationally more expensive than ReLu</p></li>
 </ul>
 </section>
 <section id="tanh-functions" class="level3">
 <h3 class="anchored" data-anchor-id="tanh-functions">Tanh Functions</h3>
 <p><span class="math display"> f(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}} </span></p>
-<div class="cell" data-execution_count="2">
-<details>
+<div id="c2c9d7ef" class="cell" data-execution_count="2">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
@@ -463,7 +508,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>Text(0, 0.5, 'f(x)')</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="0-Neural_files/figure-html/cell-3-output-2.png" width="312" height="215"></p>
+<div>
+<figure class="figure">
+<p><img src="0-Neural_files/figure-html/cell-3-output-2.png" width="312" height="215" class="figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <p><strong>Pros:</strong></p>
@@ -479,8 +528,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="rectifiersrelu" class="level3">
 <h3 class="anchored" data-anchor-id="rectifiersrelu">Rectifiers/ReLU</h3>
 <p><span class="math display">f(x) = \max(0,x)</span></p>
-<div class="cell" data-execution_count="3">
-<details>
+<div id="20dd7182" class="cell" data-execution_count="3">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
@@ -499,7 +548,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>Text(0, 0.5, 'f(x)')</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="0-Neural_files/figure-html/cell-4-output-2.png" width="285" height="216"></p>
+<div>
+<figure class="figure">
+<p><img src="0-Neural_files/figure-html/cell-4-output-2.png" width="285" height="216" class="figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <p><strong>Pros:</strong></p>
@@ -520,8 +573,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         x \text{ if } x \ge 0
         \end{cases}
 </span></p>
-<div class="cell" data-execution_count="4">
-<details>
+<div id="fdf67fe8" class="cell" data-execution_count="4">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
@@ -541,7 +594,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>Text(0, 0.5, 'f(x)')</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="0-Neural_files/figure-html/cell-5-output-2.png" width="285" height="215"></p>
+<div>
+<figure class="figure">
+<p><img src="0-Neural_files/figure-html/cell-5-output-2.png" width="285" height="215" class="figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <p><strong>Pros:</strong></p>
@@ -565,8 +622,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p><strong>Architecture:</strong> The arrangement of layers and nodes in the network</p></li>
 </ul>
 </section>
-<section id="feedforward-neural-network-multi-layer-perceptron" class="level2" data-number="13.3">
-<h2 data-number="13.3" class="anchored" data-anchor-id="feedforward-neural-network-multi-layer-perceptron"><span class="header-section-number">13.3</span> Feedforward Neural Network / Multi-Layer Perceptron</h2>
+<section id="feed-forward-neural-network-multi-layer-perceptron" class="level2" data-number="13.3">
+<h2 data-number="13.3" class="anchored" data-anchor-id="feed-forward-neural-network-multi-layer-perceptron"><span class="header-section-number">13.3</span> Feed-forward Neural Network / Multi-Layer Perceptron</h2>
 <p>This is the simplest type of proper neural networks. Each neuron of a layer is connected to each neuron of the next layer and there are no cycles. The outputs of the previous layer corresponds to the <span class="math inline">x</span> in the activation function. Each output (<span class="math inline">x_i</span>) of the previous layer gets it’s own weight (<span class="math inline">w_i</span>) in each node and a bias (<span class="math inline">b</span>) is added to each node. Neurons with a very high output are “active” neurons, those with negative outputs are “inactive”. The result is mapped to the probability range by (commonly) a sigmoid function. The output is then again given to the next layer.<br>
 If your input layer has 6400 features (80*80 image), a network with 2 hidden layers of 16 nodes will have <span class="math inline">6400*16+16*16+16*10+16+16+10 = 102'858</span> parameters. This is a very high number of degrees of freedom and requires a lot of training samples.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
@@ -635,8 +692,8 @@ If your input layer has 6400 features (80*80 image), a network with 2 hidden lay
 </div>
 </div>
 </section>
-<section id="backpropagation" class="level2" data-number="13.4">
-<h2 data-number="13.4" class="anchored" data-anchor-id="backpropagation"><span class="header-section-number">13.4</span> Backpropagation</h2>
+<section id="back-propagation" class="level2" data-number="13.4">
+<h2 data-number="13.4" class="anchored" data-anchor-id="back-propagation"><span class="header-section-number">13.4</span> Back-propagation</h2>
 <p>This is the method by which neural networks learn the optimal weights and biases of the nodes. The components are a cost function and a gradient descent method.<br>
 The cost function analyses the difference between the designated activation in the output layer (according to the label of the data) and the actual activation of that layer. Commonly a residual sum of squares is used.<br>
 You get the direction of the next best parameter-combination by using a <em>stochastic gradient descent</em> algorithm using the gradient for your cost function:</p>
@@ -644,7 +701,7 @@ You get the direction of the next best parameter-combination by using a <em>stoc
 <li><p>We use a “mini-batch” of samples for each round/step of the gradient descent.</p></li>
 <li><p>We calculate squared residual of each feature of the output layer for each sample.</p></li>
 <li><p>From that we calculate what the bias or weights from the output layer and the activation from the last hidden layer must have been to get this result. We average that out for all images in our mini-batch.</p></li>
-<li><p>From that we calculate the weights, biases and activations of the upstream layers <span class="math inline">\rightarrow</span> we <em>backpropagate</em>.</p></li>
+<li><p>From that we calculate the weights, biases and activations of the upstream layers <span class="math inline">\rightarrow</span> we <em>back-propagate</em>.</p></li>
 </ol>
 </section>
 <section id="initialization" class="level2" data-number="13.5">
@@ -665,7 +722,7 @@ You get the direction of the next best parameter-combination by using a <em>stoc
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../figures/Autoencoder_schema.png" class="img-fluid figure-img" style="width:50.0%"></p>
-<figcaption class="figure-caption">Model of an autoencoder. The encoder layers compress the data towards the code layer, the decoder layers decompress the data again. <em>Figure from <a href="https://commons.wikimedia.org/wiki/File:Autoencoder_schema.png">Michela Massi on wikimedia.org</a>.</em></figcaption>
+<figcaption>Model of an autoencoder. The encoder layers compress the data towards the code layer, the decoder layers decompress the data again. <em>Figure from <a href="https://commons.wikimedia.org/wiki/File:Autoencoder_schema.png">Michela Massi on wikimedia.org</a>.</em></figcaption>
 </figure>
 </div>
 </section>
@@ -689,7 +746,7 @@ XXXX adapted spectral clustering (section <a href="#Spectral%20Clustering">3.3</
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../figures/rnn.png" class="img-fluid figure-img" style="width:70.0%"></p>
-<figcaption class="figure-caption">A unit of an RNN. The left side shows a static view of a unit <span class="math inline">h</span>. The right side shows how the activations of past inputs (<span class="math inline">x_{t-1}</span>) influence the output (<span class="math inline">o_t</span>) of the current input (<span class="math inline">x_t</span>). <span class="math inline">U</span>, <span class="math inline">V</span> and <span class="math inline">W</span> are weights (Beware: They stay the same for different inputs). <em>Figure from <a href="https://commons.wikimedia.org/wiki/File:Recurrent_neural_network_unfold.svg">fdeloche on wikimedia.org</a>.</em></figcaption>
+<figcaption>A unit of an RNN. The left side shows a static view of a unit <span class="math inline">h</span>. The right side shows how the activations of past inputs (<span class="math inline">x_{t-1}</span>) influence the output (<span class="math inline">o_t</span>) of the current input (<span class="math inline">x_t</span>). <span class="math inline">U</span>, <span class="math inline">V</span> and <span class="math inline">W</span> are weights (Beware: They stay the same for different inputs). <em>Figure from <a href="https://commons.wikimedia.org/wiki/File:Recurrent_neural_network_unfold.svg">fdeloche on wikimedia.org</a>.</em></figcaption>
 </figure>
 </div>
 <p>Problem: The influence of previous inputs vanishes (or potentially explodes) with the sequence length (unfolding). This makes the network hard to train. This is mitigated by LSTMs (below).</p>
@@ -700,7 +757,7 @@ XXXX adapted spectral clustering (section <a href="#Spectral%20Clustering">3.3</
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../figures/LSTM.png" class="img-fluid figure-img" style="width:70.0%"></p>
-<figcaption class="figure-caption">A unfolded view of a unit of an LSTM. <span class="math inline">c_{t}</span> (top horizontal path) is the <em>cell state</em> and represents the long-term memory. <span class="math inline">h_t</span> ( bottom horizontal line) is the <em>hidden</em> <em>state</em> and represents the short-term memory. The weights are not shown in this diagram. <span class="math inline">F_t</span> is the <em>forget gate</em> and determines the percentage of the long-term memory that is remembered based on the short-term memory and input. <span class="math inline">I_t</span> is the <em>input gate</em> and determines how/whether to update/create the long-term memory using the input and short-term memory. <span class="math inline">O_t</span> is the <em>output gate</em> and determines the short-term memory to be passed on to the next time-step. Thus the output of the cell is the modified long- and short-term memory. <em>Figure from <a href="https://commons.wikimedia.org/wiki/File:Long_Short-Term_Memory.svg">fdeloche on wikimedia.org</a>.</em></figcaption>
+<figcaption>A unfolded view of a unit of an LSTM. <span class="math inline">c_{t}</span> (top horizontal path) is the <em>cell state</em> and represents the long-term memory. <span class="math inline">h_t</span> ( bottom horizontal line) is the <em>hidden</em> <em>state</em> and represents the short-term memory. The weights are not shown in this diagram. <span class="math inline">F_t</span> is the <em>forget gate</em> and determines the percentage of the long-term memory that is remembered based on the short-term memory and input. <span class="math inline">I_t</span> is the <em>input gate</em> and determines how/whether to update/create the long-term memory using the input and short-term memory. <span class="math inline">O_t</span> is the <em>output gate</em> and determines the short-term memory to be passed on to the next time-step. Thus the output of the cell is the modified long- and short-term memory. <em>Figure from <a href="https://commons.wikimedia.org/wiki/File:Long_Short-Term_Memory.svg">fdeloche on wikimedia.org</a>.</em></figcaption>
 </figure>
 </div>
 <p>more explanation: <a href="https://www.youtube.com/watch?v=YCzL96nL7j0">youtube: StatQuest</a></p>
@@ -727,7 +784,7 @@ XXXX adapted spectral clustering (section <a href="#Spectral%20Clustering">3.3</
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../figures/transfomer-architecture.png" class="img-fluid figure-img" style="width:70.0%"></p>
-<figcaption class="figure-caption">Architecture of transformer models. The encoder is on the left. The decoder is on the right. The encoder-outputs are passed to it in sequence. Output-sequence elements that come after the current input element are masked. The decoder generates the next element of the output. There are commonly multiple encoder and decoder units in sequence and multiple attention units in parallel. <em>Figure from <a href="https://commons.wikimedia.org/wiki/File:The-Transformer-model-architecture.png">Yuening Jia on wikimedia.org</a>.</em></figcaption>
+<figcaption>Architecture of transformer models. The encoder is on the left. The decoder is on the right. The encoder-outputs are passed to it in sequence. Output-sequence elements that come after the current input element are masked. The decoder generates the next element of the output. There are commonly multiple encoder and decoder units in sequence and multiple attention units in parallel. <em>Figure from <a href="https://commons.wikimedia.org/wiki/File:The-Transformer-model-architecture.png">Yuening Jia on wikimedia.org</a>.</em></figcaption>
 </figure>
 </div>
 <p>Detailed explanation: <a href="https://www.youtube.com/watch?v=QCJQG4DuHT0&amp;list=PLTl9hO2Oobd97qfWC40gOSU8C0iu0m2l4">Youtube - CodeEmporium</a></p>
@@ -745,6 +802,8 @@ XXXX adapted spectral clustering (section <a href="#Spectral%20Clustering">3.3</
 <li>The models are so huge, that it takes a lot of compute power just to use it for predictions.</li>
 </ul>
 <p>To deal with these problems, You can tune late layers in pre-trained LLMs to increase their accuracy for your field of application without having to train a huge model.</p>
+<!-- integrate https://www.markhneedham.com/blog/2023/10/18/ollama-hugging-face-gguf-models/ -->
+<!-- integrate replicate, langchain etc. -->
 </section>
 </section>
 </font></section><font color="grey">
@@ -753,14 +812,137 @@ XXXX adapted spectral clustering (section <a href="#Spectral%20Clustering">3.3</
 <p>There are specific methods for learning in neural networks.</p>
 </font><section id="transfer-learning" class="level2" data-number="15.1"><font color="grey">
 <h2 data-number="15.1" class="anchored" data-anchor-id="transfer-learning"><span class="header-section-number">15.1</span> Transfer learning</h2>
-<p>You train a model on one (usually large) dataset and adapt it for a related learning task. The feature space and distribution of the input and target data of the new task can be different from the old task.</p>
+<p>You train a model on one (usually large) dataset and adapt it for a different, but related learning task. The feature space and distribution of the input and target data of the new task can be different from the old task.</p>
+<section id="instance-transfer" class="level3">
+<h3 class="anchored" data-anchor-id="instance-transfer">Instance Transfer</h3>
+<p>You take the samples from the dataset of the initial task and mix them into the dataset of the new task.</p>
+</section>
 </font><section id="domain-adaptation" class="level3"><font color="grey">
 <h3 class="anchored" data-anchor-id="domain-adaptation">Domain adaptation</h3>
 <p>In domain adaptation the feature space is similar to the original dataset.</p>
 </font><p><font color="grey"></font></p>
-
-
 </section>
+</section>
+<section id="meta-learning" class="level2" data-number="15.2">
+<h2 data-number="15.2" class="anchored" data-anchor-id="meta-learning"><span class="header-section-number">15.2</span> Meta-learning</h2>
+<p>You do not train a model directly on the target task, but train the model to distinguish different samples on many other tasks where you have enough training data (thus <em>learning to learn</em>). You build such a model with the aim to adapt it or directly use it for the target learning task with very few samples.</p>
+<p>Definitions:</p>
+<ul>
+<li><strong>Training Set:</strong> The large set of samples used to train the model.</li>
+<li><strong>k-way n-shot Support Set:</strong> The very small set with n samples used to distinguish k classes. It is either used to adapt or directly query the pre-trained model. The class labels of the samples are only in the support set - not the training set.</li>
+<li><strong>Query Set:</strong> The set of samples used to query the model.</li>
+</ul>
+<p>You commonly train or fine-tune a model using contrastive learning (chapter <a href="#contrastive-learning">contrastive learning</a>).</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Common pre-trained models:
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<section id="nlp" class="level4">
+<h4 class="anchored" data-anchor-id="nlp">NLP</h4>
+<ul>
+<li>SBERT (Sentence Bert) <!-- TODO: include link to huggingface --></li>
+<li>SRoBERTa <!-- TODO: include link  to huggingface --></li>
+</ul>
+</section>
+<section id="images" class="level4">
+<h4 class="anchored" data-anchor-id="images">Images</h4>
+<!-- TODO: include possible models -->
+</section>
+<section id="time-series" class="level4">
+<h4 class="anchored" data-anchor-id="time-series">Time Series</h4>
+<!-- TODO: Include possible models -->
+</section>
+</div>
+</div>
+</div>
+<section id="few-shot-learning" class="level3">
+<h3 class="anchored" data-anchor-id="few-shot-learning">Few-shot learning</h3>
+<p>You have very few (1-20) samples per class in your support set. Before you use the approaches below, you should use <a href="#imagedata">data augmentation</a> to increase the sample size.</p>
+<section id="metric-based-learning" class="level4">
+<h4 class="anchored" data-anchor-id="metric-based-learning">Metric-based learning</h4>
+<p>Instead of adapting the weights of the model, you provide the model with representative reference samples. You then compare the internal representation of the model of the reference samples and the new samples. The new samples are classified according to the most similar reference samples.</p>
+<p><strong>In context learning</strong> is a special case of few-shot learning in large language models, where you provide the reference samples in the prompt to the model. This has the disadvantage, that your performance is dependent on prompt engineering and the model to be used will be very large (expensive and slow).</p>
+</section>
+<section id="fine-tuning" class="level4">
+<h4 class="anchored" data-anchor-id="fine-tuning">Fine-tuning</h4>
+<p>You adapt the weights of the model to the new task. To successfully do this with very few samples, you need suitable pre-trained models for this. To prevent overfitting, we limit the parameters of the model we adapt and use regularization (i.e.&nbsp;entropy regularization). A common technique is to only fine tune the similarity and softmax function of the model. More details here: [youtube.com - Shusen Wang: Few-Shot Learning pt.&nbsp;3]</p>
+<!-- include https://huggingface.co/blog/setfit#training-your-own-model -->
+<!-- include https://neptune.ai/blog/understanding-few-shot-learning-in-computer-vision : Algorithms for Few-Shot image classification -->
+</section>
+</section>
+</section>
+<section id="contrastive-learning" class="level2" data-number="15.3">
+<h2 data-number="15.3" class="anchored" data-anchor-id="contrastive-learning"><span class="header-section-number">15.3</span> Contrastive Learning</h2>
+<p>You train/fine-tune a model, so that similar samples are close together in feature space and dissimilar samples are far apart. This is done by using a contrastive loss function. The model is trained on pairs of samples. The loss function is minimized, when the distance between similar samples is small and the distance between dissimilar samples is large.</p>
+<p>More info: <a href="https://builtin.com/machine-learning/contrastive-learning">builtin.com</a></p>
+<div id="2ac80d21" class="cell" data-execution_count="5">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>feature_df <span class="op">=</span> pd.DataFrame(data<span class="op">=</span> {<span class="st">"x"</span>: [<span class="dv">1</span>, <span class="fl">1.5</span>, <span class="fl">3.5</span>, <span class="dv">4</span>, <span class="fl">4.5</span>, <span class="dv">6</span>],</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>                 <span class="st">"y"</span>: [<span class="dv">1</span>, <span class="dv">2</span>, <span class="fl">9.5</span>, <span class="fl">10.5</span>, <span class="dv">9</span>, <span class="dv">3</span>],</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>                 <span class="st">"object"</span>: [<span class="st">'Dog'</span>, <span class="st">'Cat'</span>, <span class="st">'Car'</span>, <span class="st">'Train'</span>, <span class="st">'Bus'</span>, <span class="st">'Tree'</span>]})</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co">#create scatterplot</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>plt.scatter(feature_df[<span class="st">"x"</span>], feature_df[<span class="st">"y"</span>])</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co">#add labels to every point</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> idx, row <span class="kw">in</span> feature_df.iterrows():</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    plt.text(row[<span class="st">"x"</span>]<span class="op">+</span><span class="fl">0.2</span>, row[<span class="st">"y"</span>]<span class="op">-</span><span class="fl">0.1</span>, row[<span class="st">"object"</span>], fontsize<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="dv">0</span>, <span class="dv">8</span>)</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="dv">0</span>, <span class="dv">12</span>)</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>plt.grid(visible<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="0-Neural_files/figure-html/cell-6-output-1.png" width="292" height="194" class="figure-img"></p>
+<figcaption>Conceptual example of a feature space in contrastive learning. The model was trained to distinguish between “animals”, “vehicles” and “plants”.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Common model architectures for contrastive learning are:</p>
+<ul>
+<li>Siamese networks (use pairs of samples for training. Samples from same classes are labeled positive, samples from different classes are labeled negative)</li>
+<li>Triplet networks (use triplets of samples containint an <em>anchor sample</em>, a <em>positive sample</em> (same class as anchor) and a <em>negative sample</em> (different class as anchor). The model is trained to minimize the distance between the anchor and the positive sample and maximize the distance between the anchor and the negative sample.)</li>
+</ul>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">graph LR
+    A[Input 1] -- "base model
+    `" --&gt; A1("Embedding 1")
+
+    B[Input 2] -- "base model
+    `" --&gt; B1("Embedding 2")
+
+    A1 --&gt; C("Difference vector")
+
+    B1 --&gt; C
+
+    C -- "dense layers
+    sigmoid" --&gt; D[Similarity score]
+</pre>
+</div>
+<p></p><figcaption> Conceptual example of a Siamese network. Note, that the base model is shared between the two inputs.</figcaption> </figure><p></p>
+</div>
+</div>
+</div>
+
+
 </section>
 </section>
 
@@ -844,10 +1026,34 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
+          // default icon
+          link.classList.add("external");
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -857,8 +1063,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -870,7 +1085,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -914,6 +1252,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -939,6 +1278,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -996,37 +1361,22 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       });
     }
   }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-          // target, if specified
-          link.setAttribute("target", "_blank");
-          // default icon
-          link.classList.add("external");
-      }
-    }
 });
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../source/Unsupervised/02-lower-dim-mapping.html" class="pagination-link">
+      <a href="../../source/Unsupervised/02-lower-dim-mapping.html" class="pagination-link" aria-label="Mapping to lower dimensions">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Mapping to lower dimensions</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../source/Other/0-ML_PM.html" class="pagination-link">
+      <a href="../../source/Other/0-ML_PM.html" class="pagination-link" aria-label="ML Project Management">
         <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">ML Project Management</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
+
 
 
 
