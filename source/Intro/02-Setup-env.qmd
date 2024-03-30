@@ -1,8 +1,61 @@
 ## Setup Environment
 
-How to setup your packages and virtual environment. 
+### Development environment
 
-### Conda
+This is the program where you write your code, run your tests and debug your code.
+
+::: {.panel-tabset}
+
+#### Python
+
+##### Visual Studio Code
+
+An open-source code editor, that can be extended to a full IDE with extensions: (https://code.visualstudio.com/). 
+
+How to get started: (https://code.visualstudio.com/docs)
+
+Suggested extensions:
+
+- Python by Microsoft (Python language support)
+- Jupyter by Microsoft (Jupyter notebook support)
+- Black Formatter by Microsoft (Code formatter)
+- Ruff by Astral Software (linter for code quality)
+
+##### PyCharm
+
+A full IDE for Python development. It has a free community edition and a paid professional edition.
+
+Community edition: (https://www.jetbrains.com/pycharm/) all you need to start working in Python.
+
+Professional edition: (https://www.jetbrains.com/pycharm/) contains support for web development, sql and remote development.
+
+
+#### R
+
+##### RStudio
+
+The most popular IDE for R development. It has all tools needed for data science and data analysis: (https://posit.co/download/rstudio-desktop/)
+
+##### Visual Studio Code
+
+You can also use Visual Studio Code for R development. 
+
+Suggested extensions:
+
+- R by Yuki Ueda (Rlanguagesupport)
+
+:::
+
+
+### Virtual environment
+
+How to setup your packages and virtual environment. This is needed to avoid conflicts between different projects and to ensure that your code runs on different machines.
+
+::: {.panel-tabset}
+
+#### Python
+
+##### Conda
 
 Conda is a package and virtual environment manager. It resolves dependencies of your python and non-python packages.
 
@@ -12,7 +65,7 @@ Conda is a package and virtual environment manager. It resolves dependencies of 
 
 ::: {.callout-note collapse=true appearance="simple"}  
 
-#### Installation via UNIX CLI
+##### Installation via UNIX CLI
 
 ```bash
 mkdir -p ~/miniconda3
@@ -25,75 +78,40 @@ rm -rf ~/miniconda3/miniconda.sh
 
 :::
 
-**List your existing environments:** 
+Cheat-sheet for Conda: [moritzguck.github.io - Conda](https://moritzguck.github.io/Code-Cheatsheets/cheatsheets/Languages/Python/Conda.html)
 
-```bash
-conda env list
-```
+##### Venv
 
-**Create new environment:**
+Venv is a virtual environment manager that comes with Python. It is a lightweight alternative to Conda. The packages are installed directly in a designated folder in your project directory.
 
-Create a yaml file with required packages like this one: [github - ml-reference-env.yml](https://gist.github.com/MoritzGuck/ee0f9b9b511a25dbff8e98925596492e)
+You can setup  a virtual environment straight out of vscode: 
 
-Create a conda env from that file:
+1. Press `Ctrl+Shift+P` to open the command palette.
+2. Search for 'Create environment' and select the option 'Python: Create Environment'.
+3. Choose Venv.
+4. Select the python version you want to use.
+5. If you have a requirements.txt file, you can select it to install the packages.
 
-```bash
-conda env create -f environment.yml
-```
+##### Poetry
 
-**Change to an existing environment:**
+Poetry is a package manager and environment manager. You can also use it to create packages that can be shared with others.
 
-```bash
-conda activate test
-conda env list
-```
+More info: (https://python-poetry.org/)
 
-**Check and update package versions:**
+Cheat-sheet for Poetry: [moritzguck.github.io - Poetry](https://moritzguck.github.io/Code-Cheatsheets/cheatsheets/Languages/Python/Poetry.html)
 
-After activating an env:
+#### R
 
-```bash
-python --version
-```
+##### Renv
 
-```bash
-conda update python
-```
+Renv is an environment manager for R. It is quite similar to Python's venv. Your packages will be installed in a designated folder in your project directory.
 
-**Install packages:**
+More info: (https://rstudio.github.io/renv/articles/renv.html)
 
-Latest version:
-```bash
-conda install pandas 
-```
+You can setup a virtual environment straight out of RStudio:
 
-Specific version:
-```bash
-conda install pandas==2.0.0
-```
+1. Create a new project.
+2. In the assistant select "use renv with this project".
 
-From different channel:
-```bash
-conda install pandas -c conda-forge -y
-```
+:::
 
-**switch back to base environment:**
-
-```bash
-conda deactivate
-```
-
-**Removing environment:**
-
-```bash
-conda env remove -n env-name
-```
-
-More info:
-[Intro to Conda virtual environments](https://towardsdatascience.com/introduction-to-conda-virtual-environments-eaea4ac84e28)
-
-**Export environment to conda:**
-
-```bash
-conda env export > environment.yml
-```

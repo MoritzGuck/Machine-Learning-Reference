@@ -1,4 +1,5 @@
 jupyter
 numpy 
 seaborn
+nbformat
 

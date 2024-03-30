@@ -1,12 +1,18 @@
+---
+editor: 
+  markdown: 
+    wrap: 80
+---
+
 ## Similarity and Distance Measures
 
-Choosing the right distance measures is important for achieving good
-results in statistics, predictions and clusterings.
+Choosing the right distance measures is important for achieving good results in
+statistics, predictions and clusterings.
 
 ### Metrics
 
-For a distance measure to be called a metric $d$, the following criteria
-need to be fulfilled:
+For a distance measure to be called a metric $d$, the following criteria need to
+be fulfilled:
 
 -   Positivity: $d(x_1,x_2)≥0$
 
@@ -16,13 +22,12 @@ need to be fulfilled:
 
 -   Triangle inequality: $d(x_1, x_3) ≤ d(x_1, x_2) + d(x_2, x_3)$
 
-There may be distance measures that do not fulfill these criteria, but
-those are not metrics.
+There may be distance measures that do not fulfill these criteria, but those are
+not metrics.
 
 ### Similarity measures on vectors
 
-These measures are used in many objective functions to compare data
-points.
+These measures are used in many objective functions to compare data points.
 
 ``` python
 from sklearn.metrics import pairwise_distances
@@ -31,128 +36,216 @@ X2 = np.array([[2,4]])
 pairwise_distances(X1,X2, metric="manhattan")
 ```
 
-The available metrics in sklearn are: 'cityblock', 'cosine',
-'euclidean', 'l1', 'l2', 'manhattan', and from scipy: 'braycurtis',
-'canberra', 'chebyshev', 'correlation', 'dice', 'hamming', 'jaccard',
-'kulsinski', 'mahalanobis', 'minkowski', 'rogerstanimoto', 'russellrao',
-'seuclidean', 'sokalmichener', 'sokalsneath', 'sqeuclidean', 'yule'\
+The available metrics in sklearn are: 'cityblock', 'cosine', 'euclidean', 'l1',
+'l2', 'manhattan', and from scipy: 'braycurtis', 'canberra', 'chebyshev',
+'correlation', 'dice', 'hamming', 'jaccard', 'kulsinski', 'mahalanobis',
+'minkowski', 'rogerstanimoto', 'russellrao', 'seuclidean', 'sokalmichener',
+'sokalsneath', 'sqeuclidean', 'yule'\
 More info:
 [scikit-learn.org](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.pairwise_distances.html)
 
 #### Manhattan distance
 
-The distance is the sum of the absolute differences of the components
-(single coordinates) of the two points:
-$$d(A, B) = \sum_{i=1}^d | A_i - B_i |$$
+The distance is the sum of the absolute differences of the components (single
+coordinates) of the two points: $$d(A, B) = \sum_{i=1}^d | A_i - B_i |$$
 
-More info at
-[wikipedia.org](https://en.wikipedia.org/wiki/Taxicab_geometry).
+More info at [wikipedia.org](https://en.wikipedia.org/wiki/Taxicab_geometry).
 
 #### Hamming distance
 
-This metric is used for pairs of strings and works equivalently to the
-Manhattan distance. It is the number of positions that are different
-between the strings.\
-More info at
-[wikipedia.org](https://en.wikipedia.org/wiki/Hamming_distance).
+This metric is used for pairs of strings and works equivalently to the Manhattan
+distance. It is the number of positions that are different between the strings.\
+More info at [wikipedia.org](https://en.wikipedia.org/wiki/Hamming_distance).
 
-#### Euclidian distance
+#### Euclidean distance
 
 $$d(A, B) = | A - B | = \sqrt{\sum_{i=1}^d (A_i-B_i)^2} $$
 
-More info on the euclidian distance on
+More info on the euclidean distance on
 [wikipedia.org](https://en.wikipedia.org/wiki/Euclidean_distance).\
-The usefulness of this metric can deteriorate in high dimensional
-spaces. See [curse of
+The usefulness of this metric can deteriorate in high dimensional spaces. See
+[curse of
 dimensionality](https://en.wikipedia.org/wiki/Curse_of_dimensionality#Distance_function)
 
 #### Chebyshev distance
 
-The Chebyshev distance is the largest difference along any of the
-components of the two vectors.
+The Chebyshev distance is the largest difference along any of the components of
+the two vectors.
 
 $$d(A, B) = \max_i(|A_i-B_i|) $$
 
-More info at
-[wikipedia.org](https://en.wikipedia.org/wiki/Chebyshev_distance).
+More info at [wikipedia.org](https://en.wikipedia.org/wiki/Chebyshev_distance).
 
 #### Minkowski Distance
 
 $$d(A, B) = (\sum_{i=1}^d |A_i-B_i|^p)^\frac{1}{p} $$
 
-For $p=2$ the Minkowski distance is equal to the Euclidian distance, for
-$p=1$ it corresponds to the Manhattan distance and it converges to the
-Chebyshev distance for $p \to \infty$.   More info at
+For $p=2$ the Minkowski distance is equal to the Euclidean distance, for $p=1$
+it corresponds to the Manhattan distance and it converges to the Chebyshev
+distance for $p \to \infty$.   More info at
 [wikipedia.org](https://en.wikipedia.org/wiki/Minkowski_distance).
 
-```{=html}
-<!--# ### Similarity measures on sets of objects
+### Similarity measures on sets of objects
+
+These measures compare the similarity of two sets of samples. This can be useful
+in e.g. recommender systems and market basket analysis.
 
 #### Jaccard coefficient
 
-#### Jaccard distance
+$$ j(A,B) = {{|A \cap B|}\over{|A \cup B|}} $$
+
+The Jaccard distance is defined as: $1 - j(A,B)$
+
+``` python
+from sklearn.metrics import jaccard_score
+jaccard_score(a_set, b_set)
+```
+
+More info: [scikit-learn.org - jaccard score](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.jaccard_score.html#sklearn.metrics.jaccard_score)
 
 #### Overlap coefficient
 
+$$ o(A,B) = {{|A \cap B|}\over{\min(|A|, |B|)}} $$
+
+```python
+from sklearn.metrics import confusion_matrix
+conf_mat = confusion_matrix(a_set, b_set)
+a_intersect_b = conf_mat[1,1]
+overlap_coeff = a_intersect_b / (min((sum(a_set), sum(b_set))))
+```
+
 #### Sorensen-Dice coefficient
+
+$$ s(A,B) = {{2* |A \cap B|}\over{|A| + |B|}} $$
+
+```python
+from sklearn.metrics import confusion_matrix
+conf_mat = confusion_matrix(a_set, b_set)
+a_intersect_b = conf_mat[1,1]
+sor_dic_coeff = 2* a_intersect_b / ((sum(a_set) + sum(b_set)))
+```
 
 ### Similarity measures on sets of vectors
 
+``` python
+from sklearn.metrics import pairwise_distances
+from scipy.cluster.hierarchy import linkage
+X1 = np.array([[2,3]])
+X2 = np.array([[2,4]])
+distanes = pairwise_distances(X1,X2, metric="manhattan")
+single_link_distance = linkage(distances, 'single')
+complete_link_distance = linkage(distances, 'complete')
+ave_link_distance = linkage(distances, 'average')
+```
+
 #### Single link distance function
+
+$$d(A,B) = min_{a \in A, b \in B }  d_{vector}(a,b)$$
+
+i.e. The distance of the set is defined by the distance of the closest two
+vectors.
+
 
 #### Complete link distance function
 
+$$d(A,B) = max_{a \in A, b \in B} d_{vector}(a,b)$$
+
 #### Average link distance function
 
-### Similarity measures on sets of strings
+$$d(A,B) = {{1}\over{|A||B|}} \sum_{a \in A} \sum_{b \in B} d_{vector}(a,b)$$
+
+### Similarity measures on strings
 
 #### k-mer based similarity measures
 
-### Similartiy measures for nodes in a Graph
+k-mers are substrings of length k. You represent each string *s* as a histogram
+of k-mer frequencies $h_k(s)$. Then you count the number of matching pairs of
+k-mers in two strings $s_1$ and $s_2$.
+
+<font color="grey">
+
+### Similarity measures for nodes in a Graph
+
+Context: Your samples are nodes in a graph. Edge weights $w(i,j)$ represent
+distances between nodes $i$ and $j$.
 
 #### Shortest path distance
 
+Floyd-Warshall's algorithm allows to compute a pairs shortest path.
+
 ### Similarity measures on Graphs
+
+There are three approaches:
+
+-   Graph or subgraph isomorphism test
+-   Graph edit distance (cost to transform graph 1 into graph 2)
+-   Map graph topological vectors & compare vector distances
 
 #### Wiener index
 
-#### Weisfeiler Lehmann Kernel
+... is used to represent *one* graph.
 
-### Similarty measures for time series
+$$w(G) = {{1}\over{|P|}} \sum_{p \in P} l(p)$$
 
-#### Dynamic Time Warping (DTW) distance -->
-```
+where G is the graph with vertices v and edges E. P is the set of all shortest
+paths in G and $l(p)$ is the length of path p.
+
+#### Weisfeiler-Lehmann Kernel
+
+measures similarity between two graphs by creating a vector containing each node
+of the graph and encodings of each node given by its direct neighbors. You then
+compare the distance between the two vectors.
+
+</font>
+
+### Similarity measures for time series
+
+Problem: we often compare time series of different lengths and time points are
+not recorded synchronously and in different frequency.
+
+#### Dynamic Time Warping (DTW) distance
+
+Distance measure that allows for different lengths and intervals. Iterate over
+each position in $x$ and $x'$:
+
+$$
+DTW(i,j) = d(x_i, x_j') + \min \begin{cases} 
+                DTW(i, j-1), \text{ then repeat } x_i \\
+                DTW(i-1, j), \text{ then repeat } x'_j \\
+                DTW(i-1, j-1), \text{ then repeat neither}
+            \end{cases}
+$$
+
 ### Kernels
 
-Kernels are functions that output the relationship between points in
-your data. They correspond to mapping the data into high-dimensional
-space and allow to implicitly draw nonlinear decision boundaries with
-linear models. The *kernel trick* denotes, that you don't have to map the points into high dimensional space explicitly.
+Kernels are functions that output the relationship between points in your data.
+They correspond to mapping the data into high-dimensional space and allow to
+implicitly draw nonlinear decision boundaries with linear models. The *kernel
+trick* denotes, that you don't have to map the points into high dimensional
+space explicitly.
 
 #### Closure properties of kernels
 
--   If $k_1$ and $k_2$ are kernels, then $k_1 + k_2$ is a kernel as
+-   If $k_1$ and $k_2$ are kernels, then $k_1 + k_2$ is a kernel as well.
+
+-   If $k_1$ and $k_2$ are kernels, then their product is a kernel as well.
+
+-   If $k$ is a kernel and $\alpha$ is a kernel, then $\alpha k$ is a kernel as
     well.
 
--   If $k_1$ and $k_2$ are kernels, then their product is a kernel as
-    well.
-
--   If $k$ is a kernel and $\alpha$ is a kernel, then $\alpha k$ is a
-    kernel as well.
-
--   If you define $k$ only on a set $D$, then points that are not in $D$
-    will have a value of $k_0=0$ which is still a valid kernel.
+-   If you define $k$ only on a set $D$, then points that are not in $D$ will
+    have a value of $k_0=0$ which is still a valid kernel.
 
 <font color="grey">
 
 #### Polynomial kernel
 
-$$K(x_1, x_2) = \left< x_1, x_2 + c \right>^d  $$
-$\left< \right>$ is the dot-product. The *linear kernel* is a polynomial kernel with $d = 1$. 
+$$K(x_1, x_2) = \left< x_1, x_2 + c \right>^d  $$ $\left< \right>$ is the
+dot-product. The *linear kernel* is a polynomial kernel with $d = 1$.
 
 #### Gaussian Radial Basis Function (RBF) kernel
 
-This is the most widely used non-linear kernel. 
+This is the most widely used non-linear kernel.
 
 $$K(x_1, x_2) = exp \left(- \frac{ || x_1 - x_2||^2}{2 \sigma^2}  \right)$$
 
@@ -161,8 +254,6 @@ $$K(x_1, x_2) = exp \left(- \frac{ || x_1 - x_2||^2}{2 \sigma^2}  \right)$$
 #### delta dirac kernel
 
 #### R convolution kernels
-
-
 
 #### String kernels
 

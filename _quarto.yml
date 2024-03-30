@@ -37,7 +37,7 @@ book:
         - "source/Other/0-Checklists.qmd"
     - part: "Blog"
       chapters:
-        - "source/tutorials/creating_grouning_db.ipynb"
+        - "source/tutorials/creating_grounding_db.ipynb"
 
   sidebar:
     search: true

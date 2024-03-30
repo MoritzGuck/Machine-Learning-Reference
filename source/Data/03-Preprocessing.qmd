@@ -542,7 +542,7 @@ You can reuse trained embeddings for other tasks. See [transfer-learning](#trans
 More info: [Google Machine Learning - Prepare Your Data](https://developers.google.com/machine-learning/guides/text-classification/step-3#sequence_vectors_option_b)
 
 
-### Image data
+### Image data {.imagedata}
 
 ```{mermaid}
 

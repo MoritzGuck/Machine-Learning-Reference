@@ -1,0 +1,10 @@
+{
+    "cSpell.enableFiletypes": [
+        "quarto"
+    ],
+    "cSpell.words": [
+        "matplotlib",
+        "numpy",
+        "seaborn"
+    ]
+}
