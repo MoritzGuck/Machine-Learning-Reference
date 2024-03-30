@@ -36,7 +36,7 @@ Professional edition: (https://www.jetbrains.com/pycharm/) contains support for 
 
 The most popular IDE for R development. It has all tools needed for data science and data analysis: (https://posit.co/download/rstudio-desktop/)
 
-##### Visual Studio Code
+##### Visual Studio Code
 
 You can also use Visual Studio Code for R development. 
 
@@ -80,7 +80,7 @@ rm -rf ~/miniconda3/miniconda.sh
 
 Cheat-sheet for Conda: [moritzguck.github.io - Conda](https://moritzguck.github.io/Code-Cheatsheets/cheatsheets/Languages/Python/Conda.html)
 
-##### Venv
+##### Venv
 
 Venv is a virtual environment manager that comes with Python. It is a lightweight alternative to Conda. The packages are installed directly in a designated folder in your project directory.
 
@@ -92,7 +92,7 @@ You can setup  a virtual environment straight out of vscode:
 4. Select the python version you want to use.
 5. If you have a requirements.txt file, you can select it to install the packages.
 
-##### Poetry
+##### Poetry
 
 Poetry is a package manager and environment manager. You can also use it to create packages that can be shared with others.
 
