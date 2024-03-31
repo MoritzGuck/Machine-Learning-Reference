@@ -10,9 +10,9 @@ This is the program where you write your code, run your tests and debug your cod
 
 ##### Visual Studio Code
 
-An open-source code editor, that can be extended to a full IDE with extensions: (https://code.visualstudio.com/). 
+An open-source code editor, that can be extended to a full IDE with extensions: <https://code.visualstudio.com/>. 
 
-How to get started: (https://code.visualstudio.com/docs)
+How to get started: <https://code.visualstudio.com/docs>
 
 Suggested extensions:
 
@@ -25,16 +25,16 @@ Suggested extensions:
 
 A full IDE for Python development. It has a free community edition and a paid professional edition.
 
-Community edition: (https://www.jetbrains.com/pycharm/) all you need to start working in Python.
+Community edition: <https://www.jetbrains.com/pycharm/> all you need to start working in Python.
 
-Professional edition: (https://www.jetbrains.com/pycharm/) contains support for web development, sql and remote development.
+Professional edition: <https://www.jetbrains.com/pycharm/> contains support for web development, sql and remote development.
 
 
 #### R
 
 ##### RStudio
 
-The most popular IDE for R development. It has all tools needed for data science and data analysis: (https://posit.co/download/rstudio-desktop/)
+The most popular IDE for R development. It has all tools needed for data science and data analysis: <https://posit.co/download/rstudio-desktop/>
 
 ##### Visual Studio Code
 
@@ -96,7 +96,7 @@ You can setup  a virtual environment straight out of vscode:
 
 Poetry is a package manager and environment manager. You can also use it to create packages that can be shared with others.
 
-More info: (https://python-poetry.org/)
+More info: <https://python-poetry.org/>
 
 Cheat-sheet for Poetry: [moritzguck.github.io - Poetry](https://moritzguck.github.io/Code-Cheatsheets/cheatsheets/Languages/Python/Poetry.html)
 
@@ -106,7 +106,7 @@ Cheat-sheet for Poetry: [moritzguck.github.io - Poetry](https://moritzguck.githu
 
 Renv is an environment manager for R. It is quite similar to Python's venv. Your packages will be installed in a designated folder in your project directory.
 
-More info: (https://rstudio.github.io/renv/articles/renv.html)
+More info: <https://rstudio.github.io/renv/articles/renv.html>
 
 You can setup a virtual environment straight out of RStudio:
 
